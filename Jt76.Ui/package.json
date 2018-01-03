@@ -1,15 +1,15 @@
 {
-  "name": "quickapp",
+  "name": "jt76",
   "version": "2.0.0",
   "description": "Angular5 (ASP.NET Core) startup project template with complete login, user and role management. Plus other useful services for Quick Application Development",
   "author": {
-    "name": "Ebenezer Monney",
-    "email": "info@ebenmonney.com",
-    "url": "http://ebenmonney.com/about"
+    "name": "Jeremy Turner",
+    "email": "jeremyturner1976@yahoo.com",
+    "url": "https://github.com/JeremyTurner1976"
   },
   "license": "MIT",
-  "homepage": "http://ebenmonney.com",
-  "repository": "https://github.com/emonney/quickapp.git",
+  "homepage": "https://github.com/JeremyTurner1976",
+  "repository": "https://github.com/JeremyTurner1976/Jt76.git",
   "dependencies": {
     "@angular/animations": "5.1.0",
     "@angular/common": "5.1.0",

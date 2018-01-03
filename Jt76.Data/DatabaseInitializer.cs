@@ -38,7 +38,7 @@
 
 			if (!await _identityContext.Users.AnyAsync())
 			{
-				_logger.LogInformation("Generating inbuilt accounts");
+				_logger.LogInformation("Generating built in accounts");
 
 				const string adminRoleName = "administrator";
 				const string userRoleName = "user";
@@ -46,12 +46,12 @@
 				await EnsureRoleAsync(adminRoleName, "Default administrator", ApplicationPermissions.GetAllPermissionValues());
 				await EnsureRoleAsync(userRoleName, "Default user", new string[] { });
 
-				await CreateUserAsync("admin", "tempP@ss123", "Inbuilt Administrator", "admin@ebenmonney.com",
+				await CreateUserAsync("admin", "tempP@ss123", "Built In Administrator", "admin@test.com",
 					"+1 (123) 000-0000", new string[] {adminRoleName});
-				await CreateUserAsync("user", "tempP@ss123", "Inbuilt Standard User", "user@ebenmonney.com", "+1 (123) 000-0001",
+				await CreateUserAsync("user", "tempP@ss123", "Built In Standard User", "user@test.com", "+1 (123) 000-0001",
 					new string[] {userRoleName});
 
-				_logger.LogInformation("User account generation completed");
+				_logger.LogInformation("Identity User account generation completed");
 			}
 
 			await _applicationContext.Database.MigrateAsync().ConfigureAwait(false);
@@ -77,6 +77,8 @@
 					}
 				}
 				_applicationContext.SaveChanges();
+
+				_logger.LogInformation("Application Error generation completed");
 			}
 
 

@@ -1,12 +1,4 @@
-﻿// ======================================
-// Author: Ebenezer Monney
-// Email:  info@ebenmonney.com
-// Copyright (c) 2017 www.ebenmonney.com
-// 
-// ==> Gun4Hire: contact@ebenmonney.com
-// ======================================
-
-import { Directive, Input, Output, EventEmitter } from '@angular/core';
+﻿import { Directive, Input, Output, EventEmitter } from '@angular/core';
 
 
 @Directive({
