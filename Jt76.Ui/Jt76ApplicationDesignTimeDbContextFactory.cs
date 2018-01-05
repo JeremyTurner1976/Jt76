@@ -21,7 +21,7 @@ namespace Jt76.Ui
 
 			var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
 
-			builder.UseSqlServer(configuration["ConnectionStrings:ApplicationConnection"], b => b.MigrationsAssembly("Jt76.Data"));
+			builder.UseSqlServer(configuration["ConnectionStrings:ApplicationConnection"], b => b.MigrationsAssembly("Jt76.Ui"));
 
 			return new ApplicationDbContext(builder.Options);
 		}

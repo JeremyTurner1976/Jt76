@@ -27,10 +27,17 @@ namespace Jt76.Data
 
 		public async Task SeedAsync()
 		{
+			await _applicationContext.Database.MigrateAsync().ConfigureAwait(false);
+
+			/*
+				Package Manager Console:
+				add-migration InitialIdentityMigration -Context IdentityDbContext
+				add-migration InitialApplicationMigration -Context ApplicationDbContext
+			 */
+
 			//Seems like this needs an update from Core
-			//this is a workaround as Migrate should create this
-			//await _applicationContext.Database.MigrateAsync().ConfigureAwait(false);
-			_applicationContext.Database.EnsureCreated();
+			//this is a workaround for fast standups as Migrate() should create this
+			//_applicationContext.Database.EnsureCreated();
 
 			if (!await _applicationContext.Errors.AnyAsync())
 			{

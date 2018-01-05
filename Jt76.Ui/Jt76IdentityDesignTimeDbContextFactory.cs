@@ -22,7 +22,7 @@
 
 			var builder = new DbContextOptionsBuilder<IdentityDbContext>();
 
-			builder.UseSqlServer(configuration["ConnectionStrings:IdentityConnection"], b => b.MigrationsAssembly("Jt76.Identity"));
+			builder.UseSqlServer(configuration["ConnectionStrings:IdentityConnection"], b => b.MigrationsAssembly("Jt76.Ui"));
 			builder.UseOpenIddict();
 
 			return new IdentityDbContext(builder.Options);

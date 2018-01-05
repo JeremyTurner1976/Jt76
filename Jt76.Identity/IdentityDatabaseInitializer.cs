@@ -29,10 +29,11 @@
 
 		public async Task SeedAsync()
 		{
+			await _identityContext.Database.MigrateAsync().ConfigureAwait(false);
+
 			//Seems like this needs an update from Core
-			//this is a workaround as Migrate should create this
-			//await _identityContext.Database.MigrateAsync().ConfigureAwait(false);
-			_identityContext.Database.EnsureCreated();
+			//this is a workaround for fast standups as Migrate() should create this
+			//_identityContext.Database.EnsureCreated();
 
 			if (!await _identityContext.Users.AnyAsync())
 			{

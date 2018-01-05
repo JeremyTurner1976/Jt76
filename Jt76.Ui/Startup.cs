@@ -42,12 +42,12 @@ namespace Jt76.Ui
 		{
 			services.AddDbContext<ApplicationDbContext>(options =>
 			{
-				options.UseSqlServer(Configuration["ConnectionStrings:ApplicationConnection"], b => b.MigrationsAssembly("Jt76.Data"));
+				options.UseSqlServer(Configuration["ConnectionStrings:ApplicationConnection"], b => b.MigrationsAssembly("Jt76.Ui"));
 			});
 
 			services.AddDbContext<IdentityDbContext>(options =>
 			{
-				options.UseSqlServer(Configuration["ConnectionStrings:IdentityConnection"], b => b.MigrationsAssembly("Jt76.Identity"));
+				options.UseSqlServer(Configuration["ConnectionStrings:IdentityConnection"], b => b.MigrationsAssembly("Jt76.Ui"));
 				options.UseOpenIddict();
 			});
 

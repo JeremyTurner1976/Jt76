@@ -26,10 +26,11 @@ namespace Jt76.Ui
 					var identityDatabaseInitializer = services.GetRequiredService<IdentityDatabaseInitializer>();
 					identityDatabaseInitializer.SeedAsync().Wait();
 				}
-				catch (Exception ex)
+				catch (Exception initializationException)
 				{
 					var logger = services.GetRequiredService<ILogger<Program>>();
-					logger.LogCritical(MessageConstants.Errors.DatabaseInitialization, ex);
+					logger.LogCritical("Error inititializing databases, during SeedAsync()", initializationException);
+					throw;
 				}
 			}
 
