@@ -1,7 +1,4 @@
-﻿// For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-
-
-namespace Jt76.Ui.Controllers
+﻿namespace Jt76.Ui.Controllers
 {
 	using System.Collections.Generic;
 	using System.Linq;
@@ -11,7 +8,7 @@ namespace Jt76.Ui.Controllers
 	using AspNet.Security.OpenIdConnect.Primitives;
 	using AspNet.Security.OpenIdConnect.Server;
 	using Common.Constants;
-	using Data.Models.IdentityDb;
+	using Identity.Models;
 	using Microsoft.AspNetCore.Authentication;
 	using Microsoft.AspNetCore.Identity;
 	using Microsoft.AspNetCore.Mvc;

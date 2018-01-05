@@ -1,18 +1,18 @@
 ﻿namespace Jt76.Data.Repositories
 {
-	using System;
 	using System.Collections.Generic;
 	using System.Linq;
+	using Common.CommonData;
 	using DbContexts;
 	using Interfaces;
 	using Models.ApplicationDb;
 
 	public class ErrorRepository : Repository<Error>, IErrorRepository
 	{
-        public ErrorRepository(Jt76ApplicationDbContext context) : base(context)
-        { }
+		public ErrorRepository(ApplicationDbContext context) : base(context)
+		{ }
 
-		private Jt76ApplicationDbContext appContext => (Jt76ApplicationDbContext)_context;
+		private ApplicationDbContext appContext => (ApplicationDbContext)_context;
 
 		public IEnumerable<Error> GetTopErrors(int count)
 		{

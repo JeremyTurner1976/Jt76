@@ -4,14 +4,16 @@ namespace Jt76.Ui
 	using AspNet.Security.OAuth.Validation;
 	using AspNet.Security.OpenIdConnect.Primitives;
 	using AutoMapper;
+	using Common.CommonData.Interfaces;
 	using Common.Constants;
 	using Data;
-	using Data.ComplexModels.IdentityCore;
-	using Data.ComplexModels.IdentityCore.Policies;
-	using Data.ComplexModels.IdentityCore.ViewModels;
 	using Data.DbContexts;
-	using Data.Interfaces;
-	using Data.Models.IdentityDb;
+	using Identity;
+	using Identity.DbContexts;
+	using Identity.Interfaces;
+	using Identity.Models;
+	using Identity.Models.MappedModels;
+	using Identity.Policies;
 	using Microsoft.AspNetCore.Authorization;
 	using Microsoft.AspNetCore.Builder;
 	using Microsoft.AspNetCore.Diagnostics;
@@ -41,21 +43,21 @@ namespace Jt76.Ui
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddDbContext<Jt76IdentityDbContext>(options =>
+			services.AddDbContext<ApplicationDbContext>(options =>
 			{
-				options.UseSqlServer(Configuration["ConnectionStrings:IdentityConnection"], b => b.MigrationsAssembly("Jt76.Ui"));
+				options.UseSqlServer(Configuration["ConnectionStrings:ApplicationConnection"], b => b.MigrationsAssembly("Jt76.Data"));
+			});
+
+			services.AddDbContext<IdentityDbContext>(options =>
+			{
+				options.UseSqlServer(Configuration["ConnectionStrings:IdentityConnection"], b => b.MigrationsAssembly("Jt76.Identity"));
 				options.UseOpenIddict();
 			});
 
 			// add identity
 			services.AddIdentity<ApplicationUser, ApplicationRole>()
-				.AddEntityFrameworkStores<Jt76IdentityDbContext>()
+				.AddEntityFrameworkStores<IdentityDbContext>()
 				.AddDefaultTokenProviders();
-
-			services.AddDbContext<Jt76ApplicationDbContext>(options =>
-			{
-				options.UseSqlServer(Configuration["ConnectionStrings:ApplicationConnection"], b => b.MigrationsAssembly("Jt76.Ui"));
-			});
 
 			// Configure Identity options and password complexity here
 			services.Configure<IdentityOptions>(options =>
@@ -84,7 +86,7 @@ namespace Jt76.Ui
 			// Register the OpenIddict services.
 			services.AddOpenIddict(options =>
 			{
-				options.AddEntityFrameworkCoreStores<Jt76IdentityDbContext>();
+				options.AddEntityFrameworkCoreStores<IdentityDbContext>();
 				options.AddMvcBinders();
 				options.EnableTokenEndpoint("/connect/token");
 				options.AllowPasswordFlow();
@@ -169,7 +171,8 @@ namespace Jt76.Ui
 			services.AddSingleton<IAuthorizationHandler, AssignRolesHandler>();
 
 			// DB Creation and Seeding
-			services.AddTransient<IDatabaseInitializer, DatabaseInitializer>();
+			services.AddTransient<DatabaseInitializer, DatabaseInitializer>();
+			services.AddTransient<IdentityDatabaseInitializer, IdentityDatabaseInitializer>();
 		}
 
 

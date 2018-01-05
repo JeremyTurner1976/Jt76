@@ -4,8 +4,8 @@
 namespace Jt76.Data.Models.ApplicationDb
 {
 	using System;
-	using Abstract;
-	using Interfaces;
+	using Common.CommonData.Abstract;
+	using Common.CommonData.Interfaces;
 
 	public class Error : ModelBase, IAuditableEntity
 	{

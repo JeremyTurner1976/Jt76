@@ -7,9 +7,9 @@ namespace Jt76.Ui
 	using Microsoft.EntityFrameworkCore.Design;
 	using Microsoft.Extensions.Configuration;
 
-	public class Jt76ApplicationDesignTimeDbContextFactory : IDesignTimeDbContextFactory<Jt76ApplicationDbContext>
+	public class Jt76ApplicationDesignTimeDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
 	{
-		public Jt76ApplicationDbContext CreateDbContext(string[] args)
+		public ApplicationDbContext CreateDbContext(string[] args)
 		{
 			Mapper.Reset();
 
@@ -19,11 +19,11 @@ namespace Jt76.Ui
 				.AddJsonFile("appsettings.Development.json", optional: true)
 				.Build();
 
-			var builder = new DbContextOptionsBuilder<Jt76ApplicationDbContext>();
+			var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
 
-			builder.UseSqlServer(configuration["ConnectionStrings:ApplicationConnection"], b => b.MigrationsAssembly("Jt76.Ui"));
+			builder.UseSqlServer(configuration["ConnectionStrings:ApplicationConnection"], b => b.MigrationsAssembly("Jt76.Data"));
 
-			return new Jt76ApplicationDbContext(builder.Options);
+			return new ApplicationDbContext(builder.Options);
 		}
 	}
 }

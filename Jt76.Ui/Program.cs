@@ -2,7 +2,8 @@ namespace Jt76.Ui
 {
 	using System;
 	using Common.Constants;
-	using Data.Interfaces;
+	using Data;
+	using Identity;
 	using Microsoft.AspNetCore;
 	using Microsoft.AspNetCore.Hosting;
 	using Microsoft.Extensions.DependencyInjection;
@@ -19,8 +20,11 @@ namespace Jt76.Ui
 				var services = scope.ServiceProvider;
 				try
 				{
-					var databaseInitializer = services.GetRequiredService<IDatabaseInitializer>();
+					var databaseInitializer = services.GetRequiredService<DatabaseInitializer>();
 					databaseInitializer.SeedAsync().Wait();
+
+					var identityDatabaseInitializer = services.GetRequiredService<IdentityDatabaseInitializer>();
+					identityDatabaseInitializer.SeedAsync().Wait();
 				}
 				catch (Exception ex)
 				{

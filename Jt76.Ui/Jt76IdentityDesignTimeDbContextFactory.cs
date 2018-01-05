@@ -2,15 +2,15 @@
 {
 	using System.IO;
 	using AutoMapper;
-	using Data.DbContexts;
+	using Identity.DbContexts;
 	using Microsoft.EntityFrameworkCore;
 	using Microsoft.EntityFrameworkCore.Design;
 	using Microsoft.Extensions.Configuration;
 	using Microsoft.Extensions.DependencyInjection;
 
-	public class Jt76IdentityDesignTimeDbContextFactory : IDesignTimeDbContextFactory<Jt76IdentityDbContext>
+	public class Jt76IdentityDesignTimeDbContextFactory : IDesignTimeDbContextFactory<IdentityDbContext>
 	{
-		public Jt76IdentityDbContext CreateDbContext(string[] args)
+		public IdentityDbContext CreateDbContext(string[] args)
 		{
 			Mapper.Reset();
 
@@ -20,12 +20,12 @@
 				.AddJsonFile("appsettings.Development.json", optional: true)
 				.Build();
 
-			var builder = new DbContextOptionsBuilder<Jt76IdentityDbContext>();
+			var builder = new DbContextOptionsBuilder<IdentityDbContext>();
 
-			builder.UseSqlServer(configuration["ConnectionStrings:IdentityConnection"], b => b.MigrationsAssembly("Jt76.Ui"));
+			builder.UseSqlServer(configuration["ConnectionStrings:IdentityConnection"], b => b.MigrationsAssembly("Jt76.Identity"));
 			builder.UseOpenIddict();
 
-			return new Jt76IdentityDbContext(builder.Options);
+			return new IdentityDbContext(builder.Options);
 		}
 	}
 }

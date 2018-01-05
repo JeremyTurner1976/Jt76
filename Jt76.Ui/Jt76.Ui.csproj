@@ -79,9 +79,11 @@
     <ProjectReference Include="..\Jt76.Common\Jt76.Common.csproj" />
     <ProjectReference Include="..\Jt76.Data\Jt76.Data.csproj" />
     <ProjectReference Include="..\Jt76.ExternalServices\Jt76.ExternalServices.csproj" />
+    <ProjectReference Include="..\Jt76.Identity\Jt76.Identity.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Logs\" />
+    <Folder Include="Migrations\" />
   </ItemGroup>
 </Project>
