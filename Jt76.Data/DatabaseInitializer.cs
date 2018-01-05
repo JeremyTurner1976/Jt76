@@ -27,7 +27,10 @@ namespace Jt76.Data
 
 		public async Task SeedAsync()
 		{
-			await _applicationContext.Database.MigrateAsync();
+			//Seems like this needs an update from Core
+			//this is a workaround as Migrate should create this
+			//await _applicationContext.Database.MigrateAsync().ConfigureAwait(false);
+			_applicationContext.Database.EnsureCreated();
 
 			if (!await _applicationContext.Errors.AnyAsync())
 			{

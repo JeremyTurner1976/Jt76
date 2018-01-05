@@ -13,7 +13,7 @@
 
 	public class IdentityDatabaseInitializer : IDatabaseInitializer
 	{
-		private readonly IdentityDbContext _IdentityContext;
+		private readonly IdentityDbContext _identityContext;
 		private readonly IAccountManager _accountManager;
 		private readonly ILogger _logger;
 
@@ -23,15 +23,18 @@
 			ILogger<IdentityDatabaseInitializer> logger)
 		{
 			_accountManager = accountManager;
-			_IdentityContext = IdentityContext;
+			_identityContext = IdentityContext;
 			_logger = logger;
 		}
 
 		public async Task SeedAsync()
 		{
-			await _IdentityContext.Database.MigrateAsync();
+			//Seems like this needs an update from Core
+			//this is a workaround as Migrate should create this
+			//await _identityContext.Database.MigrateAsync().ConfigureAwait(false);
+			_identityContext.Database.EnsureCreated();
 
-			if (!await _IdentityContext.Users.AnyAsync())
+			if (!await _identityContext.Users.AnyAsync())
 			{
 				_logger.LogInformation("Generating built in accounts");
 
