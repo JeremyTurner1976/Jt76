@@ -2,7 +2,7 @@
 {
 	using System.Collections.Generic;
 	using Common.CommonData.Interfaces;
-	using Models.ApplicationDb;
+	using Models;
 
 	public interface IErrorRepository : IRepository<Error>
 	{

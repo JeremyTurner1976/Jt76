@@ -32,12 +32,12 @@
                 return !_required;
 
 
-            var stringList = value as ICollection<string>;
+            ICollection<string> stringList = value as ICollection<string>;
             if (!_allowEmptyStringValues && stringList != null)
                 return stringList.Count(s => !string.IsNullOrWhiteSpace(s)) >= _minCount;
 
 
-            var list = value as ICollection;
+            ICollection list = value as ICollection;
 	        return list?.Count >= _minCount;
         }
 

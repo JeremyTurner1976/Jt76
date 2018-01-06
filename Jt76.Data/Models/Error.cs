@@ -1,7 +1,7 @@
 ﻿// NOTE: This error model is in 2 places, 
 // please duplicate in Common/CommonModels as the DB entities are created from that location
 
-namespace Jt76.Data.Models.ApplicationDb
+namespace Jt76.Data.Models
 {
 	using System;
 	using Common.CommonData.Abstract;

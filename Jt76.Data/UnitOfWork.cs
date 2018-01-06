@@ -18,16 +18,8 @@
 
 		}
 
-		public IErrorRepository Errors
-		{
-			get
-			{
-				if (_errors == null)
-					_errors = new ErrorRepository(_applicationDbContext);
-
-				return _errors;
-			}
-		}
+		public IErrorRepository Errors => 
+			_errors ?? (_errors = new ErrorRepository(_applicationDbContext));
 
 		public int SaveChanges()
 		{

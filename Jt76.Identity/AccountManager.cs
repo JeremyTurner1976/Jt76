@@ -49,7 +49,7 @@
 
 		public async Task<Tuple<ApplicationUser, string[]>> GetUserAndRolesAsync(string userId)
 		{
-			var user = await _context.Users
+			ApplicationUser user = await _context.Users
 				.Include(u => u.Roles)
 				.Where(u => u.Id == userId)
 				.FirstOrDefaultAsync();
@@ -57,9 +57,9 @@
 			if (user == null)
 				return null;
 
-			var userRoleIds = user.Roles.Select(r => r.RoleId).ToList();
+			List<string> userRoleIds = user.Roles.Select(r => r.RoleId).ToList();
 
-			var roles = await _context.Roles
+			string[] roles = await _context.Roles
 				.Where(r => userRoleIds.Contains(r.Id))
 				.Select(r => r.Name)
 				.ToArrayAsync();
@@ -80,11 +80,11 @@
 			if (pageSize != -1)
 				usersQuery = usersQuery.Take(pageSize);
 
-			var users = await usersQuery.ToListAsync();
+			List<ApplicationUser> users = await usersQuery.ToListAsync();
 
-			var userRoleIds = users.SelectMany(u => u.Roles.Select(r => r.RoleId)).ToList();
+			List<string> userRoleIds = users.SelectMany(u => u.Roles.Select(r => r.RoleId)).ToList();
 
-			var roles = await _context.Roles
+			ApplicationRole[] roles = await _context.Roles
 				.Where(r => userRoleIds.Contains(r.Id))
 				.ToArrayAsync();
 
@@ -96,7 +96,7 @@
 
 		public async Task<Tuple<bool, string[]>> CreateUserAsync(ApplicationUser user, IEnumerable<string> roles, string password)
 		{
-			var result = await _userManager.CreateAsync(user, password);
+			IdentityResult result = await _userManager.CreateAsync(user, password);
 			if (!result.Succeeded)
 				return Tuple.Create(false, result.Errors.Select(e => e.Description).ToArray());
 
@@ -131,17 +131,17 @@
 
 		public async Task<Tuple<bool, string[]>> UpdateUserAsync(ApplicationUser user, IEnumerable<string> roles)
 		{
-			var result = await _userManager.UpdateAsync(user);
+			IdentityResult result = await _userManager.UpdateAsync(user);
 			if (!result.Succeeded)
 				return Tuple.Create(false, result.Errors.Select(e => e.Description).ToArray());
 
 
 			if (roles != null)
 			{
-				var userRoles = await _userManager.GetRolesAsync(user);
+				IList<string> userRoles = await _userManager.GetRolesAsync(user);
 
-				var rolesToRemove = userRoles.Except(roles).ToArray();
-				var rolesToAdd = roles.Except(userRoles).Distinct().ToArray();
+				string[] rolesToRemove = userRoles.Except(roles).ToArray();
+				string[] rolesToAdd = roles.Except(userRoles).Distinct().ToArray();
 
 				if (rolesToRemove.Any())
 				{
@@ -166,7 +166,7 @@
 		{
 			string resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
 
-			var result = await _userManager.ResetPasswordAsync(user, resetToken, newPassword);
+			IdentityResult result = await _userManager.ResetPasswordAsync(user, resetToken, newPassword);
 			if (!result.Succeeded)
 				return Tuple.Create(false, result.Errors.Select(e => e.Description).ToArray());
 
@@ -175,7 +175,7 @@
 
 		public async Task<Tuple<bool, string[]>> UpdatePasswordAsync(ApplicationUser user, string currentPassword, string newPassword)
 		{
-			var result = await _userManager.ChangePasswordAsync(user, currentPassword, newPassword);
+			IdentityResult result = await _userManager.ChangePasswordAsync(user, currentPassword, newPassword);
 			if (!result.Succeeded)
 				return Tuple.Create(false, result.Errors.Select(e => e.Description).ToArray());
 
@@ -207,7 +207,7 @@
 
 		public async Task<Tuple<bool, string[]>> DeleteUserAsync(string userId)
 		{
-			var user = await _userManager.FindByIdAsync(userId);
+			ApplicationUser user = await _userManager.FindByIdAsync(userId);
 
 			if (user != null)
 				return await DeleteUserAsync(user);
@@ -218,7 +218,7 @@
 
 		public async Task<Tuple<bool, string[]>> DeleteUserAsync(ApplicationUser user)
 		{
-			var result = await _userManager.DeleteAsync(user);
+			IdentityResult result = await _userManager.DeleteAsync(user);
 			return Tuple.Create(result.Succeeded, result.Errors.Select(e => e.Description).ToArray());
 		}
 
@@ -241,7 +241,7 @@
 
 		public async Task<ApplicationRole> GetRoleLoadRelatedAsync(string roleName)
 		{
-			var role = await _context.Roles
+			ApplicationRole role = await _context.Roles
 				.Include(r => r.Claims)
 				.Include(r => r.Users)
 				.Where(r => r.Name == roleName)
@@ -264,7 +264,7 @@
 			if (pageSize != -1)
 				rolesQuery = rolesQuery.Take(pageSize);
 
-			var roles = await rolesQuery.ToListAsync();
+			List<ApplicationRole> roles = await rolesQuery.ToListAsync();
 
 			return roles;
 		}
@@ -280,7 +280,7 @@
 				return Tuple.Create(false, new string[] { "The following claim types are invalid: " + string.Join(", ", invalidClaims) });
 
 
-			var result = await _roleManager.CreateAsync(role);
+			IdentityResult result = await _roleManager.CreateAsync(role);
 			if (!result.Succeeded)
 				return Tuple.Create(false, result.Errors.Select(e => e.Description).ToArray());
 
@@ -311,18 +311,18 @@
 			}
 
 
-			var result = await _roleManager.UpdateAsync(role);
+			IdentityResult result = await _roleManager.UpdateAsync(role);
 			if (!result.Succeeded)
 				return Tuple.Create(false, result.Errors.Select(e => e.Description).ToArray());
 
 
 			if (claims != null)
 			{
-				var roleClaims = (await _roleManager.GetClaimsAsync(role)).Where(c => c.Type == CustomClaimTypes.Permission);
-				var roleClaimValues = roleClaims.Select(c => c.Value).ToArray();
+				IEnumerable<Claim> roleClaims = (await _roleManager.GetClaimsAsync(role)).Where(c => c.Type == CustomClaimTypes.Permission);
+				string[] roleClaimValues = roleClaims.Select(c => c.Value).ToArray();
 
-				var claimsToRemove = roleClaimValues.Except(claims).ToArray();
-				var claimsToAdd = claims.Except(roleClaimValues).Distinct().ToArray();
+				string[] claimsToRemove = roleClaimValues.Except(claims).ToArray();
+				string[] claimsToAdd = claims.Except(roleClaimValues).Distinct().ToArray();
 
 				if (claimsToRemove.Any())
 				{
@@ -357,7 +357,7 @@
 
 		public async Task<Tuple<bool, string[]>> DeleteRoleAsync(string roleName)
 		{
-			var role = await _roleManager.FindByNameAsync(roleName);
+			ApplicationRole role = await _roleManager.FindByNameAsync(roleName);
 
 			if (role != null)
 				return await DeleteRoleAsync(role);
@@ -368,7 +368,7 @@
 
 		public async Task<Tuple<bool, string[]>> DeleteRoleAsync(ApplicationRole role)
 		{
-			var result = await _roleManager.DeleteAsync(role);
+			IdentityResult result = await _roleManager.DeleteAsync(role);
 			return Tuple.Create(result.Succeeded, result.Errors.Select(e => e.Description).ToArray());
 		}
 	}

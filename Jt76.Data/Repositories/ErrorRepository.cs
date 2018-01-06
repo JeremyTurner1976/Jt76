@@ -5,7 +5,7 @@
 	using Common.CommonData;
 	using DbContexts;
 	using Interfaces;
-	using Models.ApplicationDb;
+	using Models;
 
 	public class ErrorRepository : Repository<Error>, IErrorRepository
 	{

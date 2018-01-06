@@ -6,7 +6,7 @@
 	using System.Threading.Tasks;
 	using Common.Extensions;
 	using Microsoft.Extensions.Logging;
-	using Models.ApplicationDb;
+	using Models;
 
 	public static class ErrorFactory
 	{
@@ -30,11 +30,11 @@
 		public static void ThrowException()
 		{
 			int n = 0;
-			int divideByZero = 1/n;
+			int divideByZero = 1 / n;
 		}
 
 		/// <summary>
-		///     Throws an aggregate exception.
+		/// Throws an aggregate exception.
 		/// </summary>
 		/// <returns>An awaitable method that will cause an aggregate exception</returns>
 		public static Task<string[][]> ThrowAggregateException()

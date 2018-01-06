@@ -1,7 +1,6 @@
 ﻿namespace Jt76.Identity
 {
 	using System;
-	using System.Threading;
 	using System.Threading.Tasks;
 	using Common.CommonData.Interfaces;
 	using Common.Constants;
@@ -30,6 +29,12 @@
 		public async Task SeedAsync()
 		{
 			await _identityContext.Database.MigrateAsync().ConfigureAwait(false);
+
+			/*
+				Package Manager Console:
+				add-migration InitialIdentityMigration -Context IdentityDbContext
+				add-migration InitialApplicationMigration -Context ApplicationDbContext
+			*/
 
 			//Seems like this needs an update from Core
 			//this is a workaround for fast standups as Migrate() should create this
@@ -62,7 +67,7 @@
 			{
 				ApplicationRole applicationRole = new ApplicationRole(roleName, description);
 
-				var result = await _accountManager.CreateRoleAsync(applicationRole, claims);
+				Tuple<bool, string[]> result = await _accountManager.CreateRoleAsync(applicationRole, claims);
 
 				if (!result.Item1)
 					throw new Exception($"Seeding \"{description}\" role failed. Errors: {string.Join(Environment.NewLine, result.Item2)}");
@@ -81,7 +86,7 @@
 				IsEnabled = true
 			};
 
-			var result = await _accountManager.CreateUserAsync(applicationUser, roles, password);
+			Tuple<bool, string[]> result = await _accountManager.CreateUserAsync(applicationUser, roles, password);
 
 			if (!result.Item1)
 				throw new Exception($"Seeding \"{userName}\" user failed. Errors: {string.Join(Environment.NewLine, result.Item2)}");

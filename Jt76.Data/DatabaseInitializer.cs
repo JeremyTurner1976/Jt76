@@ -1,6 +1,5 @@
 ﻿using Jt76.Data.DbContexts;
 using Jt76.Data.Factories;
-using Jt76.Data.Models.ApplicationDb;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -8,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Jt76.Data
 {
-	using System.Threading;
 	using Common.CommonData.Interfaces;
+	using Models;
 
 	public class DatabaseInitializer : IDatabaseInitializer
 	{
@@ -33,7 +32,7 @@ namespace Jt76.Data
 				Package Manager Console:
 				add-migration InitialIdentityMigration -Context IdentityDbContext
 				add-migration InitialApplicationMigration -Context ApplicationDbContext
-			 */
+			*/
 
 			//Seems like this needs an update from Core
 			//this is a workaround for fast standups as Migrate() should create this

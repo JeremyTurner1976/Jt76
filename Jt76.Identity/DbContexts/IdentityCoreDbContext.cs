@@ -1,12 +1,14 @@
 ﻿namespace Jt76.Identity.DbContexts
 {
 	using System;
+	using System.Collections.Generic;
 	using System.Linq;
 	using System.Threading;
 	using System.Threading.Tasks;
 	using Common.CommonData.Interfaces;
 	using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 	using Microsoft.EntityFrameworkCore;
+	using Microsoft.EntityFrameworkCore.ChangeTracking;
 	using Models;
 
 	public class IdentityDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
@@ -67,13 +69,13 @@
 
 		private void UpdateAuditEntities()
 		{
-			var modifiedEntries = ChangeTracker.Entries()
+			IEnumerable<EntityEntry> modifiedEntries = ChangeTracker.Entries()
 				.Where(x => x.Entity is IAuditableEntity && (x.State == EntityState.Added || x.State == EntityState.Modified));
 
 
-			foreach (var entry in modifiedEntries)
+			foreach (EntityEntry entry in modifiedEntries)
 			{
-				var entity = (IAuditableEntity)entry.Entity;
+				IAuditableEntity entity = (IAuditableEntity)entry.Entity;
 				DateTime now = DateTime.UtcNow;
 
 				if (entry.State == EntityState.Added)

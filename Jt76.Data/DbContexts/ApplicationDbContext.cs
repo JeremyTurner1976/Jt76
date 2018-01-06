@@ -1,7 +1,7 @@
 ﻿namespace Jt76.Data.DbContexts
 {
 	using Microsoft.EntityFrameworkCore;
-	using Models.ApplicationDb;
+	using Models;
 
 	public class ApplicationDbContext : DbContext
 	{
