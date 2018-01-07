@@ -32,8 +32,9 @@
 				if (entity == null)
 					return;
 
-				IEnumerable<PropertyInfo> properties = entity.GetType().GetProperties()
-					.Where(x => x.PropertyType == typeof (DateTime) || x.PropertyType == typeof (DateTime?));
+				IEnumerable<PropertyInfo> properties = entity.GetType()
+					.GetProperties()
+					.Where(x => x.PropertyType == typeof(DateTime) || x.PropertyType == typeof(DateTime?));
 
 				foreach (PropertyInfo property in properties)
 				{
@@ -41,7 +42,7 @@
 					if (attr == null)
 						continue;
 
-					DateTime? dt = property.PropertyType == typeof (DateTime?)
+					DateTime? dt = property.PropertyType == typeof(DateTime?)
 						? (DateTime?) property.GetValue(entity)
 						: (DateTime) property.GetValue(entity);
 
@@ -60,16 +61,18 @@
 				if (entity == null)
 					return;
 
-				IEnumerable<PropertyInfo> properties = entity.GetType().GetProperties()
-					.Where(x => x.PropertyType == typeof (string));
+				IEnumerable<PropertyInfo> properties = entity.GetType()
+					.GetProperties()
+					.Where(x => x.PropertyType == typeof(string));
 
 				foreach (PropertyInfo property in properties)
 				{
 					string strItem = (string) property.GetValue(entity);
 
 					string[] lines = strItem.Split(
-						new[] {Environment.NewLine},
-						StringSplitOptions.None).ToArray();
+							new[] {Environment.NewLine},
+							StringSplitOptions.None)
+						.ToArray();
 
 					string cleanedHtmlString = string.Join("<br/>", lines);
 

@@ -7,7 +7,7 @@
 
 	public class UnitOfWork : IUnitOfWork
 	{
-		readonly ApplicationDbContext _applicationDbContext;
+		private readonly ApplicationDbContext _applicationDbContext;
 
 		private IErrorRepository _errors;
 
@@ -15,10 +15,9 @@
 			ApplicationDbContext applicationDbContext)
 		{
 			_applicationDbContext = applicationDbContext;
-
 		}
 
-		public IErrorRepository Errors => 
+		public IErrorRepository Errors =>
 			_errors ?? (_errors = new ErrorRepository(_applicationDbContext));
 
 		public int SaveChanges()

@@ -21,14 +21,12 @@
 
 			if (memInfo != null && memInfo.Length > 0)
 			{
-				IEnumerable<Attribute> attrs = (IEnumerable < Attribute >)
-					memInfo[0].GetCustomAttributes(typeof (T), false);
+				IEnumerable<Attribute> attrs = (IEnumerable<Attribute>)
+					memInfo[0].GetCustomAttributes(typeof(T), false);
 
 				Attribute[] attributes = attrs as Attribute[] ?? attrs.ToArray();
 				if (attrs != null && attributes.Any())
-				{
 					return ((T) attributes[0]).Identifier;
-				}
 			}
 
 			return enumSource.ToNameString();

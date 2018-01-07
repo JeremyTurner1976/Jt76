@@ -139,7 +139,7 @@
 
 				//handle data for three hour chunks
 
-				if (count%groupSize == 0) //first item handles all resets
+				if (count % groupSize == 0) //first item handles all resets
 				{
 					groupCount = 0;
 
@@ -167,13 +167,13 @@
 				else
 				{
 					//third item, attaches averages and inserts the item
-					forecast.Temperature = (temperatureTotal/groupSize).ToPrecisionValue(precisionValue);
-					forecast.Humidity = (humidityTotal/groupSize).ToPrecisionValue(precisionValue);
-					forecast.AtmosphericPressure = (atmosphericPressureTotal/groupSize).ToPrecisionValue(precisionValue);
-					forecast.Windspeed = (windspeedTotal/groupSize).ToPrecisionValue(precisionValue);
-					forecast.WindDirection = (int) (windDirectionTotal/groupSize).ToPrecisionValue(precisionValue);
-					forecast.CloudCover = (cloudCoverTotal/groupSize).ToPrecisionValue(precisionValue);
-					forecast.PrecipitationVolume = (precipitationVolumeTotal/groupSize).ToPrecisionValue(precisionValue);
+					forecast.Temperature = (temperatureTotal / groupSize).ToPrecisionValue(precisionValue);
+					forecast.Humidity = (humidityTotal / groupSize).ToPrecisionValue(precisionValue);
+					forecast.AtmosphericPressure = (atmosphericPressureTotal / groupSize).ToPrecisionValue(precisionValue);
+					forecast.Windspeed = (windspeedTotal / groupSize).ToPrecisionValue(precisionValue);
+					forecast.WindDirection = (int) (windDirectionTotal / groupSize).ToPrecisionValue(precisionValue);
+					forecast.CloudCover = (cloudCoverTotal / groupSize).ToPrecisionValue(precisionValue);
+					forecast.PrecipitationVolume = (precipitationVolumeTotal / groupSize).ToPrecisionValue(precisionValue);
 
 					forecast.MinimumTemperature = minimumTemperature;
 					forecast.MinimumTemperature = maximumTemperature;
@@ -204,17 +204,13 @@
 
 				case SkyConClientSideStrings.Cloudy:
 					if (cloudCover <= 50)
-					{
 						return IsDayTime(hourOfDay)
 							? IconFileNames.PartlyCloudyDay
 							: IconFileNames.PartlyCloudyNight;
-					}
 					if (cloudCover > 50 && cloudCover < 75)
-					{
 						return IsDayTime(hourOfDay)
 							? IconFileNames.ScatteredCloudsDay
 							: IconFileNames.ScatteredCloudsNight;
-					}
 					return IsDayTime(hourOfDay)
 						? IconFileNames.BrokenCloudsDay
 						: IconFileNames.BrokenCloudsNight;

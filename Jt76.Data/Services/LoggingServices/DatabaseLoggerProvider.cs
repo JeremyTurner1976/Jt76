@@ -5,8 +5,8 @@
 
 	public class DatabaseLoggerProvider : ILoggerProvider
 	{
-		private readonly IServiceProvider _serviceProvider;
 		private readonly Func<string, LogLevel, bool> _filter;
+		private readonly IServiceProvider _serviceProvider;
 
 		public DatabaseLoggerProvider(Func<string, LogLevel, bool> filter, IServiceProvider serviceProvider)
 		{

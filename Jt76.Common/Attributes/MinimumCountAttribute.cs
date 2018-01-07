@@ -7,44 +7,44 @@
 	using System.Linq;
 
 	[AttributeUsage(AttributeTargets.Property)]
-    public sealed class MinimumCountAttribute : ValidationAttribute
-    {
-        private readonly int _minCount;
-        private readonly bool _allowEmptyStringValues;
-        private readonly bool _required;
-        private const string _defaultError = "'{0}' must have at least {1} item.";
+	public sealed class MinimumCountAttribute : ValidationAttribute
+	{
+		private const string _defaultError = "'{0}' must have at least {1} item.";
+		private readonly bool _allowEmptyStringValues;
+		private readonly int _minCount;
+		private readonly bool _required;
 
-        public MinimumCountAttribute() : this(1)
-        {
+		public MinimumCountAttribute() : this(1)
+		{
+		}
 
-        }
+		public MinimumCountAttribute(int minCount, bool required = true,
+			bool allowEmptyStringValues = false) : base(_defaultError)
+		{
+			_minCount = minCount;
+			_required = required;
+			_allowEmptyStringValues = allowEmptyStringValues;
+		}
 
-        public MinimumCountAttribute(int minCount, bool required = true, bool allowEmptyStringValues = false) : base(_defaultError)
-        {
-            _minCount = minCount;
-            _required = required;
-            _allowEmptyStringValues = allowEmptyStringValues;
-        }
-
-        public override bool IsValid(object value)
-        {
-            if (value == null)
-                return !_required;
-
-
-            ICollection<string> stringList = value as ICollection<string>;
-            if (!_allowEmptyStringValues && stringList != null)
-                return stringList.Count(s => !string.IsNullOrWhiteSpace(s)) >= _minCount;
+		public override bool IsValid(object value)
+		{
+			if (value == null)
+				return !_required;
 
 
-            ICollection list = value as ICollection;
-	        return list?.Count >= _minCount;
-        }
+			ICollection<string> stringList = value as ICollection<string>;
+			if (!_allowEmptyStringValues && stringList != null)
+				return stringList.Count(s => !string.IsNullOrWhiteSpace(s)) >= _minCount;
 
 
-        public override string FormatErrorMessage(string name)
-        {
-            return String.Format(this.ErrorMessageString, name, _minCount);
-        }
-    }
+			ICollection list = value as ICollection;
+			return list?.Count >= _minCount;
+		}
+
+
+		public override string FormatErrorMessage(string name)
+		{
+			return string.Format(ErrorMessageString, name, _minCount);
+		}
+	}
 }

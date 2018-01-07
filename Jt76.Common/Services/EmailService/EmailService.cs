@@ -20,7 +20,7 @@
 
 
 		/// <summary>
-		/// This is a config based email service
+		///     This is a config based email service
 		/// </summary>
 		/// <param name="applicationSettings">Used for application mailing values</param>
 		/// <param name="emailSettings">Settings for smtp or pickup directory</param>
@@ -36,9 +36,9 @@
 		}
 
 		/// <summary>
-		/// A simple email service, for non multiple address sets.
-		/// Note: Please see the <see cref="Email"/> object 
-		/// overload for multiple address sets
+		///     A simple email service, for non multiple address sets.
+		///     Note: Please see the <see cref="Email" /> object
+		///     overload for multiple address sets
 		/// </summary>
 		/// <param name="to">The primary to email address</param>
 		/// <param name="carbonCopy">Carbon copy address</param>
@@ -75,7 +75,6 @@
 			*/
 
 			if (_emailSettings.UsePickupDirectory)
-			{
 				using (StreamWriter data =
 					File.CreateText(
 						Path.Combine(
@@ -84,9 +83,7 @@
 				{
 					mimeMessage.WriteTo(data.BaseStream);
 				}
-			}
 			else
-			{
 				using (SmtpClient client = new SmtpClient())
 				{
 					await client.ConnectAsync(_emailSettings.Smtp, _emailSettings.Port);
@@ -99,17 +96,16 @@
 					await client.SendAsync(mimeMessage);
 					await client.DisconnectAsync(true);
 				}
-			}
 		}
 
 
 		/// <summary>
-		/// Sends an email using an email class allowing for list entries 
-		/// Note: For email address collections this is an intelligent MimeMessage. 
-		/// If a BCC address is a To Address it will not be added as a BCC and 
-		/// if there are duplicates at any level, they will not be added.
+		///     Sends an email using an email class allowing for list entries
+		///     Note: For email address collections this is an intelligent MimeMessage.
+		///     If a BCC address is a To Address it will not be added as a BCC and
+		///     if there are duplicates at any level, they will not be added.
 		/// </summary>
-		/// <param name="email">An <see cref="Email"/> object</param>
+		/// <param name="email">An <see cref="Email" /> object</param>
 		public async void SendMail(Email email)
 		{
 			MimeMessage mimeMessage = new MimeMessage();
@@ -135,7 +131,6 @@
 			*/
 
 			if (_emailSettings.UsePickupDirectory)
-			{
 				using (StreamWriter data =
 					File.CreateText(
 						Path.Combine(
@@ -144,9 +139,7 @@
 				{
 					mimeMessage.WriteTo(data.BaseStream);
 				}
-			}
 			else
-			{
 				using (SmtpClient client = new SmtpClient())
 				{
 					await client.ConnectAsync(_emailSettings.Smtp, _emailSettings.Port);
@@ -159,7 +152,6 @@
 					await client.SendAsync(mimeMessage);
 					await client.DisconnectAsync(true);
 				}
-			}
 		}
 	}
 }

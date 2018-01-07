@@ -8,16 +8,16 @@
 	[Route("api/v1/[controller]")]
 	public class WeatherDataController : Controller
 	{
-		public DarkSkyWeatherService DarkSkyWeatherService { get; set;  }
-		public OpenWeatherService OpenWeatherService { get; set;  }
-
 		public WeatherDataController(
-			DarkSkyWeatherService darkSkyWeatherService, 
+			DarkSkyWeatherService darkSkyWeatherService,
 			OpenWeatherService openWeatherService)
 		{
 			DarkSkyWeatherService = darkSkyWeatherService;
 			OpenWeatherService = openWeatherService;
 		}
+
+		public DarkSkyWeatherService DarkSkyWeatherService { get; set; }
+		public OpenWeatherService OpenWeatherService { get; set; }
 
 		/*
 			//For testing database is working
@@ -39,7 +39,7 @@
 		 */
 
 		[HttpGet("DarkSkyWeatherForecasts")]
-		[ProducesResponseType(typeof (WeatherData), 200)]
+		[ProducesResponseType(typeof(WeatherData), 200)]
 		public async Task<IActionResult> DarkSkyWeatherForecasts()
 		{
 			WeatherData weatherForecast = await DarkSkyWeatherService.GetWeatherData(1, 2);
@@ -55,4 +55,3 @@
 		}
 	}
 }
- 

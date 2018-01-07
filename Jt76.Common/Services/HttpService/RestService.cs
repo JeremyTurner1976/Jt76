@@ -153,31 +153,23 @@
 		private void AddDefaultHeaders(IDictionary<string, string> headers)
 		{
 			if (headers == null)
-			{
 				return;
-			}
 
 			foreach (KeyValuePair<string, string> item in headers)
-			{
 				_client.DefaultRequestHeaders.Add(item.Key, item.Value);
-			}
 		}
 
 		private void AddRequestTimeout(TimeSpan? timeout)
 		{
 			if (!timeout.HasValue)
-			{
 				return;
-			}
 			_client.Timeout = timeout.Value;
 		}
 
 		private void AddMaxResponseBufferSize(ulong? size)
 		{
 			if (!size.HasValue)
-			{
 				return;
-			}
 			_client.MaxResponseContentBufferSize = (long) size.Value;
 		}
 
@@ -186,9 +178,7 @@
 			lock (_endpoints)
 			{
 				if (_endpoints.Contains(endpoint))
-				{
 					return;
-				}
 
 				_endpoints.Add(endpoint);
 			}

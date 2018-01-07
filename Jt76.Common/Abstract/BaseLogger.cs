@@ -12,8 +12,6 @@
 
 		protected string CategoryName { get; set; }
 		protected Func<string, LogLevel, bool> Filter { get; set; }
-		public abstract void LogMessage(string subject, string message);
-		public abstract void LogError(Exception exception, string message, LogLevel logLevel = LogLevel.None);
 
 		public bool IsEnabled(LogLevel logLevel)
 		{
@@ -26,11 +24,14 @@
 			return null;
 		}
 
-		public abstract void Log(LogLevel logLevel, int eventId, object state, Exception exception,
-			Func<object, Exception, string> formatter);
-
 		public abstract void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception,
 			Func<TState, Exception, string> formatter);
+
+		public abstract void LogMessage(string subject, string message);
+		public abstract void LogError(Exception exception, string message, LogLevel logLevel = LogLevel.None);
+
+		public abstract void Log(LogLevel logLevel, int eventId, object state, Exception exception,
+			Func<object, Exception, string> formatter);
 
 		protected string VerifyAndGenerateMessage(
 			LogLevel logLevel,
@@ -39,28 +40,20 @@
 			Func<object, Exception, string> formatter)
 		{
 			if (!IsEnabled(logLevel))
-			{
 				return null;
-			}
 
 			if (formatter == null)
-			{
 				throw new ArgumentNullException(nameof(formatter));
-			}
 
 			string message = formatter(state, exception);
 
 			if (string.IsNullOrWhiteSpace(message))
-			{
 				return null;
-			}
 
 			message = $"{logLevel}: {message}";
 
 			if (exception != null)
-			{
 				message += Environment.NewLine + Environment.NewLine + exception.ToEnhancedString();
-			}
 
 			return message;
 		}
@@ -72,35 +65,29 @@
 			Func<TState, Exception, string> formatter)
 		{
 			if (!IsEnabled(logLevel))
-			{
 				return null;
-			}
 
 			if (formatter == null)
-			{
 				throw new ArgumentNullException(nameof(formatter));
-			}
 
 			string message = formatter(state, exception);
 
 			if (string.IsNullOrWhiteSpace(message))
-			{
 				return null;
-			}
 
 			message = $"{logLevel}: {message}";
 
 			if (exception != null)
-			{
 				message += Environment.NewLine + Environment.NewLine + exception.ToEnhancedString();
-			}
 
 			return message;
 		}
 
 		public string GetSubject(LogLevel logLevel)
-			=> logLevel < LogLevel.Error
+		{
+			return logLevel < LogLevel.Error
 				? messageSubject
 				: errorSubject;
+		}
 	}
 }

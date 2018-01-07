@@ -14,7 +14,7 @@
 		private readonly IServiceProvider _serviceProvider;
 
 		public DatabaseLoggingService(
-			string categoryName, 
+			string categoryName,
 			Func<string, LogLevel, bool> filter,
 			IServiceProvider serviceProvider)
 		{
@@ -34,9 +34,9 @@
 		public override void LogMessage(string subject, string message)
 		{
 			Error error = ErrorFactory.GetInformationalError(subject, message, LogLevel.Information.ToNameString());
-			
+
 			//Must use ServiceProvider as DBContext is Scope Specific and Thrown Errors dispose of this context
-			var unitOfWork = _serviceProvider.GetService(typeof(UnitOfWork)) as UnitOfWork;
+			UnitOfWork unitOfWork = _serviceProvider.GetService(typeof(UnitOfWork)) as UnitOfWork;
 			unitOfWork.Errors.Add(error);
 			unitOfWork.SaveChanges();
 		}
@@ -48,9 +48,7 @@
 			string message = VerifyAndGenerateMessage(logLevel, state, exception, formatter);
 
 			if (string.IsNullOrWhiteSpace(message))
-			{
 				return;
-			}
 
 			LogErrorAndSave(exception, message, logLevel);
 		}
@@ -61,9 +59,7 @@
 			string message = VerifyAndGenerateMessage(logLevel, state, exception, formatter);
 
 			if (string.IsNullOrWhiteSpace(message))
-			{
 				return;
-			}
 
 			LogErrorAndSave(exception, message, logLevel);
 		}
@@ -74,20 +70,22 @@
 			LogLevel logLevel = LogLevel.None)
 		{
 			Error error = ErrorFactory.GetErrorFromException(exception, logLevel, logLevel.ToNameString()
-				+ ": " + exception.GetBaseException().Message);
+			                                                                      + ": " + exception.GetBaseException().Message);
 
 			//TODO handle application users and id, for now just logging to the System Admin 
 			//error = _errorDecorator.GetDecoratedModel(error, 1);
 
 			//Must use ServiceProvider as DBContext is Scope Specific and Thrown Errors dispose of this context
-			var unitOfWork = _serviceProvider.GetService(typeof(UnitOfWork)) as UnitOfWork;
+			UnitOfWork unitOfWork = _serviceProvider.GetService(typeof(UnitOfWork)) as UnitOfWork;
 			unitOfWork.Errors.Add(error);
 			unitOfWork.SaveChanges();
 		}
 
 		public DirectoryFolders GetFolder(LogLevel logLevel)
-			=> logLevel <= LogLevel.Error
+		{
+			return logLevel <= LogLevel.Error
 				? DirectoryFolders.Logs
 				: DirectoryFolders.Errors;
+		}
 	}
 }

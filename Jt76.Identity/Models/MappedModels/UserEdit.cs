@@ -3,11 +3,12 @@
 	using System.ComponentModel.DataAnnotations;
 
 	public class UserEdit : User
-    {
-        public string CurrentPassword { get; set; }
+	{
+		public string CurrentPassword { get; set; }
 
-        [MinLength(6, ErrorMessage = "New Password must be at least 6 characters")]
-        public string NewPassword { get; set; }
-        new private bool IsLockedOut { get; } //Hide base member
-    }
+		[MinLength(6, ErrorMessage = "New Password must be at least 6 characters")]
+		public string NewPassword { get; set; }
+
+		private new bool IsLockedOut { get; } //Hide base member
+	}
 }

@@ -15,11 +15,11 @@
 	public class AccountManager : IAccountManager
 	{
 		private readonly IdentityDbContext _context;
-		private readonly UserManager<ApplicationUser> _userManager;
 		private readonly RoleManager<ApplicationRole> _roleManager;
+		private readonly UserManager<ApplicationUser> _userManager;
 
-
-		public AccountManager(IdentityDbContext context, UserManager<ApplicationUser> userManager, RoleManager<ApplicationRole> roleManager)
+		public AccountManager(IdentityDbContext context, UserManager<ApplicationUser> userManager,
+			RoleManager<ApplicationRole> roleManager)
 		{
 			_context = context;
 			_userManager = userManager;
@@ -89,17 +89,17 @@
 				.ToArrayAsync();
 
 			return users.Select(u => Tuple.Create(u,
-				roles.Where(r => u.Roles.Select(ur => ur.RoleId).Contains(r.Id)).Select(r => r.Name).ToArray()))
+					roles.Where(r => u.Roles.Select(ur => ur.RoleId).Contains(r.Id)).Select(r => r.Name).ToArray()))
 				.ToList();
 		}
 
 
-		public async Task<Tuple<bool, string[]>> CreateUserAsync(ApplicationUser user, IEnumerable<string> roles, string password)
+		public async Task<Tuple<bool, string[]>> CreateUserAsync(ApplicationUser user, IEnumerable<string> roles,
+			string password)
 		{
 			IdentityResult result = await _userManager.CreateAsync(user, password);
 			if (!result.Succeeded)
 				return Tuple.Create(false, result.Errors.Select(e => e.Description).ToArray());
-
 
 			user = await _userManager.FindByNameAsync(user.UserName);
 
@@ -113,13 +113,10 @@
 				throw;
 			}
 
-			if (!result.Succeeded)
-			{
-				await DeleteUserAsync(user);
-				return Tuple.Create(false, result.Errors.Select(e => e.Description).ToArray());
-			}
+			if (result.Succeeded) return Tuple.Create(true, new string[] { });
 
-			return Tuple.Create(true, new string[] { });
+			await DeleteUserAsync(user);
+			return Tuple.Create(false, result.Errors.Select(e => e.Description).ToArray());
 		}
 
 
@@ -135,30 +132,27 @@
 			if (!result.Succeeded)
 				return Tuple.Create(false, result.Errors.Select(e => e.Description).ToArray());
 
+			if (roles == null) return Tuple.Create(true, new string[] { });
 
-			if (roles != null)
+			IList<string> userRoles = await _userManager.GetRolesAsync(user);
+
+			IEnumerable<string> enumerable = roles as string[] ?? roles.ToArray();
+			string[] rolesToRemove = userRoles.Except(enumerable).ToArray();
+			string[] rolesToAdd = enumerable.Except(userRoles).Distinct().ToArray();
+
+			if (rolesToRemove.Any())
 			{
-				IList<string> userRoles = await _userManager.GetRolesAsync(user);
-
-				string[] rolesToRemove = userRoles.Except(roles).ToArray();
-				string[] rolesToAdd = roles.Except(userRoles).Distinct().ToArray();
-
-				if (rolesToRemove.Any())
-				{
-					result = await _userManager.RemoveFromRolesAsync(user, rolesToRemove);
-					if (!result.Succeeded)
-						return Tuple.Create(false, result.Errors.Select(e => e.Description).ToArray());
-				}
-
-				if (rolesToAdd.Any())
-				{
-					result = await _userManager.AddToRolesAsync(user, rolesToAdd);
-					if (!result.Succeeded)
-						return Tuple.Create(false, result.Errors.Select(e => e.Description).ToArray());
-				}
+				result = await _userManager.RemoveFromRolesAsync(user, rolesToRemove);
+				if (!result.Succeeded)
+					return Tuple.Create(false, result.Errors.Select(e => e.Description).ToArray());
 			}
 
-			return Tuple.Create(true, new string[] { });
+			if (!rolesToAdd.Any()) return Tuple.Create(true, new string[] { });
+
+			result = await _userManager.AddToRolesAsync(user, rolesToAdd);
+			return result.Succeeded 
+				? Tuple.Create(true, new string[] { })  
+				: Tuple.Create(false, result.Errors.Select(e => e.Description).ToArray());
 		}
 
 
@@ -167,32 +161,28 @@
 			string resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
 
 			IdentityResult result = await _userManager.ResetPasswordAsync(user, resetToken, newPassword);
-			if (!result.Succeeded)
-				return Tuple.Create(false, result.Errors.Select(e => e.Description).ToArray());
-
-			return Tuple.Create(true, new string[] { });
+			return result.Succeeded
+				? Tuple.Create(true, new string[] { })
+				: Tuple.Create(false, result.Errors.Select(e => e.Description).ToArray());
 		}
 
-		public async Task<Tuple<bool, string[]>> UpdatePasswordAsync(ApplicationUser user, string currentPassword, string newPassword)
+		public async Task<Tuple<bool, string[]>> UpdatePasswordAsync(ApplicationUser user, string currentPassword,
+			string newPassword)
 		{
 			IdentityResult result = await _userManager.ChangePasswordAsync(user, currentPassword, newPassword);
-			if (!result.Succeeded)
-				return Tuple.Create(false, result.Errors.Select(e => e.Description).ToArray());
-
-			return Tuple.Create(true, new string[] { });
+			return result.Succeeded
+				? Tuple.Create(true, new string[] { })
+				: Tuple.Create(false, result.Errors.Select(e => e.Description).ToArray());
 		}
 
 		public async Task<bool> CheckPasswordAsync(ApplicationUser user, string password)
 		{
-			if (!await _userManager.CheckPasswordAsync(user, password))
-			{
-				if (!_userManager.SupportsUserLockout)
-					await _userManager.AccessFailedAsync(user);
+			if (await _userManager.CheckPasswordAsync(user, password)) return true;
 
-				return false;
-			}
+			if (!_userManager.SupportsUserLockout)
+				await _userManager.AccessFailedAsync(user);
 
-			return true;
+			return false;
 		}
 
 
@@ -221,10 +211,6 @@
 			IdentityResult result = await _userManager.DeleteAsync(user);
 			return Tuple.Create(result.Succeeded, result.Errors.Select(e => e.Description).ToArray());
 		}
-
-
-
-
 
 
 		public async Task<ApplicationRole> GetRoleByIdAsync(string roleId)
@@ -275,9 +261,10 @@
 			if (claims == null)
 				claims = new string[] { };
 
-			string[] invalidClaims = claims.Where(c => ApplicationPermissions.GetPermissionByValue(c) == null).ToArray();
+			IEnumerable<string> enumerable = claims as string[] ?? claims.ToArray();
+			string[] invalidClaims = enumerable.Where(c => ApplicationPermissions.GetPermissionByValue(c) == null).ToArray();
 			if (invalidClaims.Any())
-				return Tuple.Create(false, new string[] { "The following claim types are invalid: " + string.Join(", ", invalidClaims) });
+				return Tuple.Create(false, new[] {"The following claim types are invalid: " + string.Join(", ", invalidClaims)});
 
 
 			IdentityResult result = await _roleManager.CreateAsync(role);
@@ -287,15 +274,15 @@
 
 			role = await _roleManager.FindByNameAsync(role.Name);
 
-			foreach (string claim in claims.Distinct())
+			foreach (string claim in enumerable.Distinct())
 			{
-				result = await _roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permission, ApplicationPermissions.GetPermissionByValue(claim)));
+				result = await _roleManager.AddClaimAsync(role,
+					new Claim(CustomClaimTypes.Permission, ApplicationPermissions.GetPermissionByValue(claim)));
 
-				if (!result.Succeeded)
-				{
-					await DeleteRoleAsync(role);
-					return Tuple.Create(false, result.Errors.Select(e => e.Description).ToArray());
-				}
+				if (result.Succeeded) continue;
+
+				await DeleteRoleAsync(role);
+				return Tuple.Create(false, result.Errors.Select(e => e.Description).ToArray());
 			}
 
 			return Tuple.Create(true, new string[] { });
@@ -303,11 +290,11 @@
 
 		public async Task<Tuple<bool, string[]>> UpdateRoleAsync(ApplicationRole role, IEnumerable<string> claims)
 		{
-			if (claims != null)
+			IEnumerable<string> second = claims as string[] ?? claims.ToArray();
 			{
-				string[] invalidClaims = claims.Where(c => ApplicationPermissions.GetPermissionByValue(c) == null).ToArray();
+				string[] invalidClaims = second.Where(c => ApplicationPermissions.GetPermissionByValue(c) == null).ToArray();
 				if (invalidClaims.Any())
-					return Tuple.Create(false, new string[] { "The following claim types are invalid: " + string.Join(", ", invalidClaims) });
+					return Tuple.Create(false, new[] {"The following claim types are invalid: " + string.Join(", ", invalidClaims)});
 			}
 
 
@@ -315,33 +302,31 @@
 			if (!result.Succeeded)
 				return Tuple.Create(false, result.Errors.Select(e => e.Description).ToArray());
 
-
-			if (claims != null)
 			{
-				IEnumerable<Claim> roleClaims = (await _roleManager.GetClaimsAsync(role)).Where(c => c.Type == CustomClaimTypes.Permission);
-				string[] roleClaimValues = roleClaims.Select(c => c.Value).ToArray();
+				IEnumerable<Claim> roleClaims =
+					(await _roleManager.GetClaimsAsync(role)).Where(c => c.Type == CustomClaimTypes.Permission);
+				IEnumerable<Claim> enumerable = roleClaims as Claim[] ?? roleClaims.ToArray();
+				string[] roleClaimValues = enumerable.Select(c => c.Value).ToArray();
 
-				string[] claimsToRemove = roleClaimValues.Except(claims).ToArray();
-				string[] claimsToAdd = claims.Except(roleClaimValues).Distinct().ToArray();
+				string[] claimsToRemove = roleClaimValues.Except(second).ToArray();
+				string[] claimsToAdd = second.Except(roleClaimValues).Distinct().ToArray();
 
 				if (claimsToRemove.Any())
-				{
 					foreach (string claim in claimsToRemove)
 					{
-						result = await _roleManager.RemoveClaimAsync(role, roleClaims.Where(c => c.Value == claim).FirstOrDefault());
+						result = await _roleManager.RemoveClaimAsync(role, enumerable.FirstOrDefault(c => c.Value == claim));
 						if (!result.Succeeded)
 							return Tuple.Create(false, result.Errors.Select(e => e.Description).ToArray());
 					}
-				}
 
-				if (claimsToAdd.Any())
+				if (!claimsToAdd.Any()) return Tuple.Create(true, new string[] { });
+
+				foreach (string claim in claimsToAdd)
 				{
-					foreach (string claim in claimsToAdd)
-					{
-						result = await _roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permission, ApplicationPermissions.GetPermissionByValue(claim)));
-						if (!result.Succeeded)
-							return Tuple.Create(false, result.Errors.Select(e => e.Description).ToArray());
-					}
+					result = await _roleManager.AddClaimAsync(role,
+						new Claim(CustomClaimTypes.Permission, ApplicationPermissions.GetPermissionByValue(claim)));
+					if (!result.Succeeded)
+						return Tuple.Create(false, result.Errors.Select(e => e.Description).ToArray());
 				}
 			}
 

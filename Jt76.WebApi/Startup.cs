@@ -64,7 +64,7 @@
 			IMvcBuilder mvcBuilder = services.AddMvc();
 			services.AddCors();
 			mvcBuilder.AddJsonOptions
-				(opts => opts.SerializerSettings.ContractResolver = 
+			(opts => opts.SerializerSettings.ContractResolver =
 				new CamelCasePropertyNamesContractResolver());
 
 			services.AddMemoryCache(opt => opt.ExpirationScanFrequency = TimeSpan.FromMinutes(5));
@@ -99,9 +99,9 @@
 				options =>
 				{
 					options
-					.UseSqlServer(
-						Configuration.GetConnectionString("ApplicationConnection"),
-						builder => builder.MigrationsAssembly("Jt76.WebApi"));
+						.UseSqlServer(
+							Configuration.GetConnectionString("ApplicationConnection"),
+							builder => builder.MigrationsAssembly("Jt76.WebApi"));
 				});
 
 			//Configuration Pocos
@@ -132,7 +132,6 @@
 		}
 
 
-
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(
 			IApplicationBuilder app,
@@ -144,7 +143,6 @@
 			UnitOfWork unitOfWork,
 			IOptions<LogSettings> logSettings)
 		{
-
 			/*
 			public enum LogLevel
 			{
@@ -162,29 +160,23 @@
 			LogSetting dataBaseLogSetting =
 				logSettings.Value.Settings.FirstOrDefault(x => x.Type == LogType.Database);
 			if (dataBaseLogSetting != null && dataBaseLogSetting.On)
-			{
 				loggerFactory.AddDatabaseLogger(
 					app.ApplicationServices.GetRequiredService<IServiceScopeFactory>()
 						.CreateScope()
 						.ServiceProvider,
 					dataBaseLogSetting.Level);
-			}
 
 			//File Logs
 			LogSetting fileLogSetting =
 				logSettings.Value.Settings.FirstOrDefault(x => x.Type == LogType.File);
 			if (fileLogSetting != null && fileLogSetting.On)
-			{
 				loggerFactory.AddFileLogger(fileService, fileLogSetting.Level);
-			}
 
 			//Email Logs
 			LogSetting emailLogSetting =
 				logSettings.Value.Settings.FirstOrDefault(x => x.Type == LogType.Email);
 			if (emailLogSetting != null && emailLogSetting.On)
-			{
 				loggerFactory.AddEmailLogger(mailService, emailSettings, emailLogSetting.Level);
-			}
 
 			//Development settings
 			if (Environment.IsDevelopment())
@@ -205,9 +197,7 @@
 						IExceptionHandlerFeature error =
 							context.Features.Get<IExceptionHandlerFeature>();
 						if (error != null)
-						{
 							await context.Response.WriteAsync(error.Error.ToHtml());
-						}
 					});
 				});
 			}
@@ -327,10 +317,7 @@
 					policy => policy.RequireClaim(CustomClaimTypes.Permission, ApplicationPermissions.ManageRoles));
 			});
 
-			Mapper.Initialize(config =>
-			{
-				config.AddProfile<AutoMapperProfile>();
-			});
+			Mapper.Initialize(config => { config.AddProfile<AutoMapperProfile>(); });
 
 			services.AddScoped<IUnitOfWork, HttpUnitOfWork>();
 			services.AddScoped<IAccountManager, AccountManager>();

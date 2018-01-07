@@ -13,28 +13,43 @@
 
 	public class IdentityDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
 	{
-		public string CurrentUserId { get; set; }
-
 		public IdentityDbContext(DbContextOptions<IdentityDbContext> options) : base(options)
-		{ }
+		{
+		}
+
+		public string CurrentUserId { get; set; }
 
 
 		protected override void OnModelCreating(ModelBuilder builder)
 		{
 			base.OnModelCreating(builder);
 
-			builder.Entity<ApplicationUser>().HasMany(u => u.Claims)
-				.WithOne().HasForeignKey(c => c.UserId).IsRequired().OnDelete(DeleteBehavior.Cascade);
-			builder.Entity<ApplicationUser>().HasMany(u => u.Roles)
-				.WithOne().HasForeignKey(r => r.UserId).IsRequired().OnDelete(DeleteBehavior.Cascade);
+			builder.Entity<ApplicationUser>()
+				.HasMany(u => u.Claims)
+				.WithOne()
+				.HasForeignKey(c => c.UserId)
+				.IsRequired()
+				.OnDelete(DeleteBehavior.Cascade);
+			builder.Entity<ApplicationUser>()
+				.HasMany(u => u.Roles)
+				.WithOne()
+				.HasForeignKey(r => r.UserId)
+				.IsRequired()
+				.OnDelete(DeleteBehavior.Cascade);
 
-			builder.Entity<ApplicationRole>().HasMany(r => r.Claims)
-				.WithOne().HasForeignKey(c => c.RoleId).IsRequired().OnDelete(DeleteBehavior.Cascade);
-			builder.Entity<ApplicationRole>().HasMany(r => r.Users)
-				.WithOne().HasForeignKey(r => r.RoleId).IsRequired().OnDelete(DeleteBehavior.Cascade);
+			builder.Entity<ApplicationRole>()
+				.HasMany(r => r.Claims)
+				.WithOne()
+				.HasForeignKey(c => c.RoleId)
+				.IsRequired()
+				.OnDelete(DeleteBehavior.Cascade);
+			builder.Entity<ApplicationRole>()
+				.HasMany(r => r.Users)
+				.WithOne()
+				.HasForeignKey(r => r.RoleId)
+				.IsRequired()
+				.OnDelete(DeleteBehavior.Cascade);
 		}
-
-
 
 
 		public override int SaveChanges()
@@ -75,7 +90,7 @@
 
 			foreach (EntityEntry entry in modifiedEntries)
 			{
-				IAuditableEntity entity = (IAuditableEntity)entry.Entity;
+				IAuditableEntity entity = (IAuditableEntity) entry.Entity;
 				DateTime now = DateTime.UtcNow;
 
 				if (entry.State == EntityState.Added)

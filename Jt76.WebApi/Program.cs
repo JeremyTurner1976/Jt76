@@ -17,11 +17,11 @@
 			{
 				IServiceProvider services = scope.ServiceProvider;
 
-				DatabaseInitializer databaseInitializer = 
+				DatabaseInitializer databaseInitializer =
 					services.GetRequiredService<DatabaseInitializer>();
 				databaseInitializer.SeedAsync().Wait();
 
-				IdentityDatabaseInitializer identityDatabaseInitializer = 
+				IdentityDatabaseInitializer identityDatabaseInitializer =
 					services.GetRequiredService<IdentityDatabaseInitializer>();
 				identityDatabaseInitializer.SeedAsync().Wait();
 			}
@@ -30,14 +30,11 @@
 		}
 
 
-		public static IWebHost BuildWebHost(string[] args) =>
-			WebHost.CreateDefaultBuilder(args)
+		public static IWebHost BuildWebHost(string[] args)
+		{
+			return WebHost.CreateDefaultBuilder(args)
 				.UseStartup<Startup>()
 				.Build();
+		}
 	}
 }
-
-
-
-
-

@@ -19,10 +19,10 @@
 	[Route("api/[controller]")]
 	public class AccountController : Controller
 	{
-		private readonly IAccountManager _accountManager;
-		private readonly IAuthorizationService _authorizationService;
 		private const string GetUserByIdActionName = "GetUserById";
 		private const string GetRoleByIdActionName = "GetRoleById";
+		private readonly IAccountManager _accountManager;
+		private readonly IAuthorizationService _authorizationService;
 
 		public AccountController(IAccountManager accountManager, IAuthorizationService authorizationService)
 		{
@@ -31,12 +31,11 @@
 		}
 
 
-
 		[HttpGet("users/me")]
 		[Produces(typeof(User))]
 		public async Task<IActionResult> GetCurrentUser()
 		{
-			return await GetUserByUserName(this.User.Identity.Name);
+			return await GetUserByUserName(User.Identity.Name);
 		}
 
 
@@ -44,7 +43,7 @@
 		[Produces(typeof(User))]
 		public async Task<IActionResult> GetUserById(string id)
 		{
-			if (!(await _authorizationService.AuthorizeAsync(this.User, id, AuthPolicies.ViewUserByUserIdPolicy)).Succeeded)
+			if (!(await _authorizationService.AuthorizeAsync(User, id, AuthPolicies.ViewUserByUserIdPolicy)).Succeeded)
 				return new ChallengeResult();
 
 
@@ -52,8 +51,7 @@
 
 			if (userVM != null)
 				return Ok(userVM);
-			else
-				return NotFound(id);
+			return NotFound(id);
 		}
 
 
@@ -63,7 +61,8 @@
 		{
 			ApplicationUser appUser = await _accountManager.GetUserByUserNameAsync(userName);
 
-			if (!(await _authorizationService.AuthorizeAsync(this.User, appUser?.Id ?? "", AuthPolicies.ViewUserByUserIdPolicy)).Succeeded)
+			if (!(await _authorizationService.AuthorizeAsync(User, appUser?.Id ?? "", AuthPolicies.ViewUserByUserIdPolicy))
+				.Succeeded)
 				return new ChallengeResult();
 
 			if (appUser == null)
@@ -103,12 +102,10 @@
 		}
 
 
-
-
 		[HttpPut("users/me")]
 		public async Task<IActionResult> UpdateCurrentUser([FromBody] UserEdit user)
 		{
-			return await UpdateUser(IdentityHelper.GetUserId(this.User), user);
+			return await UpdateUser(IdentityHelper.GetUserId(User), user);
 		}
 
 
@@ -118,8 +115,10 @@
 			ApplicationUser appUser = await _accountManager.GetUserByIdAsync(id);
 			string[] currentRoles = appUser != null ? (await _accountManager.GetUserRolesAsync(appUser)).ToArray() : null;
 
-			Task<AuthorizationResult> manageUsersPolicy = _authorizationService.AuthorizeAsync(this.User, id, AuthPolicies.ManageUserByUserIdPolicy);
-			Task<AuthorizationResult> assignRolePolicy = _authorizationService.AuthorizeAsync(this.User, Tuple.Create(user.Roles, currentRoles), AuthPolicies.AssignRolesPolicy);
+			Task<AuthorizationResult> manageUsersPolicy =
+				_authorizationService.AuthorizeAsync(User, id, AuthPolicies.ManageUserByUserIdPolicy);
+			Task<AuthorizationResult> assignRolePolicy = _authorizationService.AuthorizeAsync(User,
+				Tuple.Create(user.Roles, currentRoles), AuthPolicies.AssignRolesPolicy);
 
 
 			if ((await Task.WhenAll(manageUsersPolicy, assignRolePolicy)).Any(r => !r.Succeeded))
@@ -138,7 +137,7 @@
 					return NotFound(id);
 
 
-				if (IdentityHelper.GetUserId(this.User) == id && string.IsNullOrWhiteSpace(user.CurrentPassword))
+				if (IdentityHelper.GetUserId(User) == id && string.IsNullOrWhiteSpace(user.CurrentPassword))
 				{
 					if (!string.IsNullOrWhiteSpace(user.NewPassword))
 						return BadRequest("Current password is required when changing your own password");
@@ -150,14 +149,13 @@
 
 				bool isValid = true;
 
-				if (IdentityHelper.GetUserId(this.User) == id && (appUser.UserName != user.UserName || !string.IsNullOrWhiteSpace(user.NewPassword)))
-				{
+				if (IdentityHelper.GetUserId(User) == id && (appUser.UserName != user.UserName ||
+				                                             !string.IsNullOrWhiteSpace(user.NewPassword)))
 					if (!await _accountManager.CheckPasswordAsync(appUser, user.CurrentPassword))
 					{
 						isValid = false;
-						AddErrors(new string[] { "The username/password couple is invalid." });
+						AddErrors(new[] {"The username/password couple is invalid."});
 					}
-				}
 
 				if (isValid)
 				{
@@ -167,12 +165,10 @@
 					if (result.Item1)
 					{
 						if (!string.IsNullOrWhiteSpace(user.NewPassword))
-						{
 							if (!string.IsNullOrWhiteSpace(user.CurrentPassword))
 								result = await _accountManager.UpdatePasswordAsync(appUser, user.CurrentPassword, user.NewPassword);
 							else
 								result = await _accountManager.ResetPasswordAsync(appUser, user.NewPassword);
-						}
 
 						if (result.Item1)
 							return NoContent();
@@ -186,20 +182,17 @@
 		}
 
 
-
-
 		[HttpPatch("users/me")]
 		public async Task<IActionResult> UpdateCurrentUser([FromBody] JsonPatchDocument<UserPatch> patch)
 		{
-			return await UpdateUser(IdentityHelper.GetUserId(this.User), patch);
+			return await UpdateUser(IdentityHelper.GetUserId(User), patch);
 		}
-
 
 
 		[HttpPatch("users/{id}")]
 		public async Task<IActionResult> UpdateUser(string id, [FromBody] JsonPatchDocument<UserPatch> patch)
 		{
-			if (!(await _authorizationService.AuthorizeAsync(this.User, id, AuthPolicies.ManageUserByUserIdPolicy)).Succeeded)
+			if (!(await _authorizationService.AuthorizeAsync(User, id, AuthPolicies.ManageUserByUserIdPolicy)).Succeeded)
 				return new ChallengeResult();
 
 
@@ -221,7 +214,7 @@
 
 				if (ModelState.IsValid)
 				{
-					Mapper.Map<UserPatch, ApplicationUser>(userPVM, appUser);
+					Mapper.Map(userPVM, appUser);
 
 					Tuple<bool, string[]> result = await _accountManager.UpdateUserAsync(appUser);
 					if (result.Item1)
@@ -234,8 +227,6 @@
 
 			return BadRequest(ModelState);
 		}
-
-
 
 
 		[HttpPost("users")]
@@ -254,7 +245,7 @@
 				if (result.Item1)
 				{
 					User userVM = await GetUserHelper(appUser.Id);
-					return CreatedAtAction(GetUserByIdActionName, new { id = userVM.Id }, userVM);
+					return CreatedAtAction(GetUserByIdActionName, new {id = userVM.Id}, userVM);
 				}
 
 				AddErrors(result.Item2);
@@ -262,7 +253,6 @@
 
 			return BadRequest(ModelState);
 		}
-
 
 
 		[HttpDelete("users/{id}")]
@@ -275,7 +265,7 @@
 
 
 			User userVM = null;
-			ApplicationUser appUser = await this._accountManager.GetUserByIdAsync(id);
+			ApplicationUser appUser = await _accountManager.GetUserByIdAsync(id);
 
 			if (appUser != null)
 				userVM = await GetUserHelper(appUser.Id);
@@ -284,7 +274,7 @@
 			if (userVM == null)
 				return NotFound(id);
 
-			Tuple<bool, string[]> result = await this._accountManager.DeleteUserAsync(appUser);
+			Tuple<bool, string[]> result = await _accountManager.DeleteUserAsync(appUser);
 			if (!result.Item1)
 				throw new Exception("The following errors occurred whilst deleting user: " + string.Join(", ", result.Item2));
 
@@ -293,12 +283,11 @@
 		}
 
 
-
 		[HttpPut("users/unblock/{id}")]
 		[Authorize(AuthPolicies.ManageUsersPolicy)]
 		public async Task<IActionResult> UnblockUser(string id)
 		{
-			ApplicationUser appUser = await this._accountManager.GetUserByIdAsync(id);
+			ApplicationUser appUser = await _accountManager.GetUserByIdAsync(id);
 
 			if (appUser == null)
 				return NotFound(id);
@@ -313,26 +302,24 @@
 		}
 
 
-
 		[HttpGet("users/me/preferences")]
 		[Produces(typeof(string))]
 		public async Task<IActionResult> UserPreferences()
 		{
-			string userId = IdentityHelper.GetUserId(this.User);
-			ApplicationUser appUser = await this._accountManager.GetUserByIdAsync(userId);
+			string userId = IdentityHelper.GetUserId(User);
+			ApplicationUser appUser = await _accountManager.GetUserByIdAsync(userId);
 
 			if (appUser != null)
 				return Ok(appUser.Configuration);
-			else
-				return NotFound(userId);
+			return NotFound(userId);
 		}
 
 
 		[HttpPut("users/me/preferences")]
 		public async Task<IActionResult> UserPreferences([FromBody] string data)
 		{
-			string userId = IdentityHelper.GetUserId(this.User);
-			ApplicationUser appUser = await this._accountManager.GetUserByIdAsync(userId);
+			string userId = IdentityHelper.GetUserId(User);
+			ApplicationUser appUser = await _accountManager.GetUserByIdAsync(userId);
 
 			if (appUser == null)
 				return NotFound(userId);
@@ -340,17 +327,12 @@
 			appUser.Configuration = data;
 			Tuple<bool, string[]> result = await _accountManager.UpdateUserAsync(appUser);
 			if (!result.Item1)
-				throw new Exception("The following errors occurred whilst updating User Configurations: " + string.Join(", ", result.Item2));
+				throw new Exception("The following errors occurred whilst updating User Configurations: " +
+				                    string.Join(", ", result.Item2));
 
 
 			return NoContent();
 		}
-
-
-
-
-
-
 
 
 		[HttpGet("roles/{id}", Name = GetRoleByIdActionName)]
@@ -359,7 +341,8 @@
 		{
 			ApplicationRole appRole = await _accountManager.GetRoleByIdAsync(id);
 
-			if (!(await _authorizationService.AuthorizeAsync(this.User, appRole?.Name ?? "", AuthPolicies.ViewRoleByRoleNamePolicy)).Succeeded)
+			if (!(await _authorizationService.AuthorizeAsync(User, appRole?.Name ?? "", AuthPolicies.ViewRoleByRoleNamePolicy))
+				.Succeeded)
 				return new ChallengeResult();
 
 			if (appRole == null)
@@ -369,13 +352,11 @@
 		}
 
 
-
-
 		[HttpGet("roles/name/{name}")]
 		[Produces(typeof(Role))]
 		public async Task<IActionResult> GetRoleByName(string name)
 		{
-			if (!(await _authorizationService.AuthorizeAsync(this.User, name, AuthPolicies.ViewRoleByRoleNamePolicy)).Succeeded)
+			if (!(await _authorizationService.AuthorizeAsync(User, name, AuthPolicies.ViewRoleByRoleNamePolicy)).Succeeded)
 				return new ChallengeResult();
 
 
@@ -388,8 +369,6 @@
 		}
 
 
-
-
 		[HttpGet("roles")]
 		[Produces(typeof(List<Role>))]
 		[Authorize(AuthPolicies.ViewRolesPolicy)]
@@ -397,7 +376,6 @@
 		{
 			return await GetRoles(-1, -1);
 		}
-
 
 
 		[HttpGet("roles/{page:int}/{pageSize:int}")]
@@ -408,7 +386,6 @@
 			List<ApplicationRole> roles = await _accountManager.GetRolesLoadRelatedAsync(page, pageSize);
 			return Ok(Mapper.Map<List<Role>>(roles));
 		}
-
 
 
 		[HttpPut("roles/{id}")]
@@ -424,27 +401,24 @@
 					return BadRequest("Conflicting role id in parameter and model data");
 
 
-
 				ApplicationRole appRole = await _accountManager.GetRoleByIdAsync(id);
 
 				if (appRole == null)
 					return NotFound(id);
 
 
-				Mapper.Map<Role, ApplicationRole>(role, appRole);
+				Mapper.Map(role, appRole);
 
-				Tuple<bool, string[]> result = await _accountManager.UpdateRoleAsync(appRole, role.Permissions?.Select(p => p.Value).ToArray());
+				Tuple<bool, string[]> result =
+					await _accountManager.UpdateRoleAsync(appRole, role.Permissions?.Select(p => p.Value).ToArray());
 				if (result.Item1)
 					return NoContent();
 
 				AddErrors(result.Item2);
-
 			}
 
 			return BadRequest(ModelState);
 		}
-
-
 
 
 		[HttpPost("roles")]
@@ -459,11 +433,12 @@
 
 				ApplicationRole appRole = Mapper.Map<ApplicationRole>(role);
 
-				Tuple<bool, string[]> result = await _accountManager.CreateRoleAsync(appRole, role.Permissions?.Select(p => p.Value).ToArray());
+				Tuple<bool, string[]> result =
+					await _accountManager.CreateRoleAsync(appRole, role.Permissions?.Select(p => p.Value).ToArray());
 				if (result.Item1)
 				{
 					Role roleVM = await GetRoleHelper(appRole.Name);
-					return CreatedAtAction(GetRoleByIdActionName, new { id = roleVM.Id }, roleVM);
+					return CreatedAtAction(GetRoleByIdActionName, new {id = roleVM.Id}, roleVM);
 				}
 
 				AddErrors(result.Item2);
@@ -471,8 +446,6 @@
 
 			return BadRequest(ModelState);
 		}
-
-
 
 
 		[HttpDelete("roles/{id}")]
@@ -485,7 +458,7 @@
 
 
 			Role roleVM = null;
-			ApplicationRole appRole = await this._accountManager.GetRoleByIdAsync(id);
+			ApplicationRole appRole = await _accountManager.GetRoleByIdAsync(id);
 
 			if (appRole != null)
 				roleVM = await GetRoleHelper(appRole.Name);
@@ -494,14 +467,13 @@
 			if (roleVM == null)
 				return NotFound(id);
 
-			Tuple<bool, string[]> result = await this._accountManager.DeleteRoleAsync(appRole);
+			Tuple<bool, string[]> result = await _accountManager.DeleteRoleAsync(appRole);
 			if (!result.Item1)
 				throw new Exception("The following errors occurred whilst deleting role: " + string.Join(", ", result.Item2));
 
 
 			return Ok(roleVM);
 		}
-
 
 
 		[HttpGet("permissions")]
@@ -511,16 +483,6 @@
 		{
 			return Ok(Mapper.Map<List<Permission>>(ApplicationPermissions.AllPermissions));
 		}
-
-
-
-
-
-
-
-
-
-
 
 
 		private async Task<User> GetUserHelper(string userId)
@@ -555,10 +517,7 @@
 		private void AddErrors(IEnumerable<string> errors)
 		{
 			foreach (string error in errors)
-			{
 				ModelState.AddModelError(string.Empty, error);
-			}
 		}
-
 	}
 }

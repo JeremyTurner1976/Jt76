@@ -24,9 +24,7 @@
 			string message = VerifyAndGenerateMessage(logLevel, state, exception, formatter);
 
 			if (string.IsNullOrWhiteSpace(message))
-			{
 				return;
-			}
 
 			string subject = GetSubject(logLevel);
 			DirectoryFolders folder = GetFolder(logLevel);
@@ -39,9 +37,7 @@
 			string message = VerifyAndGenerateMessage(logLevel, state, exception, formatter);
 
 			if (string.IsNullOrWhiteSpace(message))
-			{
 				return;
-			}
 
 			string subject = GetSubject(logLevel);
 			DirectoryFolders folder = GetFolder(logLevel);
@@ -49,7 +45,9 @@
 		}
 
 		private string GetFormattedFileOutput(string subject, string message)
-			=> Environment.NewLine + DateTime.Now + "  " + subject + Environment.NewLine + message;
+		{
+			return Environment.NewLine + DateTime.Now + "  " + subject + Environment.NewLine + message;
+		}
 
 		public override void LogError(
 			Exception exception,
@@ -65,8 +63,10 @@
 		}
 
 		public DirectoryFolders GetFolder(LogLevel logLevel)
-			=> logLevel < LogLevel.Error
+		{
+			return logLevel < LogLevel.Error
 				? DirectoryFolders.Logs
 				: DirectoryFolders.Errors;
+		}
 	}
 }

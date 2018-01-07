@@ -22,9 +22,7 @@
 				stringBuilder.Append("|Source| " + e.Source + "<br/>");
 				stringBuilder.AppendLine("[Stack Trace|<br/>");
 				foreach (string item in GetStackStraceStrings(e.StackTrace))
-				{
 					stringBuilder.AppendLine("&nbsp;&nbsp;&nbsp;" + item + "<br/>");
-				}
 				stringBuilder.AppendLine("<br/>");
 				stringBuilder.Append(e.InnerException == null ? "<br/>|No Inner Exception|<br/>" : "<br/>|Inner Exception|: <br/>");
 				e = e.InnerException;
@@ -51,9 +49,7 @@
 				stringBuilder.AppendLine("|Source| " + e.Source);
 				stringBuilder.AppendLine("[Stack Trace|");
 				foreach (string item in GetStackStraceStrings(e.StackTrace))
-				{
 					stringBuilder.AppendLine("  " + item);
-				}
 				stringBuilder.AppendLine("");
 				stringBuilder.AppendLine(e.InnerException == null ? "|No Inner Exception|" : "\n|Inner Exception|: ");
 				e = e.InnerException;
@@ -78,9 +74,7 @@
 				stringBuilder.Append("|Source| " + e.Source + "<br/>");
 				stringBuilder.AppendLine("[Stack Trace|<br/>");
 				foreach (string item in GetStackStraceStrings(e.StackTrace))
-				{
 					stringBuilder.AppendLine("&nbsp;&nbsp;&nbsp;" + item + "<br/>");
-				}
 				stringBuilder.AppendLine("<br/>");
 				stringBuilder.Append(e.InnerException == null ? "<br/>|No Inner Exception|<br/>" : "<br/>|Inner Exception|: <br/>");
 			}

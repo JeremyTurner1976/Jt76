@@ -28,9 +28,7 @@
 			string message = VerifyAndGenerateMessage(logLevel, state, exception, formatter);
 
 			if (string.IsNullOrWhiteSpace(message))
-			{
 				return;
-			}
 
 			string subject = GetSubject(logLevel);
 			_mailService.SendMail(_emailSettings.DeveloperEmailAddress, _emailSettings.CarbobCopyEmailAddress,
@@ -43,9 +41,7 @@
 			string message = VerifyAndGenerateMessage(logLevel, state, exception, formatter);
 
 			if (string.IsNullOrWhiteSpace(message))
-			{
 				return;
-			}
 
 			string subject = GetSubject(logLevel);
 			_mailService.SendMail(_emailSettings.DeveloperEmailAddress, _emailSettings.CarbobCopyEmailAddress,

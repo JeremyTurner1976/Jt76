@@ -11,7 +11,7 @@
 		public LogType Type { get; set; }
 
 		[JsonConverter(typeof(StringEnumConverter))]
-		public LogLevel Level { get; set;  }
+		public LogLevel Level { get; set; }
 
 		public bool On { get; set; } = false;
 	}

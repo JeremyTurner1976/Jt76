@@ -5,13 +5,12 @@
 
 	public class IdentityUnitOfWork : IUnitOfWork
 	{
-		readonly IdentityDbContext _IdentityDbContext;
+		private readonly IdentityDbContext _IdentityDbContext;
 
 		public IdentityUnitOfWork(
 			IdentityDbContext IdentityDbContext)
 		{
 			_IdentityDbContext = IdentityDbContext;
-
 		}
 
 		public int SaveChanges()

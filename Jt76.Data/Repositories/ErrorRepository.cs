@@ -10,9 +10,10 @@
 	public class ErrorRepository : Repository<Error>, IErrorRepository
 	{
 		public ErrorRepository(ApplicationDbContext context) : base(context)
-		{ }
+		{
+		}
 
-		private ApplicationDbContext appContext => (ApplicationDbContext)_context;
+		private ApplicationDbContext appContext => (ApplicationDbContext) _context;
 
 		public IEnumerable<Error> GetTopErrors(int count)
 		{

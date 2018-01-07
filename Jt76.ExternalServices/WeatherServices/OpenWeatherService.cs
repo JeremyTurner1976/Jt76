@@ -42,7 +42,6 @@
 			ICollection<Forecast> forecasts = asyncFutureWeather.Result;
 
 			if (currentWeather != null && weather != null && forecasts != null)
-			{
 				return new WeatherData
 				{
 					Description = weather.description,
@@ -52,24 +51,17 @@
 					Country = currentWeather.systemInformation.country,
 					WeatherForecasts = forecasts
 				};
-			}
 
 			if (currentWeather == null)
-			{
 				throw new ArgumentNullException(nameof(currentWeather));
-			}
 			if (weather == null)
-			{
 				throw new ArgumentNullException(nameof(weather));
-			}
 
 			throw new ArgumentNullException(nameof(forecasts));
 		}
 
 		private async Task<DetailedWeather> GetCurrentWeather(double latitude, double longitude)
 		{
-
-
 			Uri clientUri = new Uri(
 				WeatherServiceSettings.BaseUri,
 				WeatherServiceSettings.CurrentWeatherRelativeUri);

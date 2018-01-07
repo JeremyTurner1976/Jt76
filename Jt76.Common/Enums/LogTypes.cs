@@ -6,5 +6,4 @@
 		Database,
 		Email
 	}
-
 }

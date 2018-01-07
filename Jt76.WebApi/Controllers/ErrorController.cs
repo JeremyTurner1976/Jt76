@@ -32,7 +32,7 @@
 
 		// POST api/values
 		[HttpPost]
-		public IActionResult Post([FromBody]Error value)
+		public IActionResult Post([FromBody] Error value)
 		{
 			applicationData.Errors.Update(value);
 			applicationData.SaveChanges();
@@ -41,7 +41,7 @@
 
 		// PUT api/values/5
 		[HttpPut("{id}")]
-		public IActionResult Put(int id, [FromBody]Error value)
+		public IActionResult Put(int id, [FromBody] Error value)
 		{
 			applicationData.Errors.Add(value);
 			applicationData.SaveChanges();
@@ -50,7 +50,7 @@
 
 		// DELETE api/values/5
 		[HttpDelete("{id}")]
-		public IActionResult Delete(int id, [FromBody]Error value)
+		public IActionResult Delete(int id, [FromBody] Error value)
 		{
 			applicationData.Errors.Remove(value);
 			applicationData.SaveChanges();

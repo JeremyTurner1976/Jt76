@@ -13,17 +13,15 @@
 		public static T GetAttribute<T>(this MemberInfo member, bool isRequired)
 			where T : Attribute
 		{
-			Attribute attribute = (Attribute) member.GetCustomAttributes(typeof (T), false).SingleOrDefault();
+			Attribute attribute = (Attribute) member.GetCustomAttributes(typeof(T), false).SingleOrDefault();
 
 			if (attribute == null && isRequired)
-			{
 				throw new ArgumentException(
 					string.Format(
 						CultureInfo.InvariantCulture,
 						"The {0} attribute must be defined on member {1}",
-						typeof (T).Name,
+						typeof(T).Name,
 						member.Name));
-			}
 
 			return (T) attribute;
 		}
@@ -33,11 +31,9 @@
 		{
 			MemberInfo memberInfo = GetPropertyInformation(propertyExpression.Body);
 			if (memberInfo == null)
-			{
 				throw new ArgumentException(
 					"No property reference expression was found.",
 					nameof(propertyExpression));
-			}
 
 			PocoAttributes.DisplayName attr = memberInfo.GetAttribute<PocoAttributes.DisplayName>(false);
 			return attr == null
@@ -53,15 +49,11 @@
 			{
 				UnaryExpression unaryExpr = propertyExpression as UnaryExpression;
 				if (unaryExpr != null && unaryExpr.NodeType == ExpressionType.Convert)
-				{
 					memberExpr = unaryExpr.Operand as MemberExpression;
-				}
 			}
 
 			if (memberExpr != null && memberExpr.Member.MemberType == MemberTypes.Property)
-			{
 				return memberExpr.Member;
-			}
 
 			return null;
 		}

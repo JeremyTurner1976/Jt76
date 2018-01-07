@@ -1,20 +1,19 @@
-﻿using Jt76.Data.DbContexts;
-using Jt76.Data.Factories;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Threading.Tasks;
-
-namespace Jt76.Data
+﻿namespace Jt76.Data
 {
+	using System;
+	using System.Threading.Tasks;
 	using Common.CommonData.Interfaces;
+	using DbContexts;
+	using Factories;
+	using Microsoft.EntityFrameworkCore;
+	using Microsoft.Extensions.Logging;
 	using Models;
 
 	public class DatabaseInitializer : IDatabaseInitializer
 	{
+		private const int dataPopulationCount = 25;
 		private readonly ApplicationDbContext _applicationContext;
 		private readonly ILogger _logger;
-		private const int dataPopulationCount = 25;
 
 		public DatabaseInitializer(
 			ApplicationDbContext applicationContext,
@@ -41,7 +40,6 @@ namespace Jt76.Data
 			if (!await _applicationContext.Errors.AnyAsync())
 			{
 				for (int i = 0; i < dataPopulationCount; i++)
-				{
 					try
 					{
 						ErrorFactory.ThrowException();
@@ -57,7 +55,6 @@ namespace Jt76.Data
 
 						_applicationContext.Errors.Add(error);
 					}
-				}
 				_applicationContext.SaveChanges();
 
 				_logger.LogInformation("Application Error generation completed");

@@ -1,7 +1,7 @@
-﻿using Jt76.Common.Attributes;
-
-namespace Jt76.ExternalServices.WeatherServices.Enums
+﻿namespace Jt76.ExternalServices.WeatherServices.Enums
 {
+	using Common.Attributes;
+
 	//https://github.com/darkskyapp/skycons
 
 	public enum Icons

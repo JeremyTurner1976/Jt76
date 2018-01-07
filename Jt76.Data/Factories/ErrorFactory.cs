@@ -10,19 +10,18 @@
 
 	public static class ErrorFactory
 	{
-
 		public static Error GetErrorFromException(Exception e, LogLevel errorLevel, string additionalInformation)
 		{
 			Error error = new Error
 			{
 				Message = e.GetBaseException().Message,
 				Source = e.GetBaseException().Source,
-				ErrorLevel = Enum.GetName(typeof (LogLevel), errorLevel),
+				ErrorLevel = Enum.GetName(typeof(LogLevel), errorLevel),
 				AdditionalInformation = additionalInformation,
 				StackTrace = e.StackTrace + Environment.NewLine + (e.InnerException == null
-					? "             |No inner exception| "
-					: "             |Inner Exception| " + e.InnerException.ToEnhancedString())
-		};
+					             ? "             |No inner exception| "
+					             : "             |Inner Exception| " + e.InnerException.ToEnhancedString())
+			};
 
 			return error;
 		}
@@ -34,15 +33,15 @@
 		}
 
 		/// <summary>
-		/// Throws an aggregate exception.
+		///     Throws an aggregate exception.
 		/// </summary>
 		/// <returns>An awaitable method that will cause an aggregate exception</returns>
 		public static Task<string[][]> ThrowAggregateException()
 		{
 			// Get a folder path whose directories should throw an UnauthorizedAccessException. 
 			string path = Directory.GetParent(
-				Environment.GetEnvironmentVariable(
-					RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? "LocalAppData" : "Home"))
+					Environment.GetEnvironmentVariable(
+						RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? "LocalAppData" : "Home"))
 				.FullName;
 			;
 
@@ -62,7 +61,6 @@
 		}
 
 		/// <summary>
-		/// 
 		/// </summary>
 		/// <param name="message"></param>
 		/// <param name="additionalInformation"></param>

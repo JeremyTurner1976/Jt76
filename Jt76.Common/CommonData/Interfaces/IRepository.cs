@@ -22,5 +22,4 @@
 		TEntity Get(int id);
 		IEnumerable<TEntity> GetAll();
 	}
-
 }

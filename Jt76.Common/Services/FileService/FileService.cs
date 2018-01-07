@@ -13,8 +13,8 @@
 	{
 		private const int daysToHoldDirectoryFiles = 7;
 		private const int maxDirectoryFolderFiles = 10;
-		private readonly string executingDirectory;
 		private readonly object _lock = new object();
+		private readonly string executingDirectory;
 
 		public FileService()
 		{
@@ -43,7 +43,9 @@
 			string strFileAndPathName;
 
 			if (!string.IsNullOrEmpty(strFileName))
+			{
 				strFileAndPathName = strFolderLocation + "\\" + strFileName;
+			}
 			else
 			{
 				string strEnum = directory.ToNameString();
@@ -53,12 +55,10 @@
 
 
 			if (strFileAndPathName.Contains(".txt") && File.Exists(strFileAndPathName))
-			{
 				lock (_lock)
 				{
 					return File.ReadAllLines(strFileAndPathName);
 				}
-			}
 			throw new FileNotFoundException();
 		}
 
@@ -68,9 +68,9 @@
 
 			foreach (
 				FileInfo file in
-					new DirectoryInfo(strFolderLocation).GetFiles()
-						.OrderByDescending(x => x.LastWriteTime)
-						.Skip(nNewestFilesToSave))
+				new DirectoryInfo(strFolderLocation).GetFiles()
+					.OrderByDescending(x => x.LastWriteTime)
+					.Skip(nNewestFilesToSave))
 				file.Delete();
 
 			return true;
@@ -82,8 +82,8 @@
 
 			foreach (
 				FileInfo file in
-					new DirectoryInfo(strFolderLocation).GetFiles()
-						.Where(x => x.LastWriteTime <= DateTime.Now.AddDays(nDays*-1)))
+				new DirectoryInfo(strFolderLocation).GetFiles()
+					.Where(x => x.LastWriteTime <= DateTime.Now.AddDays(nDays * -1)))
 				file.Delete();
 
 			return true;
@@ -102,7 +102,8 @@
 			if (getMostRecent)
 			{
 				FileInfo fileInfo = new DirectoryInfo(strFolderLocation).GetFiles()
-					.OrderByDescending(x => x.CreationTime).FirstOrDefault();
+					.OrderByDescending(x => x.CreationTime)
+					.FirstOrDefault();
 				return fileInfo?.FullName;
 			}
 			return $"{strFolderLocation}\\{fileName}";
@@ -110,7 +111,7 @@
 
 		private bool Init()
 		{
-			Array enumValues = Enum.GetValues(typeof (DirectoryFolders));
+			Array enumValues = Enum.GetValues(typeof(DirectoryFolders));
 			foreach (object value in enumValues)
 			{
 				if (!Directory.Exists(GetDirectoryFolderLocation((DirectoryFolders) value)))
@@ -118,10 +119,7 @@
 
 				//Production: Service will handle this
 				if ((DirectoryFolders) value != DirectoryFolders.Data)
-				{
-					//DeleteFilesByDays((DirectoryFolders) value, daysToHoldDirectoryFiles);
 					DeleteOldFilesInFolder((DirectoryFolders) value, maxDirectoryFolderFiles);
-				}
 			}
 
 			return true;
@@ -133,6 +131,5 @@
 			return GetDirectoryFolderLocation(directory) + "\\" + strEnum + "_" + DateTime.Now.ToString("yyyy-M-dd") +
 			       ".txt";
 		}
-
 	}
 }

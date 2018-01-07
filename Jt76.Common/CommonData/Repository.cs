@@ -40,7 +40,6 @@
 		}
 
 
-
 		public virtual void Remove(TEntity entity)
 		{
 			_entities.Remove(entity);

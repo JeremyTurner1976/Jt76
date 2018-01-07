@@ -1,6 +1,6 @@
 ﻿namespace Jt76.Common.CommonData.Abstract
 {
-	class BaseRepository
-    {
-    }
+	internal class BaseRepository
+	{
+	}
 }

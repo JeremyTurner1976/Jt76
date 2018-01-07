@@ -7,12 +7,13 @@
 	public class HttpUnitOfWork : IdentityUnitOfWork
 	{
 		public HttpUnitOfWork(
-			IdentityDbContext IdentityContext, 
+			IdentityDbContext IdentityContext,
 			IHttpContextAccessor httpAccessor) : base(IdentityContext)
 		{
-			IdentityContext.CurrentUserId = 
+			IdentityContext.CurrentUserId =
 				httpAccessor.HttpContext.User
-				.FindFirst(OpenIdConnectConstants.Claims.Subject)?.Value?.Trim();
+					.FindFirst(OpenIdConnectConstants.Claims.Subject)
+					?.Value?.Trim();
 		}
 	}
 }

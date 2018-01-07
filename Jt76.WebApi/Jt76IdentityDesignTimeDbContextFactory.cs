@@ -17,13 +17,13 @@
 			IConfigurationRoot configuration = new ConfigurationBuilder()
 				.SetBasePath(Directory.GetCurrentDirectory())
 				.AddJsonFile("appsettings.json")
-				.AddJsonFile("appsettings.Development.json", optional: true)
+				.AddJsonFile("appsettings.Development.json", true)
 				.Build();
 
 			DbContextOptionsBuilder<IdentityDbContext> builder = new DbContextOptionsBuilder<IdentityDbContext>();
 
 			builder.UseSqlServer(
-				configuration.GetConnectionString("IdentityConnection"), 
+				configuration.GetConnectionString("IdentityConnection"),
 				b => b.MigrationsAssembly("Jt76.WebApi"));
 			builder.UseOpenIddict();
 
