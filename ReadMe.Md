@@ -20,3 +20,6 @@ Optionally, if you're on Windows, you can open the generated .csproj in Visual S
 
 
 npm install -g @angular-devkit/core
+
+--Once this is all set up
+You can delete ClientApp Folder, goto Jt76.Ui and ng new ClientApp -> THEN Delete NodeModules as this is kept at the base level
