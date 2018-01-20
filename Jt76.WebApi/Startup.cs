@@ -109,6 +109,19 @@
 			services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
 			services.Configure<LogSettings>(Configuration.GetSection("LogSettings"));
 
+			// Application Code
+
+			//http://stackoverflow.com/questions/38138100/what-is-the-difference-between-services-addtransient-service-addscope-and-servi
+			//Singleton which creates a single instance throughout the application.
+			//It creates the instance for the first time and reuses the same object in the all calls.
+
+			//Scoped lifetime services are created once per request within the scope.It is equivalent to Singleton 
+			//in the current scope.eg. in MVC it creates 1 instance per each http request but uses the same instance 
+			//in the other calls within the same web request.
+
+			//Transient lifetime services are created each time they are requested.
+			//This lifetime works best for lightweight, stateless services.
+
 			//Dark Sky Api
 			services.AddSingleton<DarkSkyWeatherServiceSettings, DarkSkyWeatherServiceSettings>();
 			services.AddScoped<DarkSkyWeatherService, DarkSkyWeatherService>();
@@ -329,25 +342,6 @@
 			services.AddSingleton<IAuthorizationHandler, AssignRolesHandler>();
 
 			services.AddTransient<IdentityDatabaseInitializer, IdentityDatabaseInitializer>();
-
-			// Application Code
-
-			//http://stackoverflow.com/questions/38138100/what-is-the-difference-between-services-addtransient-service-addscope-and-servi
-			//Singleton which creates a single instance throughout the application.
-			//It creates the instance for the first time and reuses the same object in the all calls.
-
-			//Scoped lifetime services are created once per request within the scope.It is equivalent to Singleton 
-			//in the current scope.eg. in MVC it creates 1 instance per each http request but uses the same instance 
-			//in the other calls within the same web request.
-
-			//Transient lifetime services are created each time they are requested.
-			//This lifetime works best for lightweight, stateless services.
-
-			//services.AddTransient<IOperationTransient, Operation>();
-			//services.AddScoped<IOperationScoped, Operation>();
-			//services.AddSingleton<IOperationSingleton, Operation>();
-			//services.AddSingleton<IOperationSingletonInstance>(new Operation(Guid.Empty));
-			//services.AddTransient<OperationService, OperationService>();
 		}
 	}
 }
