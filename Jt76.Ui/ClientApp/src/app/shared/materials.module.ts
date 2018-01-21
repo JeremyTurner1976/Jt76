@@ -21,7 +21,6 @@ import {
 
 @NgModule({
   imports: [
-    CommonModule,
     MatButtonModule,
     MatMenuModule,
     MatToolbarModule,
