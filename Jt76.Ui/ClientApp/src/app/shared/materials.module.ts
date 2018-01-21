@@ -15,12 +15,15 @@ import {
   MatSelectModule,
   MatOptionModule,
   MatSlideToggleModule,
+  MatProgressSpinnerModule,
+
   ErrorStateMatcher,
   ShowOnDirtyErrorStateMatcher
 } from '@angular/material';
 
 @NgModule({
   imports: [
+    CommonModule,
     MatButtonModule,
     MatMenuModule,
     MatToolbarModule,
@@ -33,7 +36,8 @@ import {
     MatRadioModule,
     MatSelectModule,
     MatOptionModule,
-    MatSlideToggleModule  
+    MatSlideToggleModule,
+    MatProgressSpinnerModule
   ],
   exports: [
     MatButtonModule,
@@ -44,11 +48,13 @@ import {
     MatFormFieldModule,
     MatInputModule,
     MatDatepickerModule,
+    MatDatepicker,
     MatNativeDateModule,
     MatRadioModule,
     MatSelectModule,
     MatOptionModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     {
