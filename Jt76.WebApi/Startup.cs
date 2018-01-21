@@ -234,7 +234,8 @@
 			});
 
 			app.UseCors(corsPolicyBuilder =>
-				corsPolicyBuilder.WithOrigins("http://localhost:50006")
+				corsPolicyBuilder
+					.WithOrigins("http://localhost:57752")
 					.AllowAnyMethod()
 					.AllowAnyHeader()
 			);

@@ -1,6 +1,6 @@
 import { AppPage } from './app.po';
 
-describe('jt76.ui App', () => {
+describe('jt76.Ui App', () => {
   let page: AppPage;
 
   beforeEach(() => {
