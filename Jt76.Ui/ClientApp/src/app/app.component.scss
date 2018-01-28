@@ -1,3 +1,40 @@
+@import '../styles.scss';
+
+.content {
+  //TODO this has to be auto sized
+  border-radius: 0px;
+  height: 846px;
+}
+
+.dark-colors {
+
+}
+
+.light-colors {
+  background: whitesmoke !important;
+}
+
+.default-colors {
+  background: #E0E0E0 !important;
+}
+
+.copyright {
+  text-align: center;
+  font-size: 12px;
+  width: 100%;
+}
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+.nav-button {
+  margin: 0 3px 0 0;
+}
+
 .toolbar-spacer {
   flex: 1 1 auto;
 }

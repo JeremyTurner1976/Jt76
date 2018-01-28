@@ -1,84 +1,97 @@
 <div [class]="themeClass">
 
-<div class="wrapper">
-
-<div class="toolbar">
   <mat-toolbar color="primary">
-    <mat-toolbar-row>
+    
+    <button mat-button
+            routerLink="dashboard"
+            class="nav-button">
+      {{title}}
+    </button>
 
-      <button mat-button
-              routerLink="dashboard">
-        {{title}}
-      </button>
+    <span class="toolbar-spacer">
+    </span>
 
-      <span class="toolbar-spacer">
-      </span>
+    <button mat-button
+            class="nav-button"
+            routerLink="weather">
+      Weather
+    </button>
 
-      <button mat-button
-              routerLink="weather">
-        Weather
-      </button>
+    <button mat-button
+            routerLink="admin"
+            class="nav-button"
+            *ngIf="isAuthenticated">
+      Admin
+    </button>
 
-      <button mat-button
-              routerLink="admin"
-              *ngIf="isAuthenticated">
-        Admin
-      </button>
+    <a mat-button
+       class="nav-button link-button"
+       *ngIf="isAuthenticated"
+       href="http://localhost:58107/swagger">
+      Web Api
+    </a>
 
-      <a mat-button
-         *ngIf="isAuthenticated"
-         href="http://localhost:58107/swagger">
-        Web Api
-      </a>
+    <button mat-button
+            class="nav-button"
+            *ngIf="!isAuthenticated"
+            (click)="onLoginClick()">
+      Sign in
+    </button>
 
-      <button mat-button
-              *ngIf="!isAuthenticated"
-              (click)="onLoginClick()">
-        Sign in
-      </button>
-
-      <button *ngIf="isAuthenticated"
-              mat-icon-button
-              [matMenuTriggerFor]="toolbarUserMenu">
-        <mat-icon>person</mat-icon>
-      </button>
-      <mat-menu #toolbarUserMenu="matMenu">
-        <button mat-menu-item
-                (click)="onLogoutClick()">
-          <mat-icon>
-            power_settings_new
-          </mat-icon>
-          <span>
-            Logout
-          </span>
-        </button>
-      </mat-menu>
-
-      <button mat-icon-button
-              [matMenuTriggerFor]="toolbarSettingsMenu" >
+    <button *ngIf="isAuthenticated"
+            mat-icon-button
+            [matMenuTriggerFor]="toolbarUserMenu">
+      <mat-icon>person</mat-icon>
+    </button>
+    <mat-menu #toolbarUserMenu="matMenu">
+      <button mat-menu-item
+              (click)="onLogoutClick()">
         <mat-icon>
-          settings
+          power_settings_new
         </mat-icon>
+        <span>
+          Logout
+        </span>
       </button>
-      <mat-menu #toolbarSettingsMenu="matMenu">
-        <button mat-menu-item
-                (click)="setTheme('light')">
-          Light
-        </button>
-        <button mat-menu-item
-                (click)="setTheme('dark')">
-          Dark
-        </button>
-        <button mat-menu-item
-                (click)="setTheme('default')">
-          Default
-        </button>
-      </mat-menu>
+    </mat-menu>
 
-    </mat-toolbar-row>
+    <button mat-icon-button
+            [matMenuTriggerFor]="toolbarSettingsMenu">
+      <mat-icon>
+        settings
+      </mat-icon>
+    </button>
+    <mat-menu #toolbarSettingsMenu="matMenu">
+      <button mat-menu-item
+              (click)="setTheme('light')">
+        Light
+      </button>
+      <button mat-menu-item
+              (click)="setTheme('dark')">
+        Dark
+      </button>
+      <button mat-menu-item
+              (click)="setTheme('default')">
+        Default
+      </button>
+    </mat-menu>
+
   </mat-toolbar>
 
-  <router-outlet></router-outlet>
- 
+  <mat-card [class]="colorTheme()">
+    <mat-card-content>
+      <router-outlet></router-outlet>
+    </mat-card-content>
+  </mat-card>
+
+  <div class="footer">
+    <mat-toolbar color="primary">
+      <span class="copyright">
+        &#169; {{year}} - Jt76
+      </span>
+    </mat-toolbar>
+  </div>
 
 </div>
+
+
