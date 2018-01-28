@@ -1,21 +1,7 @@
-@import '../styles.scss';
-
 .content {
   //TODO this has to be auto sized
   border-radius: 0px;
   height: 846px;
-}
-
-.dark-colors {
-
-}
-
-.light-colors {
-  background: whitesmoke !important;
-}
-
-.default-colors {
-  background: #E0E0E0 !important;
 }
 
 .copyright {
@@ -24,11 +10,23 @@
   width: 100%;
 }
 
+.dark-colors {
+
+}
+
+.default-colors {
+  background: #E0E0E0 !important;
+}
+
 .footer {
   position: fixed;
   left: 0;
   bottom: 0;
   width: 100%;
+}
+
+.light-colors {
+  background: whitesmoke !important;
 }
 
 .nav-button {

@@ -12,8 +12,8 @@
     </span>
 
     <button mat-button
-            class="nav-button"
-            routerLink="weather">
+            routerLink="weather"
+            class="nav-button">
       Weather
     </button>
 
@@ -25,9 +25,9 @@
     </button>
 
     <a mat-button
-       class="nav-button link-button"
-       *ngIf="isAuthenticated"
-       href="http://localhost:58107/swagger">
+       href="http://localhost:58107/swagger"
+       class="nav-button"
+       *ngIf="isAuthenticated">
       Web Api
     </a>
 
