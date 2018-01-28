@@ -1,12 +1,3 @@
-import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
-import {
-  MatToolbarModule,
-
-  ErrorStateMatcher,
-  ShowOnDirtyErrorStateMatcher
-} from "@angular/material";
-
 @NgModule({
   imports: [
     CommonModule,
@@ -20,7 +11,8 @@ import {
       provide: ErrorStateMatcher,
       useClass: ShowOnDirtyErrorStateMatcher
     }
-  ],   
+  ],
   declarations: []
 })
-export class MaterialsModule { }
+export class MaterialsModule {
+}

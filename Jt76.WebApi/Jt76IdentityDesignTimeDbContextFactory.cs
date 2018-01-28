@@ -8,7 +8,8 @@
 	using Microsoft.Extensions.Configuration;
 	using Microsoft.Extensions.DependencyInjection;
 
-	public class Jt76IdentityDesignTimeDbContextFactory : IDesignTimeDbContextFactory<IdentityDbContext>
+	public class Jt76IdentityDesignTimeDbContextFactory :
+		IDesignTimeDbContextFactory<IdentityDbContext>
 	{
 		public IdentityDbContext CreateDbContext(string[] args)
 		{
@@ -20,7 +21,8 @@
 				.AddJsonFile("appsettings.Development.json", true)
 				.Build();
 
-			DbContextOptionsBuilder<IdentityDbContext> builder = new DbContextOptionsBuilder<IdentityDbContext>();
+			DbContextOptionsBuilder<IdentityDbContext> builder =
+				new DbContextOptionsBuilder<IdentityDbContext>();
 
 			builder.UseSqlServer(
 				configuration.GetConnectionString("IdentityConnection"),

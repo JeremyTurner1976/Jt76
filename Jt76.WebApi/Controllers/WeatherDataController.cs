@@ -20,6 +20,7 @@
 		public OpenWeatherService OpenWeatherService { get; set; }
 
 		/*
+		 * TODO
 			//For testing database is working
 			//int usersCount = userRepository.Count();
 			//int errorsCount = errorRepository.Count();

@@ -57,7 +57,8 @@
 		public IConfiguration Configuration { get; }
 		private IHostingEnvironment Environment { get; }
 
-		// This method gets called by the runtime. Use this method to add services to the container.
+		// This method gets called by the runtime. Use this 
+		// method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
 			// Add framework services.
@@ -67,7 +68,8 @@
 			(opts => opts.SerializerSettings.ContractResolver =
 				new CamelCasePropertyNamesContractResolver());
 
-			services.AddMemoryCache(opt => opt.ExpirationScanFrequency = TimeSpan.FromMinutes(5));
+			services.AddMemoryCache(opt => opt.ExpirationScanFrequency =
+				TimeSpan.FromMinutes(5));
 			services.AddOptions();
 
 			//Add swagger json file gen
@@ -78,7 +80,8 @@
 					new ApiKeyScheme
 					{
 						Name = "Authorization",
-						Description = "Login with your bearer authentication token. e.g. Bearer <auth-token>",
+						Description = "Login with your bearer " +
+						              "authentication token. e.g. Bearer <auth-token>",
 						In = "header",
 						Type = "apiKey"
 					});
@@ -113,10 +116,13 @@
 
 			//http://stackoverflow.com/questions/38138100/what-is-the-difference-between-services-addtransient-service-addscope-and-servi
 			//Singleton which creates a single instance throughout the application.
-			//It creates the instance for the first time and reuses the same object in the all calls.
+			//It creates the instance for the first time and reuses the same 
+			//object in the all calls.
 
-			//Scoped lifetime services are created once per request within the scope.It is equivalent to Singleton 
-			//in the current scope.eg. in MVC it creates 1 instance per each http request but uses the same instance 
+			//Scoped lifetime services are created once per request within the scope.
+			//It is equivalent to Singleton 
+			//in the current scope.eg. in MVC it creates 1 instance per 
+			//each http request but uses the same instance 
 			//in the other calls within the same web request.
 
 			//Transient lifetime services are created each time they are requested.

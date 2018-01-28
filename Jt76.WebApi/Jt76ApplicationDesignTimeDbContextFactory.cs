@@ -7,7 +7,8 @@ namespace Jt76.WebApi
 	using Microsoft.EntityFrameworkCore.Design;
 	using Microsoft.Extensions.Configuration;
 
-	public class Jt76ApplicationDesignTimeDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
+	public class Jt76ApplicationDesignTimeDbContextFactory :
+		IDesignTimeDbContextFactory<ApplicationDbContext>
 	{
 		public ApplicationDbContext CreateDbContext(string[] args)
 		{
@@ -19,7 +20,8 @@ namespace Jt76.WebApi
 				.AddJsonFile("appsettings.Development.json", true)
 				.Build();
 
-			DbContextOptionsBuilder<ApplicationDbContext> builder = new DbContextOptionsBuilder<ApplicationDbContext>();
+			DbContextOptionsBuilder<ApplicationDbContext> builder =
+				new DbContextOptionsBuilder<ApplicationDbContext>();
 
 			builder.UseSqlServer(
 				configuration.GetConnectionString("ApplicationConnection"),

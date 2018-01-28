@@ -150,8 +150,8 @@
 			if (!rolesToAdd.Any()) return Tuple.Create(true, new string[] { });
 
 			result = await _userManager.AddToRolesAsync(user, rolesToAdd);
-			return result.Succeeded 
-				? Tuple.Create(true, new string[] { })  
+			return result.Succeeded
+				? Tuple.Create(true, new string[] { })
 				: Tuple.Create(false, result.Errors.Select(e => e.Description).ToArray());
 		}
 
