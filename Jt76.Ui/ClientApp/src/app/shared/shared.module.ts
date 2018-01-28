@@ -1,3 +1,8 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule }
+  from '@angular/forms';
+
 //Shared Helpers
 import { AppCommonModule } from "./app-common.module";
 import { AppExceptionsModule } from "./app-exceptions.module";

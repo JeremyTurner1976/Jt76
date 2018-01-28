@@ -1,36 +1,39 @@
-<mat-toolbar color="primary">
-  <mat-toolbar-row>
-    <span>{{title}}</span>
+<div [class]="themeClass">
+  
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
 
-    <span class="toolbar-spacer"></span>
+      <button mat-button [routerLink]="['/dashboard']">
+        {{title}}
+      </button>
 
-    <button mat-button>Weather</button>
-    <button mat-button>Admin</button>
-    <button mat-button>Login</button>
-  </mat-toolbar-row>
-</mat-toolbar>
+      <span class="toolbar-spacer"></span>
 
-<router-outlet></router-outlet>
+      <button mat-raised-button [routerLink]="['/weather']">
+        Weather
+      </button>
+      <button mat-raised-button [routerLink]="['/admin']">
+        Admin
+      </button>
+      <a  mat-raised-button href="http://localhost:58107/swagger">
+        Web Api
+      </a>
+      <button mat-raised-button>
+        Login
+      </button>
 
-<ul>
-  <li>
-    <a [routerLink]="['/dashboard']">
-      Home
-    </a>
-  </li>
-  <li>
-    <a [routerLink]="['/weather']">
-      Local weather
-    </a>
-  </li>
-  <li>
-    <a [routerLink]="['/admin']">
-      Admin
-    </a>
-  </li>
-  <li>
-    <a href="http://localhost:58107/swagger">
-      Web Api
-    </a>
-  </li>
-</ul>
+    </mat-toolbar-row>
+  </mat-toolbar>
+
+  <router-outlet></router-outlet>
+
+  <ul>
+    <li>
+      <button mat-button (click)="setTheme('light')">Light</button>
+      <button mat-button (click)="setTheme('dark')">Dark</button>
+      <button mat-button (click)="setTheme('default')">Default</button>
+    </li>
+  </ul>
+
+
+</div>

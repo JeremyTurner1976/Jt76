@@ -37,6 +37,10 @@
 
 			//Must use ServiceProvider as DBContext is Scope Specific and Thrown Errors dispose of this context
 			UnitOfWork unitOfWork = _serviceProvider.GetService(typeof(UnitOfWork)) as UnitOfWork;
+			if (unitOfWork == null)
+			{
+				return;
+			}
 			unitOfWork.Errors.Add(error);
 			unitOfWork.SaveChanges();
 		}
@@ -70,13 +74,16 @@
 			LogLevel logLevel = LogLevel.None)
 		{
 			Error error = ErrorFactory.GetErrorFromException(exception, logLevel, logLevel.ToNameString()
-			                                                                      + ": " + exception.GetBaseException().Message);
+				+ ": " + exception.GetBaseException().Message);
 
 			//TODO handle application users and id, for now just logging to the System Admin 
 			//error = _errorDecorator.GetDecoratedModel(error, 1);
 
-			//Must use ServiceProvider as DBContext is Scope Specific and Thrown Errors dispose of this context
 			UnitOfWork unitOfWork = _serviceProvider.GetService(typeof(UnitOfWork)) as UnitOfWork;
+			if (unitOfWork == null)
+			{
+				return;
+			}
 			unitOfWork.Errors.Add(error);
 			unitOfWork.SaveChanges();
 		}

@@ -1,4 +1,5 @@
 import { AppComponent } from "./app.component";
+import { async, TestBed } from "@angular/core/testing";
 
 describe("AppComponent",
   () => {

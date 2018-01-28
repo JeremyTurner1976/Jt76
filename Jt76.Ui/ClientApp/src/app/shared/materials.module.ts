@@ -1,10 +1,60 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import {
+  MatButtonModule,
+  MatMenuModule,
+  MatToolbarModule,
+  MatIconModule,
+  MatCardModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatDatepickerModule,
+  MatDatepicker,
+  MatNativeDateModule,
+  MatRadioModule,
+  MatSelectModule,
+  MatOptionModule,
+  MatSlideToggleModule,
+  MatProgressSpinnerModule,
+
+  ErrorStateMatcher,
+  ShowOnDirtyErrorStateMatcher
+  } from '@angular/material';
+
 @NgModule({
   imports: [
     CommonModule,
-    MatToolbarModule
+    MatButtonModule,
+    MatMenuModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatRadioModule,
+    MatSelectModule,
+    MatOptionModule,
+    MatSlideToggleModule,
+    MatProgressSpinnerModule
   ],
   exports: [
-    MatToolbarModule
+    MatButtonModule,
+    MatMenuModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatDatepicker,
+    MatNativeDateModule,
+    MatRadioModule,
+    MatSelectModule,
+    MatOptionModule,
+    MatSlideToggleModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     {
@@ -14,5 +64,4 @@
   ],
   declarations: []
 })
-export class MaterialsModule {
-}
+export class MaterialsModule { }
