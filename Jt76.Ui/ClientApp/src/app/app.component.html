@@ -10,4 +10,28 @@
   </mat-toolbar-row>
 </mat-toolbar>
 
+<router-outlet></router-outlet>
+
+<ul>
+  <li>
+    <a [routerLink]="['/dashboard']" >
+      Home
+    </a>
+  </li>
+  <li>
+    <a [routerLink]="['/weather']" >
+      Local weather
+    </a>
+  </li>
+  <li>
+    <a [routerLink]="['/admin']" >
+      Admin
+    </a>
+  </li>
+  <li>
+    <a href="http://localhost:58107/swagger">
+      Web Api
+    </a>
+  </li>
+</ul>
 

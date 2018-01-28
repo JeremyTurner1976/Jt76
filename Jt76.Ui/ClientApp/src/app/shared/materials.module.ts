@@ -1,60 +1,19 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
 import {
-  MatButtonModule,
-  MatMenuModule,
   MatToolbarModule,
-  MatIconModule,
-  MatCardModule,
-  MatFormFieldModule,
-  MatInputModule,
-  MatDatepickerModule,
-  MatDatepicker,
-  MatNativeDateModule,
-  MatRadioModule,
-  MatSelectModule,
-  MatOptionModule,
-  MatSlideToggleModule,
-  MatProgressSpinnerModule,
 
   ErrorStateMatcher,
   ShowOnDirtyErrorStateMatcher
-} from '@angular/material';
+} from "@angular/material";
 
 @NgModule({
   imports: [
     CommonModule,
-    MatButtonModule,
-    MatMenuModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatRadioModule,
-    MatSelectModule,
-    MatOptionModule,
-    MatSlideToggleModule,
-    MatProgressSpinnerModule
+    MatToolbarModule
   ],
   exports: [
-    MatButtonModule,
-    MatMenuModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatDatepickerModule,
-    MatDatepicker,
-    MatNativeDateModule,
-    MatRadioModule,
-    MatSelectModule,
-    MatOptionModule,
-    MatSlideToggleModule,
-    MatProgressSpinnerModule
+    MatToolbarModule
   ],
   providers: [
     {

@@ -1,11 +1,15 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
 import {
   FormsModule,
   ReactiveFormsModule
-} from '@angular/forms';
+} from "@angular/forms";
 
-import { MaterialsModule } from './materials.module';
+//Shared Helpers
+import { AppCommonModule } from "./app-common.module";
+import { AppExceptionsModule } from "./app-exceptions.module";
+
+import { MaterialsModule } from "./materials.module";
 
 @NgModule({
   imports: [
@@ -16,7 +20,9 @@ import { MaterialsModule } from './materials.module';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    MaterialsModule
+    MaterialsModule,
+    AppCommonModule,
+    AppExceptionsModule
   ],
   declarations: []
 })
