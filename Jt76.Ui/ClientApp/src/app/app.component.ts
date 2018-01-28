@@ -7,8 +7,8 @@ import { Component, OnInit } from "@angular/core";
 })
 export class AppComponent implements OnInit {
   title = "Jt76.Ui";
-
   themeClass: string;
+  isAuthenticated = false;
 
   ngOnInit(): void {
     this.themeClass = "dark-theme";
@@ -18,5 +18,13 @@ export class AppComponent implements OnInit {
     console.log(theme);
     console.log(theme);
     this.themeClass = theme + "-theme";
+  }
+
+  onLoginClick() {
+    this.isAuthenticated = true;
+  }
+
+  onLogoutClick() {
+    this.isAuthenticated = false;
   }
 }

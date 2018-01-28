@@ -1,39 +1,84 @@
 <div [class]="themeClass">
-  
+
+<div class="wrapper">
+
+<div class="toolbar">
   <mat-toolbar color="primary">
     <mat-toolbar-row>
 
-      <button mat-button [routerLink]="['/dashboard']">
+      <button mat-button
+              routerLink="dashboard">
         {{title}}
       </button>
 
-      <span class="toolbar-spacer"></span>
+      <span class="toolbar-spacer">
+      </span>
 
-      <button mat-raised-button [routerLink]="['/weather']">
+      <button mat-button
+              routerLink="weather">
         Weather
       </button>
-      <button mat-raised-button [routerLink]="['/admin']">
+
+      <button mat-button
+              routerLink="admin"
+              *ngIf="isAuthenticated">
         Admin
       </button>
-      <a  mat-raised-button href="http://localhost:58107/swagger">
+
+      <a mat-button
+         *ngIf="isAuthenticated"
+         href="http://localhost:58107/swagger">
         Web Api
       </a>
-      <button mat-raised-button>
-        Login
+
+      <button mat-button
+              *ngIf="!isAuthenticated"
+              (click)="onLoginClick()">
+        Sign in
       </button>
+
+      <button *ngIf="isAuthenticated"
+              mat-icon-button
+              [matMenuTriggerFor]="toolbarUserMenu">
+        <mat-icon>person</mat-icon>
+      </button>
+      <mat-menu #toolbarUserMenu="matMenu">
+        <button mat-menu-item
+                (click)="onLogoutClick()">
+          <mat-icon>
+            power_settings_new
+          </mat-icon>
+          <span>
+            Logout
+          </span>
+        </button>
+      </mat-menu>
+
+      <button mat-icon-button
+              [matMenuTriggerFor]="toolbarSettingsMenu" >
+        <mat-icon>
+          settings
+        </mat-icon>
+      </button>
+      <mat-menu #toolbarSettingsMenu="matMenu">
+        <button mat-menu-item
+                (click)="setTheme('light')">
+          Light
+        </button>
+        <button mat-menu-item
+                (click)="setTheme('dark')">
+          Dark
+        </button>
+        <button mat-menu-item
+                (click)="setTheme('default')">
+          Default
+        </button>
+      </mat-menu>
 
     </mat-toolbar-row>
   </mat-toolbar>
 
   <router-outlet></router-outlet>
-
-  <ul>
-    <li>
-      <button mat-button (click)="setTheme('light')">Light</button>
-      <button mat-button (click)="setTheme('dark')">Dark</button>
-      <button mat-button (click)="setTheme('default')">Default</button>
-    </li>
-  </ul>
-
+ 
 
 </div>
