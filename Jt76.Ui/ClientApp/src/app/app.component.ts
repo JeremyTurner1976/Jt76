@@ -18,19 +18,15 @@ export class AppComponent implements OnInit {
 
   setTheme(theme) {
     this.theme = theme;
-    this.themeClass = theme + "-theme";
+    this.themeClass = this.colorTheme();
   }
 
   colorTheme() {
-    var standardClasses = "content mat-card";
-    switch (this.theme) {
-      case "dark":
-        return `dark-colors ${standardClasses}`;
-      case "default":
-        return `default-colors ${standardClasses}`;
-      case "light":
-        return `light-colors ${standardClasses}`;
-    }
+    return `${this.theme}-theme`;
+  }
+
+  contentTheme() {
+    return `${this.theme}-colors content`;
   }
 
   onLoginClick() {

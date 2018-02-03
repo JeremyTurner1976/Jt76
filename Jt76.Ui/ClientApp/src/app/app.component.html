@@ -1,6 +1,6 @@
-<div [class]="themeClass">
+<div [class]="colorTheme()">
 
-  <mat-toolbar color="primary">
+  <mat-toolbar color="primary" class="header">
     
     <button mat-button
             routerLink="dashboard"
@@ -24,12 +24,12 @@
       Admin
     </button>
 
-    <a mat-button
-       href="http://localhost:58107/swagger"
-       class="nav-button"
-       *ngIf="isAuthenticated">
+    <button mat-button
+            routerLink="webApi"
+            class="nav-button"
+            *ngIf="isAuthenticated">
       Web Api
-    </a>
+    </button>
 
     <button mat-button
             class="nav-button"
@@ -78,11 +78,9 @@
 
   </mat-toolbar>
 
-  <mat-card [class]="colorTheme()">
-    <mat-card-content>
-      <router-outlet></router-outlet>
-    </mat-card-content>
-  </mat-card>
+  <div [class]="contentTheme()">
+    <router-outlet></router-outlet>
+  </div>
 
   <div class="footer">
     <mat-toolbar color="primary">

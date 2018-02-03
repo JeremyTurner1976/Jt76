@@ -1,7 +1,12 @@
 .content {
-  //TODO this has to be auto sized
-  border-radius: 0px;
-  height: 846px;
+  position: fixed;
+  top: 64px;
+  left: 0px;
+  display: block;
+  border: none;
+  height: calc(100vh - 64px);
+  width: 100%;
+  padding: 15px 25px 15px 25px;
 }
 
 .copyright {
@@ -11,11 +16,12 @@
 }
 
 .dark-colors {
-
+  background: #424242 !important;
+  color: whitesmoke;
 }
 
 .default-colors {
-  background: #E0E0E0 !important;
+  background: #ECEFF1 !important;
 }
 
 .footer {
@@ -25,12 +31,19 @@
   width: 100%;
 }
 
+.header {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+}
+
 .light-colors {
-  background: whitesmoke !important;
+  background: #F5F5F5 !important;
 }
 
 .nav-button {
-  margin: 0 3px 0 0;
+  margin: 0 2px 0 2px;
 }
 
 .toolbar-spacer {

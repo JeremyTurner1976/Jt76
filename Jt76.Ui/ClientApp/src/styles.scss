@@ -1,8 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
-@import '../node_modules/bootstrap/scss/bootstrap';
-@import '~@angular/material/theming';
 
-// always include only once per project
+//@import '../node_modules/bootstrap/scss/bootstrap';
+
+@import '~@angular/material/theming';
 @include mat-core();
 
 // import our custom themes
@@ -20,4 +20,6 @@
 
 .light-theme {
     @include angular-material-theme($app-light-theme);
-  }
+}
+
+/*Global styles*/

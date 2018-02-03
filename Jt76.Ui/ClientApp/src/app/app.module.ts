@@ -6,8 +6,8 @@ import { RouterModule } from '@angular/router';
 
 
 //Shared components, services, and modules
-import { SharedModule }
-  from "./shared/shared.module";
+import { SharedModule } from
+  "./shared/shared.module";
 
 //Features
 import { AdminModule } from
