@@ -15,6 +15,7 @@ import { WebApiComponent } from
   './web-api/web-api.component';
 
 import { ErrorService } from './services/error.service';
+import { LogFilesComponent } from './log-files/log-files.component';
 
 @NgModule({
   imports: [
@@ -33,6 +34,10 @@ import { ErrorService } from './services/error.service';
         component: WebApiComponent
       },
       {
+        path: "logFiles",
+        component: LogFilesComponent
+      },
+      {
         path: 'admin',
         component: AdminComponent
       }
@@ -42,7 +47,8 @@ import { ErrorService } from './services/error.service';
     AdminComponent,
     ErrorsComponent,
     ErrorComponent,
-    WebApiComponent
+    WebApiComponent,
+    LogFilesComponent
   ],
   providers: [
     ErrorService
