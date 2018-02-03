@@ -22,4 +22,8 @@
     @include angular-material-theme($app-light-theme);
 }
 
-/*Global styles*/
+// global styles
+.page-title{
+  font-size: 1.5em !important;
+  font-weight: bold;
+}

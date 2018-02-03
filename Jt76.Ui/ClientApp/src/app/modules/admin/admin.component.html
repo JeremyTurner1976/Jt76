@@ -1,21 +1,55 @@
-<p>
-  admin works!
-</p>
 
-<ul>
-  <li>
-    <a mat-button [routerLink]="['/errors']">
-      Error List
-    </a>
-  </li>
-  <li>
-    <a mat-button [routerLink]="['/error/1']">
-      Error
-    </a>
-  </li>
-  <li>
-    <a mat-button [routerLink]="['/logFiles']">
+<mat-sidenav-container>
+  
+  <mat-sidenav mode="side"
+               opened="true"
+               class="side-nav">
+    <button mat-button
+            [routerLink]="['/admin/dashboard']">
+      Dashboard
+    </button>
+    <button mat-button
+            [routerLink]="['/admin/errors']">
+      Errors
+    </button>
+    <button mat-button
+            [routerLink]="['/admin/logFiles']">
       Log Files
-    </a>
-  </li>
-</ul>
+    </button>
+    <button mat-button
+            [routerLink]="['/admin/users']">
+      Users
+    </button>
+    <button mat-button
+            [routerLink]="['/admin/webApi']">
+      Web Api
+    </button>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="component-content">
+
+    <mat-card>
+      
+      <mat-card-header>
+        <div mat-card-avatar
+             class="admin-image"></div>
+        <mat-card-title class="page-title">
+          Admin
+        </mat-card-title>
+        <mat-card-subtitle>
+          Multiple common application services in one location
+        </mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <router-outlet></router-outlet>
+      </mat-card-content>
+
+    </mat-card>
+
+  </mat-sidenav-content>
+
+</mat-sidenav-container>
+
+
+

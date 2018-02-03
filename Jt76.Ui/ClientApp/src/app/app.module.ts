@@ -30,9 +30,18 @@ import { AppComponent } from
     BrowserAnimationsModule,
     HttpModule,
     RouterModule.forRoot([
-      { path: "dashboard", component: DashboardComponent },
-      { path: "", redirectTo: "dashboard", pathMatch: "full" },
-      { path: "**", redirectTo: "dashboard", pathMatch: "full" }
+      {
+        path: "dashboard",
+        component: DashboardComponent
+      },
+      {
+        path: "", redirectTo: "dashboard",
+        pathMatch: "full"
+      },
+      {
+        path: "**", redirectTo: "dashboard",
+        pathMatch: "full"
+      }
     ]),
     SharedModule,
     AdminModule,

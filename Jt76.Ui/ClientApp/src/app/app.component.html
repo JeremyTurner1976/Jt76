@@ -25,13 +25,6 @@
     </button>
 
     <button mat-button
-            routerLink="webApi"
-            class="nav-button"
-            *ngIf="isAuthenticated">
-      Web Api
-    </button>
-
-    <button mat-button
             class="nav-button"
             *ngIf="!isAuthenticated"
             (click)="onLoginClick()">

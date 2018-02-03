@@ -7,39 +7,66 @@ import { SharedModule } from
 
 import { AdminComponent } from
   './admin.component';
+import { DashboardComponent } from
+  './dashboard/dashboard.component';
 import { ErrorsComponent } from
   './errors/errors.component';
 import { ErrorComponent } from
   './errors/error/error.component';
+import { LogFilesComponent } from
+  './log-files/log-files.component';
+import { UsersComponent } from
+  './users/users.component';
 import { WebApiComponent } from
   './web-api/web-api.component';
 
-import { ErrorService } from './services/error.service';
-import { LogFilesComponent } from './log-files/log-files.component';
+import { ErrorService } from
+  './services/error.service';
+
 
 @NgModule({
   imports: [
     SharedModule,
     RouterModule.forChild([
       {
-        path: 'errors',
-        component: ErrorsComponent
-      },
-      {
-        path: 'error/:id',
-        component: ErrorComponent
-      },
-      {
-        path: "webApi",
-        component: WebApiComponent
-      },
-      {
-        path: "logFiles",
-        component: LogFilesComponent
-      },
-      {
         path: 'admin',
-        component: AdminComponent
+        component: AdminComponent,
+        children: [
+          {
+            path: "dashboard",
+            component: DashboardComponent
+          },
+          {
+            path: 'errors',
+            component: ErrorsComponent
+          },
+          {
+            path: 'error/:id',
+            component: ErrorComponent
+          },
+          {
+            path: "logFiles",
+            component: LogFilesComponent
+          },
+          {
+            path: "users",
+            component: UsersComponent
+          },
+          {
+            path: "webApi",
+            component: WebApiComponent
+          },
+          {
+            path: "",
+            redirectTo: "dashboard",
+            pathMatch: "full"
+          },
+          {
+            path: "**",
+            redirectTo: "dashboard",
+            pathMatch: "full"
+          }
+        ]
       }
     ])
   ],
@@ -48,7 +75,9 @@ import { LogFilesComponent } from './log-files/log-files.component';
     ErrorsComponent,
     ErrorComponent,
     WebApiComponent,
-    LogFilesComponent
+    LogFilesComponent,
+    UsersComponent,
+    DashboardComponent
   ],
   providers: [
     ErrorService
