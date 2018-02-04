@@ -39,10 +39,12 @@
 		public string[] LoadTextFromDirectoryFile(
 			DirectoryFolders directory, 
 			string strFileName = "",
-			int? recentLineCount = null,
+			int? trailingLineCount = null,
 			DateTime dtIdentifier = new DateTime())
 		{
-			string strFolderLocation = GetDirectoryFolderLocation(directory);
+			string strFolderLocation = 
+				GetDirectoryFolderLocation(
+					directory);
 
 			string strFileAndPathName;
 
@@ -57,18 +59,17 @@
 				                     ".txt";
 			}
 
-
 			if (strFileAndPathName.Contains(".txt") && File.Exists(strFileAndPathName))
 				lock (_lock)
 				{
-					if (recentLineCount is null)
+					if (trailingLineCount is null)
 					{
 						return File.ReadAllLines(strFileAndPathName);
 					}
 
 					return File.ReadLines(strFileAndPathName)
 						.Reverse()
-						.Take(recentLineCount ?? 0)
+						.Take(trailingLineCount ?? 0)
 						.Reverse()
 						.ToArray();
 				}
@@ -102,10 +103,13 @@
 			return true;
 		}
 
-		public string GetDirectoryFolderLocation(DirectoryFolders directory)
+		public string GetDirectoryFolderLocation(
+			DirectoryFolders directory,
+			string sharedApplicationLocation = null)
 		{
 			string strEnum = directory.ToNameString();
-			return executingDirectory + "\\App_Data\\" + strEnum;
+			return (sharedApplicationLocation ?? executingDirectory)
+				+ "App_Data\\" + strEnum;
 		}
 
 		public string GetDirectoryFileName(DirectoryFolders directory, string fileName = "", bool getMostRecent = true)
@@ -122,9 +126,14 @@
 			return $"{strFolderLocation}\\{fileName}";
 		}
 
-		public IEnumerable<FileInfo> GetDirectoryFiles(DirectoryFolders directory)
+		public IEnumerable<FileInfo> GetDirectoryFiles(
+			DirectoryFolders directory,
+			string sharedApplicationLocation = null)
 		{
-			string strFolderLocation = GetDirectoryFolderLocation(directory);
+			string strFolderLocation =
+				GetDirectoryFolderLocation(
+					directory,
+					sharedApplicationLocation);
 			return new DirectoryInfo(strFolderLocation).GetFiles()
 				.OrderByDescending(x => x.CreationTime);
 		}
@@ -145,11 +154,35 @@
 			return true;
 		}
 
-		private string GetDirectoryFileLocation(DirectoryFolders directory)
+		private string GetDirectoryFileLocation(
+			DirectoryFolders directory)
 		{
 			string strEnum = directory.ToNameString();
 			return GetDirectoryFolderLocation(directory) + "\\" + strEnum + "_" + DateTime.Now.ToString("yyyy-M-dd") +
 			       ".txt";
+		}
+
+		public string[] LoadTextFromFile(
+			string fileLocation, 
+			string fileName, 
+			int? trailingLineCount = null)
+		{
+			string pathAndFileLocation = Path.Combine(fileLocation, fileName);
+			if (fileName.Contains(".txt") && File.Exists(pathAndFileLocation))
+				lock (_lock)
+				{
+					if (trailingLineCount is null)
+					{
+						return File.ReadAllLines(pathAndFileLocation);
+					}
+
+					return File.ReadLines(pathAndFileLocation)
+						.Reverse()
+						.Take(trailingLineCount ?? 0)
+						.Reverse()
+						.ToArray();
+				}
+			throw new FileNotFoundException();
 		}
 	}
 }

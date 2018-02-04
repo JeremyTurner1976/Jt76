@@ -8,7 +8,9 @@
 
 	public interface IFileService
 	{
-		bool SaveTextToDirectoryFile(DirectoryFolders directory, string strMessage);
+		bool SaveTextToDirectoryFile(
+			DirectoryFolders directory, 
+			string strMessage);
 
 		string[] LoadTextFromDirectoryFile(
 			DirectoryFolders directory,
@@ -16,14 +18,31 @@
 			int? trailingLineCount = null,
 			DateTime dtIdentifier = new DateTime());
 
-		bool DeleteOldFilesInFolder(DirectoryFolders directory, int nFilesToSave);
+		string[] LoadTextFromFile(
+			string fileLocation,
+			string fileName, 
+			int? trailingLineCount = null);
 
-		bool DeleteFilesByDays(DirectoryFolders directory, int nDays);
+		bool DeleteOldFilesInFolder(
+			DirectoryFolders directory, 
+			int nFilesToSave);
 
-		string GetDirectoryFolderLocation(DirectoryFolders directory);
+		bool DeleteFilesByDays(
+			DirectoryFolders directory, 
+			int nDays);
 
-		string GetDirectoryFileName(DirectoryFolders directory, string fileName = "", bool getMostRecent = true);
+		string GetDirectoryFileName(
+			DirectoryFolders directory,
+			string fileName = "",
+			bool getMostRecent = true);
 
-		IEnumerable<FileInfo> GetDirectoryFiles(DirectoryFolders directory);
+		string GetDirectoryFolderLocation(
+			DirectoryFolders directory, 
+			string sharedApplicationLocation = null);
+
+		IEnumerable<FileInfo> GetDirectoryFiles(
+			DirectoryFolders directory, 
+			string sharedApplicationLocation = null);
+
 	}
 }

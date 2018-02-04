@@ -11,31 +11,51 @@
 	using Data.Factories;
 	using Data.Models;
 	using Microsoft.AspNetCore.Mvc;
+	using Microsoft.Extensions.Configuration;
+	using SQLitePCL;
 
 	[Route("api/v1/[controller]")]
 	public class LogFilesController : Controller
 	{
 		private readonly IFileService fileService;
+		private readonly IConfiguration configuration;
 
 		public LogFilesController(
-			IFileService _fileService)
+			IFileService _fileService,
+			IConfiguration _configuration)
 		{
 			fileService = _fileService;
+			configuration = _configuration;
 		}
 
 		[HttpGet]
-		public IEnumerable<object> Get()
+		public IEnumerable<LogFile> Get()
 		{
-			//TODO union with UI files, and handle those file locations in Gets
-			return fileService
+			IEnumerable<LogFile> databaseFiles = fileService
 				.GetDirectoryFiles(DirectoryFolders.Errors)
 				.Select(
 					fileInfo =>
-					new
+						new LogFile()
 						{
 							FileLocation = fileInfo.DirectoryName,
 							FileName = fileInfo.Name,
+							ApplicationName = "Database"
 						});
+			IEnumerable<LogFile> uiFiles = fileService
+				.GetDirectoryFiles(
+					DirectoryFolders.Errors,
+					configuration.GetValue<string>("SharedApplicationLocation"))
+				.Select(
+					fileInfo =>
+						new LogFile()
+						{
+							FileLocation = fileInfo.DirectoryName,
+							FileName = fileInfo.Name,
+							ApplicationName = "UI"
+						});
+
+			return databaseFiles.Union(uiFiles)
+				.OrderByDescending(file => file.FileName);
 		}
 
 		[HttpGet("GetFileLines")]
@@ -43,8 +63,8 @@
 			string fileLocation,
 			string fileName)
 		{
-			return fileService.LoadTextFromDirectoryFile(
-				DirectoryFolders.Errors,
+			return fileService.LoadTextFromFile(
+				fileLocation,
 				fileName);
 		}
 
@@ -54,8 +74,8 @@
 			string fileName,
 			int count)
 		{
-			return fileService.LoadTextFromDirectoryFile(
-				DirectoryFolders.Errors,
+			return fileService.LoadTextFromFile(
+				fileLocation,
 				fileName,
 				count);
 		}
