@@ -41,7 +41,7 @@ import { ErrorService } from
             component: ErrorsComponent
           },
           {
-            path: 'error/:id',
+            path: 'errors/:id',
             component: ErrorComponent
           },
           {

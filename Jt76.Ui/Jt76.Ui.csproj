@@ -32,6 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="ClientApp\src\app\app-api-interceptor\" />
     <Folder Include="ClientApp\src\app\modules\admin\services\" />
     <Folder Include="ClientApp\src\app\modules\weather\services\" />
   </ItemGroup>

@@ -1,15 +1,28 @@
 <div>
-  <p>
-    errors works!
+  
+  <p class="component-title">
+    Errors
   </p>
 
-  <ul>
-    <li>
-      <a mat-button [routerLink]="['/admin/error/1']">
-        Error
+  <mat-nav-list>
+    
+    <mat-list-item class="list-item"
+                   *ngFor="let error of errors">
+      
+      <a matLine
+         [routerLink]="['/admin/errors/', error.id]">
+        {{error.createdDate}} - {{error.message}}
       </a>
-    </li>
-  </ul>
+      <button mat-icon-button>
+        <mat-icon>info</mat-icon>
+      </button>
+
+    </mat-list-item>
+
+  </mat-nav-list>
+
+  <br/>
+
 </div>
 
 

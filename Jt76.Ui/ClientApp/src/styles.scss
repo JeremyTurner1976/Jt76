@@ -25,5 +25,14 @@
 // global styles
 .page-title{
   font-size: 1.5em !important;
+  font-weight: bolder;
+}
+
+.component-title {
+  font-size: 1.25em !important;
   font-weight: bold;
+}
+
+.list-item {
+  border: 1px solid black;
 }

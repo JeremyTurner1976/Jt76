@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-error',
@@ -7,9 +9,31 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ErrorComponent implements OnInit {
 
-  constructor() { }
+  id: number;  
+  error: any = {
+    createdDate: "",
+    createdBy: "",
+    errorLevel: "",
+    additionalInformation: "",
+    stackTrace: ""
+  };  
 
-  ngOnInit() {
+  constructor(
+    private route: ActivatedRoute,
+    private http: HttpClient) {
+
+    this.route.params.subscribe(
+      params => {
+        this.id = params.id;
+      }
+    );
   }
 
+  ngOnInit() {
+    this.http.get('v1/error/' + this.id)
+      .subscribe(
+        (data) => {
+          this.error = data;
+        });
+  }
 }
