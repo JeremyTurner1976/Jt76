@@ -1,3 +1,8 @@
+.admin-image {
+  background-image: url('../../../assets/images/jt76-avatar.jpg');
+  background-size: cover;
+}
+
 .component-content {
   position: fixed;
   top: 64px;
@@ -9,20 +14,29 @@
   padding: 15px 25px 15px 25px;
 }
 
+.mat-card-avatar{
+  height: 52px;
+  width: 100px;
+}
+
 .side-nav {
   position: fixed;
   top: 64px;
   left: 0px;
   width: 100px;
   height: calc(100vh - 64px);
+  border-right: 1px solid black;
 }
 
-.mat-card-avatar{
-  height: 52px;
+.side-nav-button {
   width: 100px;
+  border-bottom: 1px solid black;
 }
 
-.admin-image {
-  background-image: url('../../../assets/images/jt76-avatar.jpg');
-  background-size: cover;
+.side-nav-title {
+  margin: 0px;
+  padding: 3px;
+  text-align: center;
+  font-weight: bold;
+  border-bottom: 1px solid black;
 }

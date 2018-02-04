@@ -4,23 +4,33 @@
   <mat-sidenav mode="side"
                opened="true"
                class="side-nav">
+    
+    <p class="side-nav-title">
+      ADMIN
+    </p>
+
     <button mat-button
+            class="side-nav-button"
             [routerLink]="['/admin/dashboard']">
       Dashboard
     </button>
     <button mat-button
+            class="side-nav-button"
             [routerLink]="['/admin/errors']">
       Errors
     </button>
     <button mat-button
+            class="side-nav-button"
             [routerLink]="['/admin/logFiles']">
       Log Files
     </button>
     <button mat-button
+            class="side-nav-button"
             [routerLink]="['/admin/users']">
       Users
     </button>
     <button mat-button
+            class="side-nav-button"
             [routerLink]="['/admin/webApi']">
       Web Api
     </button>
