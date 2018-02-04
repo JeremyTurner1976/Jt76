@@ -20,8 +20,8 @@
 				ErrorLevel = Enum.GetName(typeof(LogLevel), errorLevel),
 				AdditionalInformation = additionalInformation,
 				StackTrace = e.StackTrace + Environment.NewLine + (e.InnerException == null
-					             ? "             |No inner exception| "
-					             : "             |Inner Exception| " + e.InnerException.ToEnhancedString())
+					? "             |No inner exception| "
+					: "             |Inner Exception| " + e.InnerException.ToEnhancedString())
 			};
 
 			return error;
@@ -33,7 +33,9 @@
 
 			stringBuilder.Append("<h3>Error</h3>");
 			stringBuilder.Append("|Message| " + e.Message + "<br/>");
+			stringBuilder.Append("|Error Level| " + e.ErrorLevel + "<br/>");
 			stringBuilder.Append("|Source| " + e.Source + "<br/>");
+			stringBuilder.Append("|Additional Information| " + e.AdditionalInformation + "<br/>");
 			stringBuilder.AppendLine("[Stack Trace|<br/>");
 			foreach (string item in ErrorExtensions.GetStackStraceStrings(e.StackTrace))
 				stringBuilder.AppendLine(

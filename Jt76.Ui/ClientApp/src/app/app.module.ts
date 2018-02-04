@@ -1,8 +1,8 @@
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpModule } from '@angular/http';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 //Shared components, services, and modules
@@ -18,6 +18,12 @@ import { DashboardComponent }
   from "./dashboard/dashboard.component";
 import { AppComponent } from
   "./app.component";
+
+//Injectables
+import { AppExceptionsHandler } from
+  "./shared/app-exceptions-handler";
+import { AppApiInterceptor } from
+  "./shared/app-api-interceptor";
 
 @NgModule({
   declarations: [
@@ -46,6 +52,17 @@ import { AppComponent } from
     SharedModule,
     AdminModule,
     WeatherModule
+  ],
+  providers: [
+    {
+      provide: ErrorHandler,
+      useClass: AppExceptionsHandler
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AppApiInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [
     AppComponent

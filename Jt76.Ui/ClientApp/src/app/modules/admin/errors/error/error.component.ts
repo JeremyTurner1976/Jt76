@@ -28,7 +28,7 @@ export class ErrorComponent implements OnInit {
   ngOnInit() {
     this.http.get('v1/error/GetAsHtml/' + this.id)
       .subscribe(
-      (data) => {
+        (data) => {
           this.error = data;
         });
   }

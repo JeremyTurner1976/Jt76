@@ -1,15 +1,15 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { NgModule }
+  from '@angular/core';
+import { CommonModule }
+  from '@angular/common';
 import { FormsModule, ReactiveFormsModule }
   from '@angular/forms';
 
 //Shared Helpers
-import { AppCommonModule } from "./app-common.module";
-import { AppExceptionsModule } from "./app-exceptions.module";
-import { AppApiInterceptor } from './app-api-interceptor.module';
-
-import { MaterialsModule } from "./materials.module";
+import { AppCommonModule }
+  from "./app-common.module";
+import { MaterialsModule }
+  from "./materials.module";
 
 @NgModule({
   imports: [
@@ -21,14 +21,7 @@ import { MaterialsModule } from "./materials.module";
     FormsModule,
     ReactiveFormsModule,
     MaterialsModule,
-    AppCommonModule,
-    AppExceptionsModule
-  ],
-  providers: [{
-      provide: HTTP_INTERCEPTORS,
-      useClass: AppApiInterceptor,
-      multi: true,
-    }
+    AppCommonModule
   ],
   declarations: []
 })

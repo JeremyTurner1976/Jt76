@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
+import { AppError } from '../../../shared/models/app-error';
 
 @Component({
   selector: 'app-errors',
@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ErrorsComponent implements OnInit {
 
-  errors: any = [];  
+  errors: AppError[] = new Array<AppError>();  
 
   constructor(private http: HttpClient) { }
 
@@ -17,18 +17,15 @@ export class ErrorsComponent implements OnInit {
     this.http.get('v1/error')
       .subscribe(
         (data) => {
-          this.errors = data;
-          this.errors.forEach(
-            error => {
-              error.isVisible = false;
+          var errors = data;
+          Object.defineProperty(
+            this,
+            "errors",
+            {
+              get() { return errors; },
+              set(value) { errors = value; }
             });
         });
-  }
-
-  showInfo(error) {
-    //here
-    console.log("here");
-    console.log(error);
   }
 
 }

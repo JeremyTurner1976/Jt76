@@ -48,7 +48,7 @@
 		[HttpPost]
 		public IActionResult Post([FromBody] Error value)
 		{
-			applicationData.Errors.Update(value);
+			applicationData.Errors.Add(value);
 			applicationData.SaveChanges();
 			return Ok();
 		}
@@ -56,7 +56,7 @@
 		[HttpPut("{id}")]
 		public IActionResult Put(int id, [FromBody] Error value)
 		{
-			applicationData.Errors.Add(value);
+			applicationData.Errors.Update(value);
 			applicationData.SaveChanges();
 			return Ok();
 		}
