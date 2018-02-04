@@ -39,9 +39,10 @@
 			//Clean up references
 
 			//Implement EntityAttributeFramework
+			//Implement Pdf and excel outputs
 
 			//Implement tests
-			//refactor
+			//refactor and add comments
 
 			//Implement prod deploy settings and test
 		 */
