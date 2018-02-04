@@ -1,11 +1,15 @@
-{{error.createdDate}}
-<br />
-{{error.createdBy}}
-<br />
-{{error.errorLevel}}
-<br />
-{{error.createdDate}}
-<br />
-{{error.additionalInformation}}
-<br />
-{{error.stackTrace}}
+<mat-card>
+      
+  <mat-card-content>
+    <div [innerHTML]="error.html" class="error-details"></div>
+  </mat-card-content>
+
+  <mat-card-actions>
+    <a mat-raised-button
+       color="primary"
+       [routerLink]="['/admin/errors']">
+      Back
+    </a>
+  </mat-card-actions>
+
+</mat-card>

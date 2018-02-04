@@ -29,10 +29,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Jt76.Common\Jt76.Common.csproj" />
+    <ProjectReference Include="..\Jt76.Data\Jt76.Data.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ClientApp\src\app\app-api-interceptor\" />
     <Folder Include="ClientApp\src\app\modules\admin\services\" />
     <Folder Include="ClientApp\src\app\modules\weather\services\" />
   </ItemGroup>

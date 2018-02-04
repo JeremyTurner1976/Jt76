@@ -1,27 +1,26 @@
-<div>
-  
+<div class="component-content">
+
   <p class="component-title">
     Errors
   </p>
 
   <mat-nav-list>
-    
+
     <mat-list-item class="list-item"
                    *ngFor="let error of errors">
-      
-      <a matLine
-         [routerLink]="['/admin/errors/', error.id]">
-        {{error.createdDate}} - {{error.message}}
-      </a>
-      <button mat-icon-button>
+      <div matLine
+           class="expanded-mat-line"
+           [routerLink]="['/admin/errors/', error.id]">
+        {{error.createdDate | date:"medium":"UTC-14"}} - {{error.createdBy}} - {{error.message}}
+      </div>
+      <button mat-icon-button
+              class="info-button"
+              [routerLink]="['/admin/errors/', error.id]">
         <mat-icon>info</mat-icon>
       </button>
-
     </mat-list-item>
 
   </mat-nav-list>
-
-  <br/>
 
 </div>
 

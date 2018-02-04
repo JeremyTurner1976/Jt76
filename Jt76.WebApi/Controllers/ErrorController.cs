@@ -1,7 +1,9 @@
 ﻿namespace Jt76.WebApi.Controllers
 {
 	using System.Collections.Generic;
+	using System.Linq;
 	using Data;
+	using Data.Factories;
 	using Data.Models;
 	using Microsoft.AspNetCore.Mvc;
 
@@ -16,21 +18,33 @@
 			this.applicationData = applicationData;
 		}
 
-		// GET api/values
 		[HttpGet]
-		public IEnumerable<Error> Get()
+		public IEnumerable<object> Get()
 		{
-			return applicationData.Errors.GetAll();
+			return applicationData.Errors
+				.GetAll()
+				.OrderByDescending(error => error.CreatedDate);
 		}
 
-		// GET api/values/5
 		[HttpGet("{id}")]
 		public Error Get(int id)
 		{
-			return applicationData.Errors.GetSingleOrDefault(x => x.Id == id);
+			return applicationData.Errors
+				.GetSingleOrDefault(x => x.Id == id);
 		}
 
-		// POST api/values
+		[HttpGet("GetAsHtml/{id}")]
+		public object GetAsHtml(int id)
+		{
+			return new
+			{
+				html = 
+					applicationData.Errors
+					.GetSingleOrDefault(x => x.Id == id)
+					.ToHtml()
+			};
+		}
+
 		[HttpPost]
 		public IActionResult Post([FromBody] Error value)
 		{
@@ -39,7 +53,6 @@
 			return Ok();
 		}
 
-		// PUT api/values/5
 		[HttpPut("{id}")]
 		public IActionResult Put(int id, [FromBody] Error value)
 		{
@@ -48,7 +61,6 @@
 			return Ok();
 		}
 
-		// DELETE api/values/5
 		[HttpDelete("{id}")]
 		public IActionResult Delete(int id, [FromBody] Error value)
 		{

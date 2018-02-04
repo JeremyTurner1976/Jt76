@@ -3,6 +3,7 @@
 	using System;
 	using System.IO;
 	using System.Runtime.InteropServices;
+	using System.Text;
 	using System.Threading.Tasks;
 	using Common.Extensions;
 	using Microsoft.Extensions.Logging;
@@ -24,6 +25,23 @@
 			};
 
 			return error;
+		}
+
+		public static string ToHtml(this Error e)
+		{
+			StringBuilder stringBuilder = new StringBuilder();
+
+			stringBuilder.Append("<h3>Error</h3>");
+			stringBuilder.Append("|Message| " + e.Message + "<br/>");
+			stringBuilder.Append("|Source| " + e.Source + "<br/>");
+			stringBuilder.AppendLine("[Stack Trace|<br/>");
+			foreach (string item in ErrorExtensions.GetStackStraceStrings(e.StackTrace))
+				stringBuilder.AppendLine(
+					"&nbsp;&nbsp;&nbsp;" 
+					+ item.Replace("<", "").Replace(">", "") 
+					+ "<br/>");
+
+			return "<div>" + stringBuilder + "</div>";
 		}
 
 		public static void ThrowException()

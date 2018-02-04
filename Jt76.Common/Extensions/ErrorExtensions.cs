@@ -99,7 +99,7 @@
 			return stringBuilder.ToString();
 		}
 
-		private static IEnumerable<string> GetStackStraceStrings(string strStackTrace)
+		public static IEnumerable<string> GetStackStraceStrings(string strStackTrace)
 		{
 			return strStackTrace == null
 				? new[] {""}

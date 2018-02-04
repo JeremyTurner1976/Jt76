@@ -10,9 +10,7 @@ namespace Jt76.Ui
 	using Common.Services.EmailService;
 	using Common.Services.FileService;
 	using Microsoft.AspNetCore.Builder;
-	using Microsoft.AspNetCore.Diagnostics;
 	using Microsoft.AspNetCore.Hosting;
-	using Microsoft.AspNetCore.Http;
 	using Microsoft.AspNetCore.SpaServices.AngularCli;
 	using Microsoft.Extensions.Configuration;
 	using Microsoft.Extensions.DependencyInjection;
@@ -100,30 +98,8 @@ namespace Jt76.Ui
 			//Development settings
 			if (Environment.IsDevelopment())
 			{
-				app.UseDeveloperExceptionPage();
-				app.UseDatabaseErrorPage();
-
 				loggerFactory.AddDebug(LogLevel.Information);
 				loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-
-				app.UseExceptionHandler(errorApp =>
-				{
-					errorApp.Run(async context =>
-					{
-						context.Response.StatusCode = 500;
-						//// or another Status according to Exception Type
-						context.Response.ContentType = "text/html";
-
-						IExceptionHandlerFeature error =
-							context.Features.Get<IExceptionHandlerFeature>();
-						if (error != null)
-							await context.Response.WriteAsync(error.Error.ToHtml());
-					});
-				});
-			}
-			else //production
-			{
-				app.UseExceptionHandler("/Home/Error");
 			}
 
 			app.UseStaticFiles();

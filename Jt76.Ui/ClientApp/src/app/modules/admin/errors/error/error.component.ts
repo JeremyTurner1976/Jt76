@@ -11,11 +11,7 @@ export class ErrorComponent implements OnInit {
 
   id: number;  
   error: any = {
-    createdDate: "",
-    createdBy: "",
-    errorLevel: "",
-    additionalInformation: "",
-    stackTrace: ""
+    html: ""
   };  
 
   constructor(
@@ -30,9 +26,9 @@ export class ErrorComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.http.get('v1/error/' + this.id)
+    this.http.get('v1/error/GetAsHtml/' + this.id)
       .subscribe(
-        (data) => {
+      (data) => {
           this.error = data;
         });
   }

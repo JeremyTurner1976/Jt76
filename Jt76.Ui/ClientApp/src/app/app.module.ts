@@ -5,7 +5,6 @@ import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
-
 //Shared components, services, and modules
 import { SharedModule } from
   "./shared/shared.module";
@@ -19,7 +18,6 @@ import { DashboardComponent }
   from "./dashboard/dashboard.component";
 import { AppComponent } from
   "./app.component";
-
 
 @NgModule({
   declarations: [
@@ -48,8 +46,6 @@ import { AppComponent } from
     SharedModule,
     AdminModule,
     WeatherModule
-  ],
-  providers: [
   ],
   bootstrap: [
     AppComponent
