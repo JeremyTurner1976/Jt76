@@ -1,17 +1,18 @@
-.info-button {
-  margin: -15px !important;
-}
-
 .component-content {
   padding-bottom: 70px;
 }
 
-.example-headers-align .mat-expansion-panel-header-title,
-.example-headers-align .mat-expansion-panel-header-description {
+.file-content {
+  padding: 15px;
+  border-radius: .5em;
+}
+
+.accordion-headers-align .mat-expansion-panel-header-title,
+.accordion-headers-align .mat-expansion-panel-header-description {
   flex-basis: 0;
 }
 
-.example-headers-align .mat-expansion-panel-header-description {
+.accordion-headers-align .mat-expansion-panel-header-description {
   justify-content: space-between;
   align-items: center;
 }

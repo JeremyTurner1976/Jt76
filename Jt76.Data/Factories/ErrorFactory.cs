@@ -32,11 +32,11 @@
 			StringBuilder stringBuilder = new StringBuilder();
 
 			stringBuilder.Append("<h3>Error</h3>");
-			stringBuilder.Append("|Message| " + e.Message + "<br/>");
-			stringBuilder.Append("|Error Level| " + e.ErrorLevel + "<br/>");
-			stringBuilder.Append("|Source| " + e.Source + "<br/>");
-			stringBuilder.Append("|Additional Information| " + e.AdditionalInformation + "<br/>");
-			stringBuilder.AppendLine("[Stack Trace|<br/>");
+			stringBuilder.Append("<strong>|Message|</strong> " + e.Message + "<br/>");
+			stringBuilder.Append("<strong>|Error Level|</strong> " + e.ErrorLevel + "<br/>");
+			stringBuilder.Append("<strong>|Source|</strong> " + e.Source + "<br/>");
+			stringBuilder.Append("<strong>|Additional Information|</strong> " + e.AdditionalInformation + "<br/>");
+			stringBuilder.AppendLine("<strong>[Stack Trace|</strong><br/>");
 			foreach (string item in ErrorExtensions.GetStackStraceStrings(e.StackTrace))
 				stringBuilder.AppendLine(
 					"&nbsp;&nbsp;&nbsp;" 

@@ -1,18 +1,12 @@
 ﻿namespace Jt76.WebApi.Controllers
 {
 	using System.Collections.Generic;
-	using System.IO;
 	using System.Linq;
-	using System.Net.NetworkInformation;
 	using Common.Enums;
 	using Common.Interfaces;
 	using Common.Services.FileService;
-	using Data;
-	using Data.Factories;
-	using Data.Models;
 	using Microsoft.AspNetCore.Mvc;
 	using Microsoft.Extensions.Configuration;
-	using SQLitePCL;
 
 	[Route("api/v1/[controller]")]
 	public class LogFilesController : Controller
@@ -35,7 +29,7 @@
 				.GetDirectoryFiles(DirectoryFolders.Errors)
 				.Select(
 					fileInfo =>
-						new LogFile()
+						new LogFile
 						{
 							FileLocation = fileInfo.DirectoryName,
 							FileName = fileInfo.Name,
@@ -47,7 +41,7 @@
 					configuration.GetValue<string>("SharedApplicationLocation"))
 				.Select(
 					fileInfo =>
-						new LogFile()
+						new LogFile
 						{
 							FileLocation = fileInfo.DirectoryName,
 							FileName = fileInfo.Name,

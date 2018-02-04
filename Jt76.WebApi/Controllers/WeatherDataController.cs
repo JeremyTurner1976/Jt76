@@ -21,22 +21,14 @@
 
 		/*
 		 * TODO
-			//For testing database is working
-			//int usersCount = userRepository.Count();
-			//int errorsCount = errorRepository.Count();
-
-			//For testing error loggers
-			//ErrorFactory.ThrowException();
-
-			//Client Side work left and geolocation left
-
-			//Implement a file getter page for developers (add webservice file Directory, output as html), and database errors
-			//Implement weather service
-			//Implement Client Side Errors
+			//Paging on Errors
 			//Implement toaster - Perhaps production error handler output there, but create much smaller html to display in the toaster (Message)
 
+			//implement user admin
 			//Implement Authentication - https://social.technet.microsoft.com/wiki/contents/articles/37169.secure-your-netcore-web-applications-using-identityserver-4.aspx
 			//Implement User Secrets Manager
+
+			//Implement weather service and GeoLocation
 		 */
 
 		[HttpGet("DarkSkyWeatherForecasts")]

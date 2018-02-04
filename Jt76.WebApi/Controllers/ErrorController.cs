@@ -45,6 +45,14 @@
 			};
 		}
 
+		[HttpGet("GetPaged")]
+		public IEnumerable<object> GetPaged()
+		{
+			return applicationData.Errors
+				.GetAll()
+				.OrderByDescending(error => error.CreatedDate);
+		}
+
 		[HttpPost]
 		public IActionResult Post([FromBody] Error value)
 		{
