@@ -36,7 +36,10 @@
 			return true;
 		}
 
-		public string[] LoadTextFromDirectoryFile(DirectoryFolders directory, string strFileName = "",
+		public string[] LoadTextFromDirectoryFile(
+			DirectoryFolders directory, 
+			string strFileName = "",
+			int? recentLineCount = null,
 			DateTime dtIdentifier = new DateTime())
 		{
 			string strFolderLocation = GetDirectoryFolderLocation(directory);
@@ -58,7 +61,16 @@
 			if (strFileAndPathName.Contains(".txt") && File.Exists(strFileAndPathName))
 				lock (_lock)
 				{
-					return File.ReadAllLines(strFileAndPathName);
+					if (recentLineCount is null)
+					{
+						return File.ReadAllLines(strFileAndPathName);
+					}
+
+					return File.ReadLines(strFileAndPathName)
+						.Reverse()
+						.Take(recentLineCount ?? 0)
+						.Reverse()
+						.ToArray();
 				}
 			throw new FileNotFoundException();
 		}

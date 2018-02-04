@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { LogFile } from '../models/log-file'
+import { LogFile } from "../models/log-file"
 
 @Component({
   selector: "app-log-files",
@@ -11,6 +11,7 @@ export class LogFilesComponent implements OnInit {
   step = -1;
   lineCount = 120;
   loadingDetails: Boolean = false;
+  lastFile = new LogFile();
   logFiles = new Array<LogFile>();
   fileLines = new Array<string>();
 
@@ -37,31 +38,41 @@ export class LogFilesComponent implements OnInit {
 
   logFileClicked(logFile) {
     if (!this.loadingDetails) {
-      this.http.get(
-          `v1/logFiles/GetLastFileLines?fileLocation=${logFile.fileLocation}&fileName=${logFile.fileName}&count=${this
-          .lineCount}`
-        )
-        .subscribe(
-          (data) => {
-            var fileLines = data;
-            Object.defineProperty(this,
-              "fileLines",
-              {
-                get() {
-                  return fileLines;
-                },
-                set(value) {
-                  fileLines = value;
-                }
-              });
-          });
+      if (!(this.lastFile.fileName === logFile.fileName
+        && this.lastFile.fileLocation === logFile.fileLocation)) {
+        this.fileLines = new Array<string>();
+        this.http.get(
+            "v1/logFiles/GetLastFileLines?"
+            + `fileLocation=${logFile.fileLocation}`
+            + `&fileName=${logFile.fileName}`
+            + `&count=${this.lineCount}`
+          )
+          .subscribe(
+            (data) => {
+              var fileLines = data;
+              Object.defineProperty(this,
+                "fileLines",
+                {
+                  get() {
+                    return fileLines;
+                  },
+                  set(value) {
+                    fileLines = value;
+                  }
+                });
+              this.lastFile = logFile;
+            });
+      }
     }
   }
 
   detailedLogFileClicked(logFile) {
     this.loadingDetails = true;
+    this.fileLines = new Array<string>();
     this.http.get(
-        `v1/logFiles/GetFileLines?fileLocation=${logFile.fileLocation}&fileName=${logFile.fileName}`
+      "v1/logFiles/GetFileLines?"
+      + `fileLocation=${logFile.fileLocation}`
+      + `&fileName=${logFile.fileName}`
       )
       .subscribe(
         (data) => {
@@ -82,22 +93,44 @@ export class LogFilesComponent implements OnInit {
 
   setStep(index: number) {
     this.step = index;
+    this.logFileClicked(
+      this.logFiles[this.step]);
   }
 
   nextStep() {
-    this.step++;
+    this.step =
+      this.step + 1 >= this.logFiles.length 
+      ? this.logFiles.length - 1
+        : this.step + 1;
+    this.logFileClicked(
+      this.logFiles[this.step]);
   }
 
   prevStep() {
-    this.step--;
+    this.step =
+      this.step - 1 <= 0
+        ? 0
+        : this.step - 1;
+    this.logFileClicked(
+      this.logFiles[this.step]);
   }
 
   firstStep() {
     this.step = 0;
+    this.logFileClicked(
+      this.logFiles[this.step]);
   }
 
   lastStep() {
-    this.step = this.logFiles.length - 1;
+    this.step =
+      this.logFiles.length - 1;
+    this.logFileClicked(
+      this.logFiles[this.step]);
   }
 
+  hideInfo() {
+    this.step = -1;
+    this.fileLines = new Array<string>();
+    this.lastFile = new LogFile();
+  }
 }

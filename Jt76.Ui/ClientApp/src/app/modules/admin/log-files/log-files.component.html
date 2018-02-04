@@ -9,6 +9,7 @@
     <mat-expansion-panel [expanded]="step === i"
                          (opened)="setStep(i)"
                          hideToggle="true"
+                         class="list-item"
                          (click)="logFileClicked(item);">
       <mat-expansion-panel-header>
         <mat-panel-title>
@@ -20,12 +21,15 @@
         </mat-panel-description>
       </mat-expansion-panel-header>
 
-      <div *ngFor="let line of fileLines">
-        {{line}}<br/>
+      <div (click)="hideInfo();">
+        <div *ngFor="let line of fileLines"
+             class="ellipsis">
+          {{line}}<br/>
+        </div>
       </div>
 
       <mat-action-row>
-        <button mat-button color="primary"
+        <button mat-button color="accent"
                 (click)="detailedLogFileClicked(item)">Detailed</button>
         <button mat-button color="warn"
                 (click)="firstStep()">First</button>

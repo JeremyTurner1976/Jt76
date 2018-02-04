@@ -13,6 +13,7 @@
 		string[] LoadTextFromDirectoryFile(
 			DirectoryFolders directory,
 			string strFileName = "",
+			int? trailingLineCount = null,
 			DateTime dtIdentifier = new DateTime());
 
 		bool DeleteOldFilesInFolder(DirectoryFolders directory, int nFilesToSave);

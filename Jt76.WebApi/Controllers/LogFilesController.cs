@@ -26,6 +26,7 @@
 		[HttpGet]
 		public IEnumerable<object> Get()
 		{
+			//TODO union with UI files, and handle those file locations in Gets
 			return fileService
 				.GetDirectoryFiles(DirectoryFolders.Errors)
 				.Select(
@@ -55,9 +56,8 @@
 		{
 			return fileService.LoadTextFromDirectoryFile(
 				DirectoryFolders.Errors,
-				fileName)
-				.TakeLast(count)
-				.ToArray();
+				fileName,
+				count);
 		}
 	}
 }
