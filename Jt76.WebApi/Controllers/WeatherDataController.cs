@@ -25,6 +25,7 @@
 			//Implement toaster - Perhaps production error handler output there, but create much smaller html to display in the toaster (Message)
 			//Implement loading screen and load guards like in the other app
 			//Implement sass variables
+			//Implement global event bus (theme)
 			//Implement local storage for settings
 			//Implement clean services and data store
 
