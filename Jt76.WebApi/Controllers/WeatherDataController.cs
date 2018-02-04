@@ -23,12 +23,27 @@
 		 * TODO
 			//Paging on Errors
 			//Implement toaster - Perhaps production error handler output there, but create much smaller html to display in the toaster (Message)
+			//Implement loading screen and load guards like in the other app
+			//Implement sass variables
+			//Implement local storage for settings
+			//Implement clean services and data store
 
-			//implement user admin
 			//Implement Authentication - https://social.technet.microsoft.com/wiki/contents/articles/37169.secure-your-netcore-web-applications-using-identityserver-4.aspx
+			//implement user admin
 			//Implement User Secrets Manager
 
 			//Implement weather service and GeoLocation
+
+			//Implement dashboards
+			//Implement phone layout
+			//Clean up references
+
+			//Implement EntityAttributeFramework
+
+			//Implement tests
+			//refactor
+
+			//Implement prod deploy settings and test
 		 */
 
 		[HttpGet("DarkSkyWeatherForecasts")]
