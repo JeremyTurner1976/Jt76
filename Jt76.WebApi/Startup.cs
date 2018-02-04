@@ -141,7 +141,7 @@
 
 			//Add custom services
 			services.AddTransient<IEmailService, EmailService>();
-			services.AddSingleton<IFileService, FileService>();
+			services.AddTransient<IFileService, FileService>();
 			services.AddSingleton<IDatabaseLoggingService, DatabaseLoggingService>();
 
 			// DB Creation and Seeding

@@ -1,6 +1,7 @@
 ﻿namespace Jt76.Common.Services.FileService
 {
 	using System;
+	using System.Collections.Generic;
 	using System.IO;
 	using System.Linq;
 	using Enums;
@@ -107,6 +108,13 @@
 				return fileInfo?.FullName;
 			}
 			return $"{strFolderLocation}\\{fileName}";
+		}
+
+		public IEnumerable<FileInfo> GetDirectoryFiles(DirectoryFolders directory)
+		{
+			string strFolderLocation = GetDirectoryFolderLocation(directory);
+			return new DirectoryInfo(strFolderLocation).GetFiles()
+				.OrderByDescending(x => x.CreationTime);
 		}
 
 		private bool Init()

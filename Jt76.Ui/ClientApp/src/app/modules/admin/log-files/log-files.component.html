@@ -1,3 +1,44 @@
-<p>
-  log-files works!
-</p>
+<div class="component-content">
+
+  <p class="component-title">
+    Log Files
+  </p>
+
+  <mat-accordion class="example-headers-align"
+                 *ngFor="let item of logFiles; let i = index">
+    <mat-expansion-panel [expanded]="step === i"
+                         (opened)="setStep(i)"
+                         hideToggle="true"
+                         (click)="logFileClicked(item);">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{item.fileName}}
+        </mat-panel-title>
+        <mat-panel-description>
+          DB Error Logs
+          <mat-icon>ant-book</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <div *ngFor="let line of fileLines">
+        {{line}}<br/>
+      </div>
+
+      <mat-action-row>
+        <button mat-button color="primary"
+                (click)="detailedLogFileClicked(item)">Detailed</button>
+        <button mat-button color="warn"
+                (click)="firstStep()">First</button>
+        <button mat-button color="warn"
+                (click)="prevStep()">Previous</button>
+        <button mat-button color="warn"
+                (click)="nextStep()">Next</button>
+        <button mat-button color="warn"
+                (click)="lastStep()">Last</button>
+      </mat-action-row>
+
+    </mat-expansion-panel>
+
+  </mat-accordion>
+
+</div>
