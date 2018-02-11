@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { LogFile } from "../models/log-file"
+import { MatSnackBar, MatSnackBarConfig, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material';
 
 @Component({
   selector: "app-log-files",
@@ -15,7 +16,7 @@ export class LogFilesComponent implements OnInit {
   logFiles = new Array<LogFile>();
   fileLines = new Array<string>();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, public snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.http.get("v1/logFiles")
@@ -37,6 +38,15 @@ export class LogFilesComponent implements OnInit {
   }
 
   logFileClicked(logFile) {
+
+    let config = new MatSnackBarConfig();
+    config.verticalPosition = 'bottom';
+    config.horizontalPosition = 'right';
+    config.duration = 1000;
+    config.panelClass = ['app-notification'];
+
+    this.snackBar.open('Log File Loaded', null, config);
+
     if (!this.loadingDetails) {
       if (!(this.lastFile.fileName === logFile.fileName
         && this.lastFile.fileLocation === logFile.fileLocation)) {

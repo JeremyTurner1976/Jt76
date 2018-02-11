@@ -19,6 +19,7 @@ import {
   MatSelectModule,
   MatSidenavModule,
   MatSlideToggleModule,
+  MatSnackBarModule,
   MatToolbarModule,
 
   ErrorStateMatcher,
@@ -45,6 +46,7 @@ import {
     MatSelectModule,
     MatSidenavModule,
     MatSlideToggleModule,
+    MatSnackBarModule,
     MatToolbarModule
   ],
   exports: [
@@ -66,6 +68,7 @@ import {
     MatSelectModule,
     MatSidenavModule,
     MatSlideToggleModule,
+    MatSnackBarModule,
     MatToolbarModule
   ],
   providers: [

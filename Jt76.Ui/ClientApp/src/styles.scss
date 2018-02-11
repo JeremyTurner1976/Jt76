@@ -23,9 +23,14 @@
 }
 
 // global styles
-.page-title{
-  font-size: 1.5em !important;
+.app-notification {
+  z-index: 100000;
+  border-radius: .5em !important;
+  background: whitesmoke;
+  color: #37474F;
+  border: 1px solid #37474F;
   font-weight: bolder;
+  text-align: center;
 }
 
 .component-title {
