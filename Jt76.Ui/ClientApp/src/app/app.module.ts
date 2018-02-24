@@ -1,11 +1,14 @@
-import { NgModule, ErrorHandler } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpModule } from '@angular/http';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
+import { NgModule, ErrorHandler } from "@angular/core";
+import { BrowserModule } from "@angular/platform-browser";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { HttpModule } from "@angular/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { RouterModule } from "@angular/router";
 
-//Shared components, services, and modules
+//npm additions
+import { Ng2Webstorage } from "ngx-webstorage";
+
+//shared
 import { SharedModule } from
   "./shared/shared.module";
 
@@ -21,9 +24,9 @@ import { AppComponent } from
 
 //Injectables
 import { AppExceptionsHandler } from
-  "./shared/app-exceptions-handler";
+  "./app-exceptions-handler";
 import { AppApiInterceptor } from
-  "./shared/app-api-interceptor";
+  "./app-api-interceptor";
 
 @NgModule({
   declarations: [
@@ -49,6 +52,12 @@ import { AppApiInterceptor } from
         pathMatch: "full"
       }
     ]),
+    Ng2Webstorage.forRoot(
+      {
+        prefix: "jt76Storage",
+        separator: "|",
+        caseSensitive: false
+      }),
     SharedModule,
     AdminModule,
     WeatherModule

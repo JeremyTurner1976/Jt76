@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
 import {
   MatButtonModule,
   MatCardModule,
@@ -24,7 +24,7 @@ import {
 
   ErrorStateMatcher,
   ShowOnDirtyErrorStateMatcher
-  } from '@angular/material';
+  } from "@angular/material";
 
 @NgModule({
   imports: [

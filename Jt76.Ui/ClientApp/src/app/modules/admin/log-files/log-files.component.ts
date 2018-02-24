@@ -1,7 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { LogFile } from "../models/log-file"
-import { MatSnackBar, MatSnackBarConfig, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material';
+import { LogFile } from "../models/log-file";
+import { AlertService }
+  from "../../../shared/services/alert.service";
 
 @Component({
   selector: "app-log-files",
@@ -16,7 +17,9 @@ export class LogFilesComponent implements OnInit {
   logFiles = new Array<LogFile>();
   fileLines = new Array<string>();
 
-  constructor(private http: HttpClient, public snackBar: MatSnackBar) { }
+  constructor(
+    private http: HttpClient,
+    public alertService: AlertService) { }
 
   ngOnInit() {
     this.http.get("v1/logFiles")
@@ -39,37 +42,26 @@ export class LogFilesComponent implements OnInit {
 
   logFileClicked(logFile) {
 
-    let config = new MatSnackBarConfig();
-    config.verticalPosition = 'bottom';
-    config.horizontalPosition = 'right';
-    config.duration = 1000;
-    config.panelClass = ['app-notification'];
-
-    this.snackBar.open('Log File Loaded', null, config);
-
     if (!this.loadingDetails) {
+
       if (!(this.lastFile.fileName === logFile.fileName
         && this.lastFile.fileLocation === logFile.fileLocation)) {
+
         this.fileLines = new Array<string>();
         this.http.get(
-            "v1/logFiles/GetLastFileLines?"
-            + `fileLocation=${logFile.fileLocation}`
-            + `&fileName=${logFile.fileName}`
-            + `&count=${this.lineCount}`
+            "v1/logFiles/GetLastFileLines?" +
+            `fileLocation=${logFile.fileLocation}` +
+            `&fileName=${logFile.fileName}` +
+            `&count=${this.lineCount}`
           )
           .subscribe(
             (data) => {
-              var fileLines = data;
-              Object.defineProperty(this,
-                "fileLines",
-                {
-                  get() {
-                    return fileLines;
-                  },
-                  set(value) {
-                    fileLines = value;
-                  }
-                });
+
+              this.alertService.debug(
+                "Log File Loaded",
+                `${logFile.fileName}`);
+
+              this.fileLines = ((data) as string[]);
               this.lastFile = logFile;
             });
       }

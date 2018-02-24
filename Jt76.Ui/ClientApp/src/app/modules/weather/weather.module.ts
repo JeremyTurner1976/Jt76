@@ -1,27 +1,27 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { RouterModule } from "@angular/router";
 
 import { SharedModule } from
-  '../../shared/shared.module';
+  "../../shared/shared.module";
 
-import { WeatherComponent } from './weather.component';
+import { WeatherComponent } from "./weather.component";
 import { WeatherPanelComponent }
-  from './weather-panel/weather-panel.component';
+  from "./weather-panel/weather-panel.component";
 
 import { WeatherService } from
-  './services/weather.service';
+  "./services/weather.service";
 
 @NgModule({
   imports: [
     SharedModule,
     RouterModule.forChild([
       {
-        path: 'weather-panel',
+        path: "weather-panel",
         component: WeatherPanelComponent
       },
       {
-        path: 'weather',
+        path: "weather",
         component: WeatherComponent
       }
     ])

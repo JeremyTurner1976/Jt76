@@ -1,17 +1,36 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { AppError } from "./models/app-error";
-import { ErrorHandler, Injectable } from '@angular/core';
+import {
+  ErrorHandler,
+  Inject,
+  Injector,
+  Injectable
+} from "@angular/core";
+import {
+  HttpClient,
+  HttpErrorResponse
+} from "@angular/common/http";
+import { AppError }
+  from "./modules/admin/models/app-error";
+import { AlertService }
+  from "./shared/services/alert.service";
 
 @Injectable()
 export class AppExceptionsHandler implements ErrorHandler {
 
-  constructor(private http: HttpClient) {  }
+  constructor(
+    private http: HttpClient,
+    @Inject(Injector) private injector: Injector) {
+  }
+
+  //Get alert service to avoid cyclic dependency
+  private get alertService(): AlertService {
+    return this.injector.get(AlertService);
+  }
 
   handleError(error: Error) {
     const appError = new AppError();
 
     if (error instanceof HttpErrorResponse) {
-      console.error('Http Error: ', error);
+      console.error("Http Error: ", error);
       appError.message = error.message;
       appError.source = error.statusText;
       appError.errorLevel = "Error";
@@ -27,7 +46,7 @@ export class AppExceptionsHandler implements ErrorHandler {
       }
 
     } else {
-      console.error('Application Error: ', error);
+      console.error("Application Error: ", error);
       appError.message = error.message;
       appError.source = error.name;
       appError.errorLevel = "Error";
@@ -37,13 +56,17 @@ export class AppExceptionsHandler implements ErrorHandler {
       appError.createdDate = new Date();   
     }
 
-    this.http.post('v1/error', appError)
+    this.alertService.error(
+      appError.source,
+      appError.message);
+
+    this.http.post("v1/error", appError)
       .subscribe(
+        () => {},
         () => {
-          console.log("Error Saved");
-        },
-        () => {
-          console.log("Error failed to save.");
+          this.alertService.error(
+            appError.source,
+            "Error did not save");
         });
   }
 }

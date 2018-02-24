@@ -1,8 +1,8 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { WebApiComponent } from './web-api.component';
+import { WebApiComponent } from "./web-api.component";
 
-describe('WebApiComponent', () => {
+describe("WebApiComponent", () => {
   let component: WebApiComponent;
   let fixture: ComponentFixture<WebApiComponent>;
 
@@ -19,7 +19,7 @@ describe('WebApiComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

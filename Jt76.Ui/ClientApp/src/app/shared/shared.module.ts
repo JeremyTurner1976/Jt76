@@ -1,29 +1,45 @@
 import { NgModule }
-  from '@angular/core';
+  from "@angular/core";
 import { CommonModule }
-  from '@angular/common';
-import { FormsModule, ReactiveFormsModule }
-  from '@angular/forms';
+  from "@angular/common";
+import {
+  FormsModule,
+  ReactiveFormsModule
+} from "@angular/forms";
 
-//Shared Helpers
-import { AppCommonModule }
-  from "./app-common.module";
+//shared components
+import { AlertComponent } from
+  "./components/alert/alert.component";
+
+//shared services
+import { AlertService }
+  from "./services/alert.service";
+
+//module wrappers
 import { MaterialsModule }
   from "./materials.module";
 
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    MaterialsModule
   ],
   exports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    MaterialsModule,
-    AppCommonModule
+    MaterialsModule
   ],
-  declarations: []
+  declarations: [
+    AlertComponent
+  ],
+  providers: [
+    AlertService
+  ],
+  entryComponents: [
+    AlertComponent
+  ]
 })
 export class SharedModule {
 }

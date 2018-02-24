@@ -17,5 +17,6 @@ export const environment = {
     rxjs: packageJson.dependencies.rxjs,
     angularCli: packageJson.devDependencies['@angular/cli'],
     typescript: packageJson.devDependencies['typescript']
-  }
+  },
+  logLevel: "verbose"
 };

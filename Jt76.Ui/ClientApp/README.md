@@ -55,3 +55,6 @@ npm install --save @angular-devkit/core
 --Once this is all set up
 You can delete ClientApp Folder, goto Jt76.Ui and ng new ClientApp -> npm install THEN Delete NodeModules in the UI Project as this is kept at the base level of the solution
 
+## Webstorage services, offers session local and volatile storage types
+Json serialized object storage via [Webstorage](https://www.npmjs.com/package/ngx-webstorage).
+Note: Array storage may require an overwrite. ie array.push(); array = array;

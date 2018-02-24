@@ -1,35 +1,37 @@
 import { NgModule } from
-  '@angular/core';
+  "@angular/core";
 import { RouterModule } from
-  '@angular/router';
+  "@angular/router";
+
 import { SharedModule } from
-  '../../shared/shared.module';
+  "../../shared/shared.module";
 
 import { AdminComponent } from
-  './admin.component';
+  "./admin.component";
 import { DashboardComponent } from
-  './dashboard/dashboard.component';
+  "./dashboard/dashboard.component";
 import { ErrorsComponent } from
-  './errors/errors.component';
+  "./errors/errors.component";
 import { ErrorComponent } from
-  './errors/error/error.component';
+  "./errors/error/error.component";
 import { LogFilesComponent } from
-  './log-files/log-files.component';
+  "./log-files/log-files.component";
 import { UsersComponent } from
-  './users/users.component';
+  "./users/users.component";
 import { WebApiComponent } from
-  './web-api/web-api.component';
+  "./web-api/web-api.component";
 
 import { ErrorService } from
-  './services/error.service';
-
+  "./services/error.service";
+import { LogFileService } from
+  "./services/log-file.service";
 
 @NgModule({
   imports: [
     SharedModule,
     RouterModule.forChild([
       {
-        path: 'admin',
+        path: "admin",
         component: AdminComponent,
         children: [
           {
@@ -37,11 +39,11 @@ import { ErrorService } from
             component: DashboardComponent
           },
           {
-            path: 'errors',
+            path: "errors",
             component: ErrorsComponent
           },
           {
-            path: 'errors/:id',
+            path: "errors/:id",
             component: ErrorComponent
           },
           {
@@ -80,7 +82,8 @@ import { ErrorService } from
     DashboardComponent
   ],
   providers: [
-    ErrorService
+    ErrorService,
+    LogFileService
   ]
 })
 export class AdminModule { }

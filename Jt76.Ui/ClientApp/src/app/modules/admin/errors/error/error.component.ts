@@ -1,12 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import { HttpClient } from "@angular/common/http";
+import { AlertService } from "../../../../shared/services/alert.service";
 
 @Component({
-  selector: 'app-error',
-  templateUrl: './error.component.html',
-  styleUrls: ['./error.component.scss']
+  selector: "app-error",
+  templateUrl: "./error.component.html",
+  styleUrls: ["./error.component.scss"]
 })
+
 export class ErrorComponent implements OnInit {
 
   id: number;  
@@ -16,7 +18,8 @@ export class ErrorComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private http: HttpClient) {
+    private http: HttpClient,
+    private alertService: AlertService) {
 
     this.route.params.subscribe(
       params => {
@@ -26,10 +29,13 @@ export class ErrorComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.http.get('v1/error/GetAsHtml/' + this.id)
+    this.http.get("v1/error/GetAsHtml/" + this.id)
       .subscribe(
         (data) => {
           this.error = data;
+
+          this.alertService.debug(
+            "Error Loaded");
         });
   }
 }
