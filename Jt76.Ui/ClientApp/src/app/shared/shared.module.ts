@@ -16,6 +16,8 @@ import { AlertService }
   from "./services/alert.service";
 import { AppLocalStorageService }
   from "./services/app-local-storage.service";
+import { BaseService }
+  from "./abstract/base.service";
 
 //module wrappers
 import { MaterialsModule }
@@ -38,7 +40,8 @@ import { MaterialsModule }
   ],
   providers: [
     AlertService,
-    AppLocalStorageService
+    AppLocalStorageService,
+    BaseService
   ],
   entryComponents: [
     AlertComponent
