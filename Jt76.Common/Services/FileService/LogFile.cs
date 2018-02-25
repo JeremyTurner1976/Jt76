@@ -25,11 +25,5 @@
 			get;
 			set;
 		}
-
-		public string[] FullFile
-		{
-			get;
-			set;
-		} = new string[0];
 	}
 }

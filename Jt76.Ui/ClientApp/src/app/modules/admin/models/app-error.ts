@@ -11,7 +11,6 @@ export interface IAppError {
   updatedDate: Date;
 }
 
-
 export class AppError implements IAppError {
   id = 0;
   message = "";
