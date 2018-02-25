@@ -10,7 +10,7 @@ import { ErrorService } from "../services/error.service";
 
 export class ErrorsComponent implements OnInit {
   errors: AppError[] = new Array<AppError>();
-  loading: boolean = false;
+  countIsZero: boolean = false;
 
   constructor(
     private errorService: ErrorService
@@ -18,27 +18,27 @@ export class ErrorsComponent implements OnInit {
 
   ngOnInit() {
     setTimeout(() => {
-      this.loading = true;
       this.errorService.getAll().subscribe(
         (data: IAppError[]) => {
           this.errors = data;
-          this.loading = false;
+          this.countIsZero = data.length === 0;
         });
     });
   }
 
   refresh() {
-    this.loading = true;
+    this.errors = new Array<AppError>();
     this.errorService.refreshAll().subscribe(
       (data: IAppError[]) => {
         this.errors = data;
-        this.loading = false;
+        this.countIsZero = data.length === 0;
       });
   }
 
   clearAll() {
     this.errorService.deleteAll(this.errors);
     this.errors = new Array<AppError>();
+    this.countIsZero = true;
   }
 }
 

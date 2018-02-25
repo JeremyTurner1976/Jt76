@@ -32,7 +32,7 @@ export class ErrorService {
       (this.dataUrl + "/deleteAll")).subscribe(
       () => {
           this.alertService.info("All items deleted");
-        });
+      });
   }
 
   getAll(refresh: boolean = false): Observable<IAppError[]> {
@@ -53,7 +53,6 @@ export class ErrorService {
     return this.http.get(this.dataUrl)
       .map(
       (data) => {
-        console.log(data);
           const response = ((data) as AppError[]);
 
           this.appLocalStorageService.saveLocalValue(

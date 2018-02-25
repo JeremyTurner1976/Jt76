@@ -5,7 +5,8 @@
     <span class="action-button">
       <a mat-raised-button
          color="warning"
-         (click)="clearAll()">
+         (click)="clearAll()"
+         *ngIf="!countIsZero">
         Clear All
       </a>
       <a mat-raised-button
@@ -16,23 +17,38 @@
     </span>
   </p>
 
-  <mat-nav-list>
+  <div *ngIf="errors.length || countIsZero;else loading">
+    <mat-nav-list>
 
-    <mat-list-item class="list-item"
-                   *ngFor="let error of errors">
-      <div matLine
-           class="expanded-mat-line"
-           [routerLink]="['/admin/errors/', error.id]">
-        {{error.createdDate | date:"medium":"UTC-14"}} - {{error.createdBy}} - {{error.message}}
-      </div>
-      <button mat-icon-button
-              class="info-button"
-              [routerLink]="['/admin/errors/', error.id]">
-        <mat-icon>info</mat-icon>
-      </button>
-    </mat-list-item>
+      <mat-list-item class="list-item"
+                     *ngFor="let error of errors">
+        <div matLine
+             class="expanded-mat-line"
+             [routerLink]="['/admin/errors/', error.id]">
+          {{error.createdDate | date:"medium":"UTC-14"}} - {{error.createdBy}} - {{error.message}}
+        </div>
+        <button mat-icon-button
+                class="info-button"
+                [routerLink]="['/admin/errors/', error.id]">
+          <mat-icon>info</mat-icon>
+        </button>
+      </mat-list-item>
 
-  </mat-nav-list>
+    </mat-nav-list>
+  </div>
+  <ng-template #loading>
+    <mat-progress-spinner
+      color="primary"
+      mode="indeterminate">
+    </mat-progress-spinner>
+  </ng-template>
+
+
+  <div *ngIf="countIsZero">
+    <p class="component-detail">
+      No errors found
+    </p>
+  </div>
 
 </div>
 

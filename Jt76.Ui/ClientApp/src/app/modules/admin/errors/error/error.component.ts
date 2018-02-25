@@ -12,7 +12,6 @@ import { IAppError, AppError } from "../../models/app-error";
 export class ErrorComponent implements OnInit {
   id: number;  
   error: AppError = new AppError();
-  loading: boolean = false;
 
   constructor(
     private errorService: ErrorService,
@@ -30,7 +29,6 @@ export class ErrorComponent implements OnInit {
       this.errorService.getItem(this.id).subscribe(
         (data: AppError) => {
           this.error = data;
-          this.loading = false;
         });
     });
   }

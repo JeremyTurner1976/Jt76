@@ -6,13 +6,21 @@
 
   <mat-card-content>
 
-    {{error.message}}
-    {{error.errorLevel}}
-    {{error.source}}
-    {{error.additionalInformation}}
-    {{error.stackTrace}}
-    {{error.createdBy}}
-    {{error.createdDate}}
+    <div *ngIf="error;else loading">
+      {{error.message}}
+      {{error.errorLevel}}
+      {{error.source}}
+      {{error.additionalInformation}}
+      {{error.stackTrace}}
+      {{error.createdBy}}
+      {{error.createdDate}}
+    </div>
+    <ng-template #loading>
+      <mat-progress-spinner
+        color="primary"
+        mode="indeterminate">
+      </mat-progress-spinner>
+    </ng-template>
 
   </mat-card-content>
 
