@@ -1,4 +1,5 @@
 export interface IAppError {
+  id: number;
   message: string;
   errorLevel: string;
   source: string;
@@ -12,6 +13,7 @@ export interface IAppError {
 
 
 export class AppError implements IAppError {
+  id = 0;
   message = "";
   errorLevel = "";
   source = "";

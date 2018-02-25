@@ -1,7 +1,9 @@
 <div class="alert {{alertClass}}">
-  <strong>{{message}}</strong>
+  {{message}}
   <div *ngIf="additionalInformation.length">
     <hr />
-    {{additionalInformation}}
+    <div class="alert-info">
+      {{additionalInformation}}
+    </div>
   </div>
 </div>

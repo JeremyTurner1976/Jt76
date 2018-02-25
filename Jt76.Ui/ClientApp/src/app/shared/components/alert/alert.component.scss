@@ -1,18 +1,22 @@
 .alert {
+  padding: 8px;
+  z-index: 100000;
+  border-radius: .5em;
+  border: 1px solid black;
+  font-weight: 900;
   font-size: 1.1em;
-  padding: 12px;
-  border: 2px solid #424242;
-  border-radius: 8px;
+  text-align: left;
 }
 
 .alert-debug {
-  background: #424242;
+  background: #263238;
   color: whitesmoke;
-  border: 2px solid #FF7043;
+  border: 1px solid #FF7043;
 }
 
 .alert-info {
-  background: #E0E0E0;
+  background: #455A64;
+  color: whitesmoke;
 }
 
 .alert-warning {

@@ -1,7 +1,19 @@
 <mat-card>
-      
+
+  <mat-card-title>
+    Error
+  </mat-card-title>
+
   <mat-card-content>
-    <div [innerHTML]="error.html" class="error-details"></div>
+
+    {{error.message}}
+    {{error.errorLevel}}
+    {{error.source}}
+    {{error.additionalInformation}}
+    {{error.stackTrace}}
+    {{error.createdBy}}
+    {{error.createdDate}}
+
   </mat-card-content>
 
   <mat-card-actions>

@@ -41,7 +41,7 @@ export class AlertService {
 
   public info(
     message: string,
-    additionalInformation: string) {
+    additionalInformation: string = "") {
 
     this.matSnackBarRef =
       this.openAlert(
@@ -52,7 +52,7 @@ export class AlertService {
 
   public warning(
     message: string,
-    additionalInformation: string) {
+    additionalInformation: string = "") {
 
     this.matSnackBarRef =
       this.openAlert(
@@ -63,7 +63,7 @@ export class AlertService {
 
   public error(
     message: string,
-    additionalInformation: string) {
+    additionalInformation: string = "") {
 
     this.matSnackBarRef =
       this.openAlert(

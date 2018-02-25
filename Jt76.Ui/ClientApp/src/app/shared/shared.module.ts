@@ -14,6 +14,8 @@ import { AlertComponent } from
 //shared services
 import { AlertService }
   from "./services/alert.service";
+import { AppLocalStorageService }
+  from "./services/app-local-storage.service";
 
 //module wrappers
 import { MaterialsModule }
@@ -35,7 +37,8 @@ import { MaterialsModule }
     AlertComponent
   ],
   providers: [
-    AlertService
+    AlertService,
+    AppLocalStorageService
   ],
   entryComponents: [
     AlertComponent

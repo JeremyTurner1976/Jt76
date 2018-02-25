@@ -76,5 +76,14 @@
 			applicationData.SaveChanges();
 			return Ok();
 		}
+
+		[HttpDelete("deleteAll")]
+		public IActionResult DeleteAll()
+		{
+			IEnumerable<Error> items = applicationData.Errors.GetAll();
+			applicationData.Errors.RemoveRange(items);
+			applicationData.SaveChanges();
+			return Ok();
+		}
 	}
 }

@@ -13,7 +13,7 @@
 	public class FileService : IFileService
 	{
 		private const int daysToHoldDirectoryFiles = 7;
-		private const int maxDirectoryFolderFiles = 10;
+		private const int maxDirectoryFolderFiles = 5;
 		private readonly object _lock = new object();
 		private readonly string executingDirectory;
 

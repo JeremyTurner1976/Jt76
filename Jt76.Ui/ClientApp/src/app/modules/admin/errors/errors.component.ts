@@ -1,7 +1,6 @@
 import { Component, OnInit } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { AppError } from "../models/app-error";
-import { AlertService } from "../../../shared/services/alert.service";
+import { IAppError, AppError } from "../models/app-error";
+import { ErrorService } from "../services/error.service";
 
 @Component({
   selector: "app-errors",
@@ -10,22 +9,37 @@ import { AlertService } from "../../../shared/services/alert.service";
 })
 
 export class ErrorsComponent implements OnInit {
-
-  errors: AppError[] = new Array<AppError>();  
+  errors: AppError[] = new Array<AppError>();
+  loading: boolean = false;
 
   constructor(
-    private http: HttpClient,
-    private alertService: AlertService) { }
+    private errorService: ErrorService
+  ) { }
 
   ngOnInit() {
-    this.http.get("v1/error")
-      .subscribe(
-        (data) => {
-          this.errors = ((data) as AppError[]);
-
-          this.alertService.debug(
-            `${this.errors.length} Errors Loaded`);
+    setTimeout(() => {
+      this.loading = true;
+      this.errorService.getAll().subscribe(
+        (data: IAppError[]) => {
+          this.errors = data;
+          this.loading = false;
         });
+    });
   }
 
+  refresh() {
+    this.loading = true;
+    this.errorService.refreshAll().subscribe(
+      (data: IAppError[]) => {
+        this.errors = data;
+        this.loading = false;
+      });
+  }
+
+  clearAll() {
+    this.errorService.deleteAll(this.errors);
+    this.errors = new Array<AppError>();
+  }
 }
+
+

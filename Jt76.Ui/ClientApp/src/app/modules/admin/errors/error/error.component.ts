@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { HttpClient } from "@angular/common/http";
-import { AlertService } from "../../../../shared/services/alert.service";
+import { ErrorService } from "../../services/error.service";
+import { IAppError, AppError } from "../../models/app-error";
 
 @Component({
   selector: "app-error",
@@ -10,16 +10,13 @@ import { AlertService } from "../../../../shared/services/alert.service";
 })
 
 export class ErrorComponent implements OnInit {
-
   id: number;  
-  error: any = {
-    html: ""
-  };  
+  error: AppError = new AppError();
+  loading: boolean = false;
 
   constructor(
-    private route: ActivatedRoute,
-    private http: HttpClient,
-    private alertService: AlertService) {
+    private errorService: ErrorService,
+    private route: ActivatedRoute) {
 
     this.route.params.subscribe(
       params => {
@@ -29,13 +26,12 @@ export class ErrorComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.http.get("v1/error/GetAsHtml/" + this.id)
-      .subscribe(
-        (data) => {
+    setTimeout(() => {
+      this.errorService.getItem(this.id).subscribe(
+        (data: AppError) => {
           this.error = data;
-
-          this.alertService.debug(
-            "Error Loaded");
+          this.loading = false;
         });
+    });
   }
 }

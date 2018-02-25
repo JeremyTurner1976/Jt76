@@ -2,6 +2,18 @@
 
   <p class="component-title">
     Errors
+    <span class="action-button">
+      <a mat-raised-button
+         color="warning"
+         (click)="clearAll()">
+        Clear All
+      </a>
+      <a mat-raised-button
+         color="primary"
+         (click)="refresh()">
+        Refresh
+      </a>
+    </span>
   </p>
 
   <mat-nav-list>
