@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 import { AlertService }
   from "../../../shared/services/alert.service";
-import { IAppError, AppError }
+import { IAppError }
   from "../models/app-error";
 import { AppLocalStorageService }
   from "../../../shared/services/app-local-storage.service";
@@ -41,7 +41,7 @@ export class ErrorService {
       return this.refreshAll();
     } else {
       const data =
-        ((this.appLocalStorageService.getLocalValue(this.dataKey)) as AppError[]);
+        ((this.appLocalStorageService.getLocalValue(this.dataKey)) as IAppError[]);
       this.alertService.debug(
         `${data.length} ${this.dataKey}` + " loaded from LocalStorage");
       return Observable.of(data);
@@ -53,7 +53,7 @@ export class ErrorService {
     return this.http.get(this.dataUrl)
       .map(
       (data) => {
-          const response = ((data) as AppError[]);
+        const response = ((data) as IAppError[]);
 
           this.appLocalStorageService.saveLocalValue(
             this.dataKey,
@@ -77,7 +77,7 @@ export class ErrorService {
       return this.refreshItem(id);
     } else {
       const data =
-        ((this.appLocalStorageService.getLocalValue(this.dataKey)) as AppError[]);
+        ((this.appLocalStorageService.getLocalValue(this.dataKey)) as IAppError[]);
       // ReSharper disable once CoercedEqualsUsing
       const matchedItems = data.filter(item => item.id == id);
 
@@ -94,7 +94,7 @@ export class ErrorService {
     return this.http.get(this.dataUrl + `/${id}`)
       .map(
         (data) => {
-          const response = ((data) as AppError);
+          const response = ((data) as IAppError);
           this.alertService.debug("Item loaded");
           return response;
         });

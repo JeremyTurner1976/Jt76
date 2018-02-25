@@ -2,53 +2,75 @@
 
   <p class="component-title">
     Log Files
+    <span class="action-button">
+      <a mat-raised-button
+         color="primary"
+         (click)="refresh()">
+        Refresh
+      </a>
+    </span>
   </p>
 
-  <mat-accordion class="accordion-headers-align"
-                 *ngFor="let item of logFiles; let i = index">
-    <mat-expansion-panel [expanded]="step === i"
-                         (opened)="setStep(i)"
-                         hideToggle="true"
-                         class="list-item"
-                         (click)="logFileClicked(item);">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          {{item.fileName}}
-        </mat-panel-title>
-        <mat-panel-description>
-          {{item.applicationName}} Error Logs
-          <mat-icon>content_copy</mat-icon>
-        </mat-panel-description>
-      </mat-expansion-panel-header>
+  <div *ngIf="logFiles.length || countIsZero;else loading">
+    <mat-accordion class="accordion-headers-align"
+                   *ngFor="let item of logFiles; let i = index">
+      <mat-expansion-panel [expanded]="step === i"
+                           (opened)="setStep(i)"
+                           hideToggle="true"
+                           class="list-item">
+        
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{item.fileName}}
+          </mat-panel-title>
+          <mat-panel-description>
+            {{item.applicationName}} Error Logs
+            <mat-icon>content_copy</mat-icon>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
 
-      <div (click)="hideInfo();"
-           class="list-item file-content">
-        <div *ngFor="let line of fileLines"
-             class="ellipsis">
-          {{line}}<br/>
+        <div (click)="hideInfo();"
+             class="list-item file-content">
+          <div *ngFor="let line of item.recentFileLines"
+               class="ellipsis">
+            {{line}}<br/>
+          </div>
         </div>
-      </div>
 
-      <mat-action-row>
-        <button mat-button
-                color="accent"
-                (click)="detailedLogFileClicked(item)">Detailed</button>
-        <button mat-button
-                color="warn"
-                (click)="firstStep()">First</button>
-        <button mat-button
-                color="warn"
-                (click)="prevStep()">Previous</button>
-        <button mat-button
-                color="warn"
-                (click)="nextStep()">Next</button>
-        <button mat-button
-                color="warn"
-                (click)="lastStep()">Last</button>
-      </mat-action-row>
+        <mat-action-row>
+          <button mat-button
+                  color="accent"
+                  (click)="detailedLogFileClicked(item)">Detailed</button>
+          <button mat-button
+                  color="warn"
+                  (click)="firstStep()">First</button>
+          <button mat-button
+                  color="warn"
+                  (click)="prevStep()">Previous</button>
+          <button mat-button
+                  color="warn"
+                  (click)="nextStep()">Next</button>
+          <button mat-button
+                  color="warn"
+                  (click)="lastStep()">Last</button>
+        </mat-action-row>
 
-    </mat-expansion-panel>
+      </mat-expansion-panel>
 
-  </mat-accordion>
+    </mat-accordion>
+
+  </div>
+  <ng-template #loading>
+    <mat-progress-spinner
+      color="primary"
+      mode="indeterminate">
+    </mat-progress-spinner>
+  </ng-template>
+
+  <div *ngIf="countIsZero">
+    <p class="component-detail">
+      No log files found
+    </p>
+  </div>
 
 </div>

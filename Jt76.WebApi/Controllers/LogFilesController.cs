@@ -11,6 +11,7 @@
 	[Route("api/v1/[controller]")]
 	public class LogFilesController : Controller
 	{
+		private const int recentLineCount = 60;
 		private readonly IFileService fileService;
 		private readonly IConfiguration configuration;
 
@@ -33,8 +34,12 @@
 						{
 							FileLocation = fileInfo.DirectoryName,
 							FileName = fileInfo.Name,
-							ApplicationName = "Database"
-						});
+							ApplicationName = "Database",
+							RecentFileLines = fileService.LoadTextFromFile(
+								fileInfo.DirectoryName,
+								fileInfo.Name,
+								recentLineCount)
+		});
 			IEnumerable<LogFile> uiFiles = fileService
 				.GetDirectoryFiles(
 					DirectoryFolders.Errors,
@@ -45,8 +50,12 @@
 						{
 							FileLocation = fileInfo.DirectoryName,
 							FileName = fileInfo.Name,
-							ApplicationName = "UI"
-						});
+							ApplicationName = "UI",
+							RecentFileLines = fileService.LoadTextFromFile(
+								fileInfo.DirectoryName,
+								fileInfo.Name,
+								recentLineCount)
+	});
 
 			return databaseFiles.Union(uiFiles)
 				.OrderByDescending(file => file.FileName);
