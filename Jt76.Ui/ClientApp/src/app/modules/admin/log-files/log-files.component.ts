@@ -51,17 +51,11 @@ export class LogFilesComponent implements OnInit {
   }
 
   nextStep() {
-    this.step =
-      this.step + 1 >= this.logFiles.length 
-      ? this.logFiles.length - 1
-        : this.step + 1;
+    this.step++;
   }
 
   prevStep() {
-    this.step =
-      this.step - 1 <= 0
-        ? 0
-        : this.step - 1;
+    this.step--;
   }
 
   firstStep() {

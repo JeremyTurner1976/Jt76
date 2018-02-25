@@ -18,7 +18,7 @@ export class AlertService {
 
   verticalPosition: MatSnackBarVerticalPosition = 'bottom';
   horizontalPosition: MatSnackBarHorizontalPosition = 'right';
-  duration: number = 100000;
+  duration: number = 1200;
 
   public matSnackBarRef: MatSnackBarRef<AlertComponent>;
   public matSnackBarConfig: MatSnackBarConfig;
