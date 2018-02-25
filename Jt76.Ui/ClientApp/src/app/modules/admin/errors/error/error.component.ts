@@ -27,7 +27,7 @@ export class ErrorComponent implements OnInit {
   ngOnInit() {
     setTimeout(() => {
       this.errorService.getItem(this.id).subscribe(
-        (data: AppError) => {
+        (data: IAppError) => {
           this.error = data;
         });
     });

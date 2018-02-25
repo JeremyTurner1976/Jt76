@@ -25,10 +25,10 @@ export class ErrorService extends BaseService<IAppError> {
   }
 
   deleteAll(items: IAppError[]) {
-    this.clearAllStorage();
     return this.http.delete(
       (this.dataUrl + "/deleteAll")).subscribe(
       () => {
+        this.clearAllStorage();
         this.alertService.info("All items deleted");
       });
   }
