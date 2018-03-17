@@ -26,13 +26,15 @@ export class ErrorsComponent implements OnInit {
     });
   }
 
+  //todo paged
+
   refresh() {
     this.errors = new Array<AppError>();
     this.errorService.refreshAll().subscribe(
       (data: IAppError[]) => {
         this.errors = data;
         this.countIsZero = data.length === 0;
-      });
+    });
   }
 
   clearAll() {

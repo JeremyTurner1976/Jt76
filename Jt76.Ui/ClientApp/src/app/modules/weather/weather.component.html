@@ -1,12 +1,63 @@
-<p>
-  weather works!
-</p>
+<div class="component-content">
 
-<ul>
-  <li>
-    <a mat-button [routerLink]="['/weather-panel']">
-      Today's Weather
-    </a>
-  </li>
-</ul>
+  <span class="component-title">
+    Weather Data
+
+    <span class="action-button">
+      <a mat-raised-button
+         color="primary"
+         (click)="refresh()">
+        Refresh
+      </a>
+    </span>
+  </span>
+
+  <div *ngIf="isLoaded;else loading">
+    <span class="component-detail">
+      Local weather data for {{weatherData.city}}
+    </span>
+    <hr/>
+
+    <div class="weather-content">
+
+      <mat-card class="example-card">
+        <mat-card-header>
+          <mat-card-title>
+            Current Weather
+          </mat-card-title>
+          <mat-card-subtitle>
+            Weather as of {{currentTime | date:'EEEE, MMMM d'}} at {{currentTime | date:'shortTime' }}
+          </mat-card-subtitle>
+        </mat-card-header>
+        <img mat-card-image
+             [src]="currentWeather.skycon"
+             [alt]="currentWeather.description">
+        <mat-card-content>
+          <p>
+            {{currentWeather.description}}
+          </p>
+        </mat-card-content>
+
+      </mat-card>
+
+
+
+    </div>
+
+  </div>
+
+  <ng-template #loading>
+    <br />
+    <span class="component-detail">
+      Loading data
+    </span>
+    <hr/>
+    <br/>
+    <mat-progress-spinner color="primary"
+                          mode="indeterminate">
+    </mat-progress-spinner>
+  </ng-template>
+
+</div>
+
 

@@ -5,7 +5,10 @@ import { RouterModule } from "@angular/router";
 import { SharedModule } from
   "../../shared/shared.module";
 
-import { WeatherComponent } from "./weather.component";
+import { SkyConComponent }
+  from "./components/sky-con/sky-con.component";
+import { WeatherComponent }
+  from "./weather.component";
 import { WeatherPanelComponent }
   from "./weather-panel/weather-panel.component";
 
@@ -27,6 +30,7 @@ import { WeatherService } from
     ])
   ],
   declarations: [
+    SkyConComponent,
     WeatherComponent,
     WeatherPanelComponent
   ],

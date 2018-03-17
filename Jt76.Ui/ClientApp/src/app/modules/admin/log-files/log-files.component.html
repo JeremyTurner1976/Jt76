@@ -18,7 +18,7 @@
                            (opened)="setStep(i)"
                            hideToggle="true"
                            class="list-item">
-        
+
         <mat-expansion-panel-header>
           <mat-panel-title>
             {{item.fileName}}
@@ -33,7 +33,8 @@
              class="list-item file-content">
           <div *ngFor="let line of item.recentFileLines"
                class="ellipsis">
-            {{line}}<br/>
+            {{line}}
+            <br />
           </div>
         </div>
 

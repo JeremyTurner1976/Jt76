@@ -25,18 +25,59 @@ export class BaseService<T> {
     this.appLocalStorageService.deleteLocalValue(this.dataSetKey);
   }
 
+  get(): Observable<T> {
+    const lastCacheAge =
+      this.appLocalStorageService.getLocalCacheAge(this.dataSetKey);
+    if (lastCacheAge == null
+      || isNaN(lastCacheAge)
+      || lastCacheAge >= this.dataCacheDuration) {
+      return this.refresh();
+    } else {
+      const data =
+        ((this.appLocalStorageService
+          .getLocalValue(this.dataSetKey)) as T);
+
+      this.alertService.debug(
+        `${this.dataSetKey}` + " loaded from LocalStorage");
+
+      return Observable.of(data);
+    }
+  }
+
+  refresh(): Observable<T> {
+    this.clearAllStorage();
+    return this.http.get(this.dataUrl)
+      .map(
+        (data) => {
+          const response = ((data) as T);
+
+          this.appLocalStorageService.saveLocalValue(
+            this.dataSetKey,
+            response);
+
+          this.alertService.debug(
+            `${this.dataSetKey}` + " loaded");
+
+          return response;
+        });
+  }
+
   getAll(): Observable<T[]> {
     const lastCacheAge =
       this.appLocalStorageService.getLocalCacheAge(this.dataSetKey);
     if (lastCacheAge == null
       || isNaN(lastCacheAge)
-      || lastCacheAge > this.dataCacheDuration) {
+      || lastCacheAge >= this.dataCacheDuration) {
       return this.refreshAll();
     } else {
       const data =
-        ((this.appLocalStorageService.getLocalValue(this.dataSetKey)) as T[]);
+        ((this.appLocalStorageService
+          .getLocalValue(this.dataSetKey)) as T[]);
+
       this.alertService.debug(
-        `${data.length} ${this.dataSetKey}` + " loaded from LocalStorage");
+        `${data.length} ${this.dataSetKey}`
+          + " loaded from LocalStorage");
+
       return Observable.of(data);
     }
   }
@@ -67,7 +108,7 @@ export class BaseService<T> {
       this.appLocalStorageService.getLocalCacheAge(this.dataSetKey);
     if (lastCacheAge == null
       || isNaN(lastCacheAge)
-      || lastCacheAge > this.dataCacheDuration) {
+      || lastCacheAge >= this.dataCacheDuration) {
 
       return this.refreshItem(id);
     } else {
@@ -76,7 +117,9 @@ export class BaseService<T> {
 
       const matchedItems = data.filter(comparator);
       if (matchedItems.length) {
-        this.alertService.debug(`${this.singularName} loaded from LocalStorage`);
+        this.alertService.debug(
+          `${this.singularName} loaded from LocalStorage`);
+
         return Observable.of(matchedItems[0]);
       }
 
@@ -89,7 +132,10 @@ export class BaseService<T> {
       .map(
         (data) => {
           const response = ((data) as T);
-          this.alertService.debug(`${this.singularName} loaded`);
+
+          this.alertService.debug(
+            `${this.singularName} loaded`);
+
           return response;
       });
   }

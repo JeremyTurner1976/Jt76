@@ -1,1 +1,29 @@
 @import '../../app.component.scss';
+
+.action-button {
+  margin-top: 6px;
+}
+
+.component-content {
+  position: fixed;
+  top: 64px;
+  left: 0px;
+  display: block;
+  border: none;
+  height: calc(100vh - 64px);
+  width: calc(100% - 150px);
+  padding: 15px 25px 15px 25px;
+}
+
+.component-detail {
+  margin-left: 0px !important;
+}
+
+.mat-card {
+  border-radius: .5em !important;
+}
+
+.weather-content {
+  padding: 5px;
+}
+

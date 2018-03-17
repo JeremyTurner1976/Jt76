@@ -121,7 +121,6 @@
 			double minimumTemperature = 9999;
 			double maximumTemperature = -9999;
 
-
 			foreach (Forecast item in fiveDayOneHourForecasts)
 			{
 				//Gather averages data

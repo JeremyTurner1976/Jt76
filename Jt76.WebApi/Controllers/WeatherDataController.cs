@@ -22,21 +22,17 @@
 		/*
 		 * TODO
 			//Paging on Errors
-			//Implement toaster - Perhaps production error handler output there, but create much smaller html to display in the toaster (Message)
-			//Implement loading screen and load guards like in the other app
-			//Implement sass variables
-			//Implement global event bus (theme)
-			//Implement local storage for settings
-			//Implement clean services and data store
+			//Implement sass variables - alert will use these
+			//Implement global event bus (For theme) - can use observe on local storage, themed alert. Should look into traditional methods
 
 			//Implement Authentication - https://social.technet.microsoft.com/wiki/contents/articles/37169.secure-your-netcore-web-applications-using-identityserver-4.aspx
 			//implement user admin
 			//Implement User Secrets Manager
+			//storage cleanup service (Use injectors to get all services, check cache time and delete over on app start)
 
 			//Implement weather service and GeoLocation
 
 			//Implement dashboards
-			//Implement phone layout
 			//Clean up references
 
 			//Implement EntityAttributeFramework

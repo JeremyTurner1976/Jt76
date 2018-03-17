@@ -11,7 +11,7 @@
 
 	public class DatabaseInitializer : IDatabaseInitializer
 	{
-		private const int dataPopulationCount = 3;
+		private const int dataPopulationCount = 35;
 		private readonly ApplicationDbContext _applicationContext;
 		private readonly ILogger _logger;
 
