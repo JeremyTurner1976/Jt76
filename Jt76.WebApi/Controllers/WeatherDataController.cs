@@ -21,6 +21,9 @@
 
 		/*
 		 * TODO
+			//Implement weather service and GeoLocation
+			//Finalize display for open weather api forecasts (Darksky looks good)
+
 			//Paging on Errors
 			//Implement sass variables - alert will use these
 			//Implement global event bus (For theme) - can use observe on local storage, themed alert. Should look into traditional methods
@@ -31,6 +34,7 @@
 			//storage cleanup service (Use injectors to get all services, check cache time and delete over on app start)
 
 			//Implement weather service and GeoLocation
+			//Finalized display for open weather api forecasts
 
 			//Implement dashboards
 			//Clean up references
