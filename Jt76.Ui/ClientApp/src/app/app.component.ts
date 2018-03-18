@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
   year = new Date().getFullYear();
 
   ngOnInit(): void {
-    this.setTheme("default");
+    this.setTheme("dark");
   }
 
   setTheme(theme) {

@@ -1,4 +1,11 @@
-import { Component, OnInit } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  ElementRef,
+  ViewChild,
+
+  Input
+} from "@angular/core";
 
 @Component({
   selector: "app-sky-con",
@@ -6,10 +13,22 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./sky-con.component.scss"]
 })
 export class SkyConComponent implements OnInit {
+  @Input() height = 128;
+  @Input() width = 128;
+  @Input() icon = "rain";
+  @Input() color = "blue";
+
+  @ViewChild("SkyCanvas") skyCanvas: ElementRef;
 
   ngOnInit() {
-    var skycons = new Skycons({ "color": "blue" });
-    skycons.add("sky-con-canvas", "rain");
+    const skycons = new Skycons({
+      "color": this.color
+    });
+
+    skycons.add(
+      this.skyCanvas.nativeElement,
+      this.icon);
+
     skycons.play();
   }
 

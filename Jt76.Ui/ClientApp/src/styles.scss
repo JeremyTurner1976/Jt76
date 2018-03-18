@@ -47,6 +47,10 @@ ellipsis {
   padding-bottom: 15px !important;
 }
 
+.float-right {
+  float: right;
+}
+
 .list-item {
   border: 1px solid black;
 }
@@ -56,4 +60,9 @@ ellipsis {
   font-weight: bolder;
   margin-bottom: 6px !important;
   padding-top: 6px !important;
+}
+
+/* Angular material overloads */
+.mat-card {
+  border-radius: 6px !important;
 }

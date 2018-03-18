@@ -80,7 +80,8 @@
 
 		private ICollection<Forecast> GetDarkSkyForecasts(DarkSkyWeather darkSkyWeather)
 		{
-			List<Forecast> fiveDayOneHourForecasts = (from item in darkSkyWeather.hourly.data
+			List<Forecast> fiveDayOneHourForecasts = (
+				from item in darkSkyWeather.hourly.data
 				select new Forecast
 				{
 					StartDateTime = item.dateTime,
@@ -175,7 +176,7 @@
 					forecast.PrecipitationVolume = (precipitationVolumeTotal / groupSize).ToPrecisionValue(precisionValue);
 
 					forecast.MinimumTemperature = minimumTemperature;
-					forecast.MinimumTemperature = maximumTemperature;
+					forecast.MaximumTemperature = maximumTemperature;
 
 					forecasts.Add(forecast);
 				}

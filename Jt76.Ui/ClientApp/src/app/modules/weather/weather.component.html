@@ -18,30 +18,81 @@
     </span>
     <hr/>
 
-    <div class="weather-content">
+    <div class="weather-content"
+         *ngFor="let item of dailyForecasts">
 
-      <mat-card class="example-card">
-        <mat-card-header>
-          <mat-card-title>
-            Current Weather
-          </mat-card-title>
-          <mat-card-subtitle>
-            Weather as of {{currentTime | date:'EEEE, MMMM d'}} at {{currentTime | date:'shortTime' }}
-          </mat-card-subtitle>
-        </mat-card-header>
-        <!--<img mat-card-image
-                 [src]="currentWeather.skycon"
-                 [alt]="currentWeather.description">-->
-        <app-sky-con></app-sky-con>
+      <mat-card class="daily-weather">
+
+        <div class="weather-title">
+          <span class="component-title">
+            <strong>
+              {{item.day}} -
+            </strong>
+          </span>
+          <span class="component-detail">
+            <strong>
+              {{item.minimumTemperature}}&#176; to {{item.maximumTemperature}}&#x2109;
+            </strong>
+          </span>
+        </div>
+
+        <div class="skycon-array">
+          <span class="skycon-item"
+                *ngFor="let icon of item.skyCons; index as i">
+
+            <app-sky-con height="104"
+                         width="104"
+                         color="green"
+                         [icon]="icon">
+            </app-sky-con>
+            <br />
+            <span>{{item.descriptions[i]}}</span>
+            <br />
+            <span class="detail">{{item.times[i]}} {{item.temperatures[i]}}&#x2109;</span>
+          </span>
+        </div>
+
+        <br />
+        <hr />
         <mat-card-content>
-          <p>
-            {{currentWeather.description}}
-          </p>
+          <div class="daily-content">
+            <mat-grid-list cols="3" rowHeight="50px">
+              <mat-grid-tile [colspan]="1"
+                             [rowspan]="1">
+                <span>
+                  <strong>Precipitation:</strong>
+                  <br />
+                  {{item.totalPrecipitationVolume}}
+                </span>
+              </mat-grid-tile>
+              <mat-grid-tile [colspan]="1"
+                             [rowspan]="1">
+                <span>
+                  <strong>Wind Direction:</strong>
+                  <br />
+                  {{item.avgWindDirection}}
+                </span>
+              </mat-grid-tile>
+              <mat-grid-tile [colspan]="1"
+                             [rowspan]="1">
+                <span *ngIf="item.minWindspeed !== item.maxWindspeed;else else_content">
+                  <span>
+                    <strong>Windspeeds:</strong>
+                    <br />
+                    {{item.minWindspeed}} to {{item.maxWindspeed}} Mph
+                  </span>
+                </span>
+                <ng-template #else_content>
+                  <span>
+                    <strong>Windspeed:</strong>
+                    {{item.maxWindspeed}} Mph
+                  </span>
+                </ng-template>
+              </mat-grid-tile>
+            </mat-grid-list>
+          </div>
         </mat-card-content>
-
       </mat-card>
-
-
 
     </div>
 

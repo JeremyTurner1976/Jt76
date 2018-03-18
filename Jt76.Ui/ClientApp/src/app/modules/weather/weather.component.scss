@@ -10,20 +10,48 @@
   left: 0px;
   display: block;
   border: none;
-  height: calc(100vh - 64px);
-  width: calc(100% - 50px);
-  padding: 15px 25px 15px 25px;
+  height: calc(100vh - 175px);
+  width: calc(100% - 55px);
+  padding: 25px;
+  overflow: auto;
 }
 
 .component-detail {
   margin-left: 0px !important;
 }
 
+.detail {
+  font-size: .8em;
+}
+
 .mat-card {
   border-radius: .5em !important;
 }
 
+.skycon-array {
+  text-align: center;
+}
+
+.skycon-item {
+  display: inline-block;
+}
+
 .weather-content {
+  min-width: 400px;
   padding: 5px;
 }
 
+.weather-title {
+  text-align: center;
+}
+
+/*.weather-forecast {
+  min-width: 275px;
+  margin-left: 5px;
+  margin-right: 5px;
+  display: inline-block;
+}
+
+.weather-summary {
+  text-align: center;
+}*/

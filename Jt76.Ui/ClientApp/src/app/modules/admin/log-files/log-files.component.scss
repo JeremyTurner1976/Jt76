@@ -1,5 +1,11 @@
-.component-content {
-  padding-bottom: 70px;
+.accordion-headers-align .mat-expansion-panel-header-title,
+.accordion-headers-align .mat-expansion-panel-header-description {
+  flex-basis: 0;
+}
+
+.accordion-headers-align .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
 }
 
 .component-title {
@@ -9,14 +15,4 @@
 .file-content {
   padding: 15px;
   border-radius: .5em;
-}
-
-.accordion-headers-align .mat-expansion-panel-header-title,
-.accordion-headers-align .mat-expansion-panel-header-description {
-  flex-basis: 0;
-}
-
-.accordion-headers-align .mat-expansion-panel-header-description {
-  justify-content: space-between;
-  align-items: center;
 }
