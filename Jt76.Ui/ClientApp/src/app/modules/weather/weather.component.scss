@@ -11,7 +11,7 @@
   display: block;
   border: none;
   height: calc(100vh - 175px);
-  width: calc(100% - 55px);
+  width: calc(100% - 50px);
   padding: 25px;
   overflow: auto;
 }
@@ -20,8 +20,20 @@
   margin-left: 0px !important;
 }
 
+.component-weather {
+  font-size: 1.3em;
+}
+
+.daily-content {
+  font-size: 1.1em;
+}
+
+.daily-weather {
+  padding-bottom: 5px !important;
+}
+
 .detail {
-  font-size: .8em;
+  font-size: .85em;
 }
 
 .mat-card {
@@ -39,10 +51,16 @@
 .weather-content {
   min-width: 400px;
   padding: 5px;
+  font-weight: 500;
+}
+
+.weather-header {
+  text-align: center;
 }
 
 .weather-title {
-  text-align: center;
+  font-size: 1.5em;
+  font-weight: 800 !important;
 }
 
 /*.weather-forecast {

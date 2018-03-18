@@ -14,6 +14,7 @@ import * as moment from "moment";
 
 export class WeatherComponent implements OnInit {
   isLoaded: boolean = false;
+  useOpenWeather: boolean = false;
   weatherData = new WeatherData();
   currentWeather = new WeatherForecast();
   weatherForecasts = new Array<WeatherForecast>();
@@ -25,11 +26,29 @@ export class WeatherComponent implements OnInit {
 
   ngOnInit() {
     setTimeout(() => {
+      this.weatherService.setUrl(this.useOpenWeather);
       this.weatherService.get().subscribe(
         (data: WeatherData) => {
           this.mapData(data);
         });
     });
+  }
+
+  useOpenWeatherApi(useOpenWeather: boolean) {
+    this.useOpenWeather = useOpenWeather;
+    this.refresh();
+  }
+
+  refresh() {
+    this.isLoaded = false;
+    this.weatherData = new WeatherData();
+    this.currentWeather = new WeatherForecast();
+    this.weatherForecasts = new Array<WeatherForecast>();
+    this.weatherService.setUrl(this.useOpenWeather);
+    this.weatherService.refresh().subscribe(
+      (data: WeatherData) => {
+        this.mapData(data);
+      });
   }
 
   mapData(data: WeatherData) {
@@ -69,9 +88,14 @@ export class WeatherComponent implements OnInit {
                   now.date() === moment(forecast.startDateTime).date()) ||
                 now.format(dayFormat) !== startDateTime.format(dayFormat)) {
 
+                dailyForecast.totalPrecipitationVolume += forecast.precipitationVolume;
+
+                dailyForecast.avgTemperature += forecast.temperature;
+                dailyForecast.avgWindDirection += forecast.windDirection;
                 dailyForecast.avgAtmosphericPressure += forecast.atmosphericPressure;
                 dailyForecast.avgCloudCover += forecast.cloudCover;
                 dailyForecast.avgHumidity += forecast.humidity;
+
                 dailyForecast.maximumTemperature =
                   dailyForecast.maximumTemperature < forecast.maximumTemperature
                   ? forecast.maximumTemperature
@@ -80,9 +104,6 @@ export class WeatherComponent implements OnInit {
                   forecast.minimumTemperature < dailyForecast.minimumTemperature
                   ? forecast.minimumTemperature
                   : dailyForecast.minimumTemperature;
-                dailyForecast.totalPrecipitationVolume += forecast.precipitationVolume;
-                dailyForecast.avgTemperature += forecast.temperature;
-                dailyForecast.avgWindDirection += forecast.windDirection;
                 dailyForecast.maxWindspeed =
                   dailyForecast.maxWindspeed < forecast.windspeed
                   ? forecast.windspeed
@@ -90,13 +111,20 @@ export class WeatherComponent implements OnInit {
                 dailyForecast.minWindspeed =
                   forecast.windspeed < dailyForecast.minWindspeed
                   ? forecast.windspeed
-                  : dailyForecast.minWindspeed;
-                dailyForecast.descriptions.push(forecast.description);
-                dailyForecast.skyCons.push(forecast.skyCon);
+                    : dailyForecast.minWindspeed;
+
+                const temperature =
+                  ((forecast.minimumTemperature + forecast.maximumTemperature) / 2);
+                dailyForecast.descriptions.push(
+                  forecast.description);
+                dailyForecast.skyCons.push(
+                  forecast.skyCon);
                 dailyForecast.times.push(
                   moment(forecast.startDateTime).format("h:mm a"));
                 dailyForecast.temperatures.push(
-                  ((forecast.minimumTemperature + forecast.maximumTemperature) / 2).toFixed(0));
+                  temperature.toFixed(0));
+                dailyForecast.temperatureColors.push(
+                  this.getTemperatureColor(temperature));
               }
             });
 
@@ -140,15 +168,49 @@ export class WeatherComponent implements OnInit {
     this.isLoaded = true;
   }
 
-  refresh() {
-    this.isLoaded = false;
-    this.weatherData = new WeatherData();
-    this.currentWeather = new WeatherForecast();
-    this.weatherForecasts = new Array<WeatherForecast>();
-
-    this.weatherService.refresh().subscribe(
-      (data: WeatherData) => {
-        this.mapData(data);
-      });
+  getTemperatureColor(temperature : number): string {
+    if (temperature > 100) {
+      return "#E65100";
+    } else if (temperature > 95) {
+      return "#EF6C00";
+    } else if (temperature > 90) {
+      return "#F57C00";
+    } else if (temperature > 85) {
+      return "#FFA000";
+    } else if (temperature > 80) {
+      return "#FFC107";
+    } else if (temperature > 75) {
+      return "#FFD54F";
+    } else if (temperature > 70) {
+      return "#FFEE58";
+    } else if (temperature > 65) {
+      return "#FFF176";
+    } else if (temperature > 60) {
+      return "#E0F7FA";
+    } else if (temperature > 55) {
+      return "#B2EBF2";
+    } else if (temperature > 50) {
+      return "#80DEEA";
+    } else if (temperature > 45) {
+      return "#4DD0E1";
+    } else if (temperature > 40) {
+      return "#26C6DA";
+    } else if (temperature > 35) {
+      return "#00BCD4";
+    } else if (temperature > 30) {
+      return "#00ACC1";
+    } else if (temperature > 25) {
+      return "#29B6F6";
+    } else if (temperature > 20) {
+      return "#03A9F4";
+    } else if (temperature > 15) {
+      return "#039BE5";
+    } else if (temperature > 10) {
+      return "#0288D1";
+    } else if (temperature > 5) {
+      return "#0277BD";
+    } else {
+      return "#01579B";
+    }
   }
 }

@@ -20,8 +20,16 @@ export class WeatherService extends BaseService<IWeatherData> {
     super(http, alertService, appLocalStorageService);
     this.singularName = "WeatherForecast";
     this.dataSetKey = "WeatherForecasts";
-    this.dataUrl = "v1/weatherData/darkSkyWeatherForecasts";
     //this.dataUrl = "v1/weatherData/openWeatherForecasts";
+    this.dataUrl = "v1/weatherData/darkSkyWeatherForecasts";
     this.dataCacheDuration = 30;
+  }
+
+  setUrl(useOpenWeather: boolean) {
+    this.dataUrl =
+      useOpenWeather
+        ? "v1/weatherData/openWeatherForecasts"
+        : "v1/weatherData/darkSkyWeatherForecasts";
+
   }
 }

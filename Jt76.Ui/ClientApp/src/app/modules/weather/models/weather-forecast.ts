@@ -13,6 +13,7 @@ export interface IWeatherForecast {
   temperature: number;
   windDirection: number;
   windspeed: number;
+  temperatureColor: any;
 }
 
 export class WeatherForecast implements IWeatherForecast {

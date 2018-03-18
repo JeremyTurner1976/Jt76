@@ -5,6 +5,18 @@
 
     <span class="action-button">
       <a mat-raised-button
+         color="warning"
+         *ngIf="!useOpenWeather"
+         (click)="useOpenWeatherApi(true)">
+        Open Weather Api
+      </a>
+      <a mat-raised-button
+         *ngIf="useOpenWeather"
+         color="warning"
+         (click)="useOpenWeatherApi(false)">
+        Dark Sky Weather Api
+      </a>
+      <a mat-raised-button
          color="primary"
          (click)="refresh()">
         Refresh
@@ -23,17 +35,24 @@
 
       <mat-card class="daily-weather">
 
-        <div class="weather-title">
-          <span class="component-title">
-            <strong>
-              {{item.day}} -
-            </strong>
-          </span>
-          <span class="component-detail">
-            <strong>
-              {{item.minimumTemperature}}&#176; to {{item.maximumTemperature}}&#x2109;
-            </strong>
-          </span>
+        <div class="weather-header">
+          <mat-grid-list cols="2" rowHeight="25px">
+            <mat-grid-tile [colspan]="1"
+                           [rowspan]="1">
+              <span class="weather-title">
+                {{item.day}}
+              </span>
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="1"
+                           [rowspan]="1">
+              <span class="component-detail">
+                Low:
+                <span class="component-weather">{{item.minimumTemperature}}&#176;</span>
+                | High:
+                <span class="component-weather">{{item.maximumTemperature}}&#176;</span>
+              </span>
+            </mat-grid-tile>
+          </mat-grid-list>
         </div>
 
         <div class="skycon-array">
@@ -42,13 +61,15 @@
 
             <app-sky-con height="104"
                          width="104"
-                         color="green"
+                         [color]="item.temperatureColors[i]"
                          [icon]="icon">
             </app-sky-con>
             <br />
             <span>{{item.descriptions[i]}}</span>
             <br />
-            <span class="detail">{{item.times[i]}} {{item.temperatures[i]}}&#x2109;</span>
+            <span class="detail">
+              {{item.times[i]}} &nbsp; {{item.temperatures[i]}}&#x2109;
+            </span>
           </span>
         </div>
 
@@ -56,36 +77,26 @@
         <hr />
         <mat-card-content>
           <div class="daily-content">
-            <mat-grid-list cols="3" rowHeight="50px">
+            <mat-grid-list cols="2" rowHeight="25px">
               <mat-grid-tile [colspan]="1"
                              [rowspan]="1">
                 <span>
                   <strong>Precipitation:</strong>
-                  <br />
-                  {{item.totalPrecipitationVolume}}
-                </span>
-              </mat-grid-tile>
-              <mat-grid-tile [colspan]="1"
-                             [rowspan]="1">
-                <span>
-                  <strong>Wind Direction:</strong>
-                  <br />
-                  {{item.avgWindDirection}}
+                  {{item.totalPrecipitationVolume}}"
                 </span>
               </mat-grid-tile>
               <mat-grid-tile [colspan]="1"
                              [rowspan]="1">
                 <span *ngIf="item.minWindspeed !== item.maxWindspeed;else else_content">
                   <span>
-                    <strong>Windspeeds:</strong>
-                    <br />
-                    {{item.minWindspeed}} to {{item.maxWindspeed}} Mph
+                    <strong>Winds:</strong>
+                    {{item.windCompassDirection()}} {{item.minWindspeed}} to {{item.maxWindspeed}} Mph
                   </span>
                 </span>
                 <ng-template #else_content>
                   <span>
-                    <strong>Windspeed:</strong>
-                    {{item.maxWindspeed}} Mph
+                    <strong>Winds:</strong>
+                    {{item.windCompassDirection()}} at {{item.maxWindspeed}} Mph
                   </span>
                 </ng-template>
               </mat-grid-tile>
