@@ -21,10 +21,12 @@
 
 		/*
 		 * TODO
-			//Implement weather service and GeoLocation
 			//Finalize display for open weather api forecasts (Darksky looks good)
+			//Implement weather service and GeoLocation
+			//very detailed single day displays with graphs and such (will be a router, with a defined route just like errors)
 
 			//Paging on Errors
+			//Decorate the error page
 			//Implement sass variables - alert will use these
 			//Implement global event bus (For theme) - can use observe on local storage, themed alert. Should look into traditional methods
 
