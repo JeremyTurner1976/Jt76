@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 import {
   LocalStorageService,
   SessionStorageService,
   LocalStorage,
   SessionStorage
-} from 'ngx-webstorage';
-import * as moment from 'moment';
+} from "ngx-webstorage";
+import * as moment from "moment";
 
 @Injectable()
 export class AppLocalStorageService {
@@ -60,7 +60,7 @@ export class AppLocalStorageService {
     let currentTime = moment();
     let originalTime =
       moment(this.getLocalValue(key + this.cacheTimeIdentifier));
-    return currentTime.diff(originalTime, 'minutes');
+    return currentTime.diff(originalTime, "minutes");
   }
 
 
@@ -90,7 +90,7 @@ export class AppLocalStorageService {
     let currentTime = moment();
     let originalTime =
       moment(this.getSessionValue(key + this.cacheTimeIdentifier));
-    return currentTime.diff(originalTime, 'minutes');
+    return currentTime.diff(originalTime, "minutes");
   }
 
 }

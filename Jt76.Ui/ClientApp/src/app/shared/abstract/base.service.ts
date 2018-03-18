@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { Observable } from 'rxjs/Rx';
-import 'rxjs/add/operator/map';
+import { Observable } from "rxjs/Rx";
+import "rxjs/add/operator/map";
 import { AlertService }
   from "../services/alert.service";
 import { AppLocalStorageService }

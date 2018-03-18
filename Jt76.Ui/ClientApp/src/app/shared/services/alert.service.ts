@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
 import {
   MatSnackBar,
@@ -6,18 +6,18 @@ import {
   MatSnackBarHorizontalPosition,
   MatSnackBarVerticalPosition,
   MatSnackBarRef
-} from '@angular/material';
+} from "@angular/material";
 
 import { AlertComponent }
-  from '../components/alert/alert.component';
+  from "../components/alert/alert.component";
 import { environment }
-  from '../../../environments/environment';
+  from "../../../environments/environment";
 
 @Injectable()
 export class AlertService {
 
-  verticalPosition: MatSnackBarVerticalPosition = 'bottom';
-  horizontalPosition: MatSnackBarHorizontalPosition = 'right';
+  verticalPosition: MatSnackBarVerticalPosition = "bottom";
+  horizontalPosition: MatSnackBarHorizontalPosition = "right";
   duration: number = 1200;
 
   public matSnackBarRef: MatSnackBarRef<AlertComponent>;

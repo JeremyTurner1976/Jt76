@@ -1,8 +1,8 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { SkyConComponent } from './sky-con.component';
+import { SkyConComponent } from "./sky-con.component";
 
-describe('SkyConComponent', () => {
+describe("SkyConComponent", () => {
   let component: SkyConComponent;
   let fixture: ComponentFixture<SkyConComponent>;
 
@@ -19,7 +19,7 @@ describe('SkyConComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });
