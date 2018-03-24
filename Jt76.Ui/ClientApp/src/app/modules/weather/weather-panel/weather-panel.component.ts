@@ -75,8 +75,8 @@ extends BaseWeatherComponent
 
           backgroundColor: ["rgba(54, 162, 235, 0.2)"],
           borderColor: ["rgba(54, 162, 235, 1)"],
-          borderWidth: 1,
-          lineTension: 0, // set to 0 means - No bezier
+          borderWidth: 2,
+          lineTension: .5, // set to 0 means - No bezier
 
           pointBorderColor: "rgba(75,192,192,1)",
           pointBackgroundColor: "#fff",
@@ -93,7 +93,13 @@ extends BaseWeatherComponent
 
     this.chartOptions = {
       legend: {
-        display: true
+        display: true,
+        position: "top",
+        labels: {
+          fontFamily: "Roboto, 'Helvetica Neue', sans-serif",
+          fontStyle: "700",
+          boxWidth: 12
+        }
       },
       tooltips: {
         mode: "label"
@@ -102,7 +108,8 @@ extends BaseWeatherComponent
       responsive: true,
       maintainAspectRatio: false,
       scales: {
-        yAxes:[{ticks: { beginAtZero: true }}]
+        yAxes: [{ ticks: { beginAtZero: true, fontStyle: "550", fontFamily: "Roboto, 'Helvetica Neue', sans-serif" }}],
+        xAxes: [{ ticks: { fontStyle: "550", fontFamily: "Roboto, 'Helvetica Neue', sans-serif" } }]
       }
     };
 
