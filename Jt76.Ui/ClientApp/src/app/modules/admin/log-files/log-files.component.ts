@@ -12,7 +12,6 @@ import { BaseDataComponent }
 })
 export class LogFilesComponent
 extends BaseDataComponent {
-  step = -1;
   lineCount = 120;
   lastFile = new LogFile();
   logFiles = new Array<LogFile>();
@@ -53,30 +52,5 @@ extends BaseDataComponent {
       (data: string[]) => {
         logFile.recentFileLines = data;
       });
-  }
-
-  setStep(index: number) {
-    this.step = index;
-  }
-
-  nextStep() {
-    this.step++;
-  }
-
-  prevStep() {
-    this.step--;
-  }
-
-  firstStep() {
-    this.step = 0;
-  }
-
-  lastStep() {
-    this.step =
-      this.logFiles.length - 1;
-  }
-
-  hideInfo() {
-    this.step = -1;
   }
 }

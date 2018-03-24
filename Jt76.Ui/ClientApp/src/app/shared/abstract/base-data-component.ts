@@ -18,4 +18,32 @@ export abstract class BaseDataComponent implements IBaseDataComponent {
   abstract refreshData(): void;
   abstract clearData(): void;
   abstract mapData(data: any): void;
+
+  //step interface
+  step = -1;
+
+  setStep(index: number) {
+    this.step = index;
+  }
+
+  nextStep() {
+    this.step++;
+  }
+
+  prevStep() {
+    this.step--;
+  }
+
+  firstStep() {
+    this.step = 0;
+  }
+
+  lastStep(array: Array<any>) {
+    this.step =
+      array.length - 1;
+  }
+
+  hideInfo() {
+    this.step = -1;
+  }
 }

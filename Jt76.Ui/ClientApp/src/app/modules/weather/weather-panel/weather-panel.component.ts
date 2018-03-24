@@ -47,6 +47,13 @@ extends BaseWeatherComponent
     this.differ = iterableDifferences.find([]).create(null);
   }
 
+  ngDoCheck() {
+    const change = this.differ.diff(this.todaysForecasts);
+    if (change && change.length) {
+      this.drawGraph();
+    }
+  }
+
   mapData(data: WeatherData) {
     const todaysForecasts =
       this.weatherService
@@ -66,6 +73,15 @@ extends BaseWeatherComponent
         });
       });
 
+    this.setupGraph(labels, weatherData);
+    this.todaysForecasts = todaysForecasts;
+  }
+
+  clearData() {
+    this.todaysForecasts = new Array<WeatherForecast>();
+  }
+
+  setupGraph(labels: Array<string>, weatherData: Array<any>) {
     this.graphData = {
       labels: labels,
       datasets: [
@@ -108,23 +124,25 @@ extends BaseWeatherComponent
       responsive: true,
       maintainAspectRatio: false,
       scales: {
-        yAxes: [{ ticks: { beginAtZero: true, fontStyle: "550", fontFamily: "Roboto, 'Helvetica Neue', sans-serif" }}],
-        xAxes: [{ ticks: { fontStyle: "550", fontFamily: "Roboto, 'Helvetica Neue', sans-serif" } }]
+        yAxes: [
+          {
+             ticks: {
+               beginAtZero: true,
+               fontStyle: "700",
+               fontSize: 16,
+               fontFamily: "Roboto, 'Helvetica Neue', sans-serif"
+             }
+          }],
+        xAxes: [
+          {
+             ticks: {
+               fontStyle: "600",
+               fontSize: 14,
+               fontFamily: "Roboto, 'Helvetica Neue', sans-serif"
+             }
+          }]
       }
     };
-
-    this.todaysForecasts = todaysForecasts;
-  }
-
-  clearData() {
-    this.todaysForecasts = new Array<WeatherForecast>();
-  }
-
-  ngDoCheck() {
-    const change = this.differ.diff(this.todaysForecasts);
-    if (change && change.length) {
-      this.drawGraph();
-    }
   }
 
   drawGraph() {

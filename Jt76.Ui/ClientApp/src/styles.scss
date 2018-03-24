@@ -23,6 +23,11 @@
 }
 
 // global styles
+.accordion-content {
+  padding: 15px;
+  border-radius: .5em;
+}
+
 .action-button {
   float: right;
 }
@@ -70,7 +75,17 @@ ellipsis {
   border-radius: 6px !important;
 }
 
+.accordion-headers-align .mat-expansion-panel-header-title,
+.accordion-headers-align .mat-expansion-panel-header-description {
+  flex-basis: 0;
+}
 
+.accordion-headers-align .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Html element overrides*/
 body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }

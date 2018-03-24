@@ -36,9 +36,66 @@
     <hr />
 
     <h2 class="center">{{day}}</h2>
-    <div id="wrapper" style="position: relative; height:275px">
+    <div id="wrapper" style="position: relative; height:225px">
       <canvas #WeatherGraph></canvas>
     </div>
+
+    <hr/>
+    <br/>
+
+    <mat-accordion class="accordion-headers-align"
+                   *ngFor="let item of todaysForecasts; let i = index">
+      
+      <mat-expansion-panel [expanded]="step === i"
+                           (opened)="setStep(i)"
+                           hideToggle="true"
+                           class="list-item">
+
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            filename
+          </mat-panel-title>
+          <mat-panel-description>
+            Error Logs
+            <mat-icon>content_copy</mat-icon>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div (click)="hideInfo();"
+             class="list-item accordion-content">
+          CONTENT
+        </div>
+
+        <mat-action-row>
+          <button mat-button
+                  color="accent"
+                  (click)="firstStep()"
+                  *ngIf="i > 0">
+            First
+          </button>
+          <button mat-button
+                  color="warn"
+                  (click)="prevStep()"
+                  *ngIf="i > 0">
+            Previous
+          </button>
+          <button mat-button
+                  color="warn"
+                  (click)="nextStep()"
+                  *ngIf="i < todaysForecasts.length - 1">
+            Next
+          </button>
+          <button mat-button
+                  color="accent"
+                  (click)="lastStep()"
+                  *ngIf="i < todaysForecasts.length - 1">
+            Last
+          </button>
+        </mat-action-row>
+
+      </mat-expansion-panel>
+
+    </mat-accordion>
 
   </div>
 
