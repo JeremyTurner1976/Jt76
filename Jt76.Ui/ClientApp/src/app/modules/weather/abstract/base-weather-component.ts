@@ -25,6 +25,7 @@ export abstract class BaseWeatherComponent extends BaseDataComponent {
 
   refreshData() {
     this.isLoaded = false;
+    this.weatherService.setUrl(this.useOpenWeather);
     this.weatherService.refresh().subscribe(
       (data: WeatherData) => {
         this.mapData(data);

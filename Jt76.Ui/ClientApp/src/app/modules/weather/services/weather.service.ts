@@ -51,19 +51,20 @@ export class WeatherService extends BaseService<IWeatherData> {
 
     return forecasts.filter(
       (item) => {
-        if (getOverrunData) {
-          return moment(item.startDateTime)
-              .subtract(1, "m").format(this.dayFormat) === day
-            || moment(item.endDateTime)
-                .add(1, "m").format(this.dayFormat) === day;
+        if (this.isLimitedByDay(item.startDateTime)) {
+          if (getOverrunData) {
+            return moment(item.startDateTime)
+              .subtract(1, "m").format(this.dayFormat) === day;
+          }
+          return moment(item.startDateTime).format(this.dayFormat) === day;
         }
-        return moment(item.startDateTime).format(this.dayFormat) === day;
+        return false;
       });
   }
 
   getDailyForecasts(forecasts: Array<WeatherForecast>)
     : Array<DailyForecast> {
-
+    
     const days = new Array<string>();
     for (let i = 0; i < forecasts.length; i++) {
       const day = moment(forecasts[i].startDateTime).format("dddd");
@@ -122,61 +123,61 @@ export class WeatherService extends BaseService<IWeatherData> {
     matchingForecasts: Array<WeatherForecast>)
     : DailyForecast {
 
-    const now = moment();
     const dailyForecast = new DailyForecast();
 
     matchingForecasts.forEach(
       (forecast) => {
+        dailyForecast.totalPrecipitationVolume += forecast.precipitationVolume;
 
-        var startDateTime = moment(forecast.startDateTime);
-        if (now.format(this.dayFormat) !== startDateTime.format(this.dayFormat)
-          || (
-              now.format(this.dayFormat) === startDateTime.format(this.dayFormat)
-              && now.date() === moment(forecast.startDateTime).date()
-          )) {
+        dailyForecast.avgTemperature += forecast.temperature;
+        dailyForecast.avgWindDirection += forecast.windDirection;
+        dailyForecast.avgAtmosphericPressure += forecast.atmosphericPressure;
+        dailyForecast.avgCloudCover += forecast.cloudCover;
+        dailyForecast.avgHumidity += forecast.humidity;
 
-          dailyForecast.totalPrecipitationVolume += forecast.precipitationVolume;
+        dailyForecast.maximumTemperature =
+          dailyForecast.maximumTemperature < forecast.maximumTemperature
+          ? forecast.maximumTemperature
+          : dailyForecast.maximumTemperature;
+        dailyForecast.minimumTemperature =
+          forecast.minimumTemperature < dailyForecast.minimumTemperature
+          ? forecast.minimumTemperature
+          : dailyForecast.minimumTemperature;
+        dailyForecast.maxWindspeed =
+          dailyForecast.maxWindspeed < forecast.windspeed
+          ? forecast.windspeed
+          : dailyForecast.maxWindspeed;
+        dailyForecast.minWindspeed =
+          forecast.windspeed < dailyForecast.minWindspeed
+          ? forecast.windspeed
+          : dailyForecast.minWindspeed;
 
-          dailyForecast.avgTemperature += forecast.temperature;
-          dailyForecast.avgWindDirection += forecast.windDirection;
-          dailyForecast.avgAtmosphericPressure += forecast.atmosphericPressure;
-          dailyForecast.avgCloudCover += forecast.cloudCover;
-          dailyForecast.avgHumidity += forecast.humidity;
-
-          dailyForecast.maximumTemperature =
-            dailyForecast.maximumTemperature < forecast.maximumTemperature
-            ? forecast.maximumTemperature
-            : dailyForecast.maximumTemperature;
-          dailyForecast.minimumTemperature =
-            forecast.minimumTemperature < dailyForecast.minimumTemperature
-            ? forecast.minimumTemperature
-            : dailyForecast.minimumTemperature;
-          dailyForecast.maxWindspeed =
-            dailyForecast.maxWindspeed < forecast.windspeed
-            ? forecast.windspeed
-            : dailyForecast.maxWindspeed;
-          dailyForecast.minWindspeed =
-            forecast.windspeed < dailyForecast.minWindspeed
-            ? forecast.windspeed
-            : dailyForecast.minWindspeed;
-
-          const temperature =
-            ((forecast.minimumTemperature + forecast.maximumTemperature) / 2);
-          dailyForecast.descriptions.push(
-            forecast.description);
-          dailyForecast.skyCons.push(
-            forecast.skyCon);
-          dailyForecast.times.push(
-            moment(forecast.startDateTime).format("h:mm a"));
-          dailyForecast.temperatures.push(
-            temperature.toFixed(0));
-          dailyForecast.temperatureColors.push(
-            this.getTemperatureColor(temperature));
-        }
+        const temperature =
+          ((forecast.minimumTemperature + forecast.maximumTemperature) / 2);
+        dailyForecast.descriptions.push(
+          forecast.description);
+        dailyForecast.skyCons.push(
+          forecast.skyCon);
+        dailyForecast.times.push(
+          moment(forecast.startDateTime).format("h:mm a"));
+        dailyForecast.temperatures.push(
+          temperature.toFixed(0));
+        dailyForecast.temperatureColors.push(
+          this.getTemperatureColor(temperature));
       });
 
     return dailyForecast;
   };
+
+  private isLimitedByDay(forecastStartDate: Date) {
+    const now = moment();
+    const startDateTime = moment(forecastStartDate);
+    return now.format(this.dayFormat) !== startDateTime.format(this.dayFormat)
+      || (
+        now.format(this.dayFormat) === startDateTime.format(this.dayFormat) &&
+        now.date() === startDateTime.date()
+      );
+  }
 
   private getTemperatureColor(temperature: number): string {
     if (temperature > 100) {

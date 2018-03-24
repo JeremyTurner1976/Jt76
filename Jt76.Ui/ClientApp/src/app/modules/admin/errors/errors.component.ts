@@ -11,8 +11,7 @@ import { BaseDataComponent }
 })
 
 export class ErrorsComponent
-  extends BaseDataComponent
-  implements OnInit {
+  extends BaseDataComponent {
 
   errors = new Array<AppError>();
 
@@ -20,6 +19,7 @@ export class ErrorsComponent
     private readonly errorService: ErrorService
   ) {
     super();
+    this.getData();
   }
 
   getData() {

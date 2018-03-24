@@ -5,14 +5,14 @@
 
     <span class="action-button">
       <a mat-raised-button
-         color="warning"
+         color="accent"
          *ngIf="!useOpenWeather"
          (click)="useOpenWeatherApi(true)">
         Open Weather Api
       </a>
       <a mat-raised-button
          *ngIf="useOpenWeather"
-         color="warning"
+         color="accent"
          (click)="useOpenWeatherApi(false)">
         Dark Sky Weather Api
       </a>

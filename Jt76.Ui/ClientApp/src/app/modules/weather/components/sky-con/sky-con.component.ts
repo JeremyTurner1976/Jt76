@@ -1,6 +1,6 @@
 import {
   Component,
-  OnInit,
+  AfterViewInit,
   ElementRef,
   ViewChild,
   Input
@@ -11,7 +11,9 @@ import {
   templateUrl: "./sky-con.component.html",
   styleUrls: ["./sky-con.component.scss"]
 })
-export class SkyConComponent implements OnInit {
+export class SkyConComponent
+  implements AfterViewInit  {
+
   @Input() height = 128;
   @Input() width = 128;
   @Input() icon = "rain";
@@ -19,7 +21,7 @@ export class SkyConComponent implements OnInit {
 
   @ViewChild("SkyCanvas") skyCanvas: ElementRef;
 
-  ngOnInit() {
+  ngAfterViewInit() {
     const skycons = new Skycons({
       "color": this.color
     });

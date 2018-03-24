@@ -58,3 +58,8 @@ You can delete ClientApp Folder, goto Jt76.Ui and ng new ClientApp -> npm instal
 ## Webstorage services, offers session local and volatile storage types
 Json serialized object storage via [Webstorage](https://www.npmjs.com/package/ngx-webstorage).
 Note: Array storage may require an overwrite. ie array.push(); array = array;
+
+Great comment for pulling in third party libraries
+https://stackoverflow.com/questions/43151704/how-implement-chart-js-in-angular-2
+
+https://material.io/guidelines/style/color.html#color-color-palette

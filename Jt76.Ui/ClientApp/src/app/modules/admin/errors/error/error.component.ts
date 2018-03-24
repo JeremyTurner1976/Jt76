@@ -12,8 +12,7 @@ import { BaseDataComponent }
 })
 
 export class ErrorComponent
-  extends BaseDataComponent
-  implements OnInit {
+  extends BaseDataComponent {
 
   id: number;  
   error: AppError = new AppError();
@@ -29,6 +28,7 @@ export class ErrorComponent
         this.id = params.id;
       }
     );
+    this.getData();
   }
 
   getData() {

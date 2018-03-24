@@ -6,13 +6,18 @@
     <span class="action-button">
       <a mat-raised-button
          color="warning"
+         routerLink="weather">
+        Back
+      </a>
+      <a mat-raised-button
+         color="accent"
          *ngIf="!useOpenWeather"
          (click)="useOpenWeatherApi(true)">
         Open Weather Api
       </a>
       <a mat-raised-button
          *ngIf="useOpenWeather"
-         color="warning"
+         color="accent"
          (click)="useOpenWeatherApi(false)">
         Dark Sky Weather Api
       </a>
@@ -28,23 +33,27 @@
     <span class="component-detail">
       Local weather data for {{day}}
     </span>
-    <hr/>
+    <hr />
 
+    <h2 style="text-align:center">{{day}}</h2>
+    <div id="wrapper" style="position: relative; height:300px">
+      <canvas #WeatherGraph></canvas>
+    </div>
 
   </div>
 
-  <ng-template #loading>
-    <br />
-    <span class="component-detail">
-      Loading data
-    </span>
-    <hr/>
-    <br/>
-    <mat-progress-spinner color="primary"
-                          mode="indeterminate">
-    </mat-progress-spinner>
-  </ng-template>
+    <ng-template #loading>
+      <br />
+      <span class="component-detail">
+        Loading data
+      </span>
+      <hr />
+      <br />
+      <mat-progress-spinner color="primary"
+                            mode="indeterminate">
+      </mat-progress-spinner>
+    </ng-template>
 
-</div>
+  </div>
 
 

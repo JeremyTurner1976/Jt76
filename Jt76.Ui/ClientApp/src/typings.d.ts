@@ -9,3 +9,4 @@ interface NodeModule {
  * Third party Sykcons declaration
  */
 declare var Skycons: any;
+declare var ChartJs: any;

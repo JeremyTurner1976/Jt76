@@ -1,12 +1,6 @@
 export abstract class BaseDataComponent {
   isLoaded: boolean = true;
 
-  ngOnInit() {
-    setTimeout(() => {
-      this.getData();
-    });
-  }
-
   refresh() {
     this.clearData();
     this.refreshData();

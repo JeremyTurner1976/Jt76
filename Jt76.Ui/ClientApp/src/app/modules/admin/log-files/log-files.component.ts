@@ -11,8 +11,7 @@ import { BaseDataComponent }
   styleUrls: ["./log-files.component.scss"]
 })
 export class LogFilesComponent
-extends BaseDataComponent
-implements OnInit {
+extends BaseDataComponent {
   step = -1;
   lineCount = 120;
   lastFile = new LogFile();
@@ -23,6 +22,7 @@ implements OnInit {
     private readonly logFileService: LogFileService
   ) {
     super();
+    this.getData();
   }
 
   getData() {

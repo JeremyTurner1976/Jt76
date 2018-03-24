@@ -12,8 +12,7 @@ import { BaseWeatherComponent } from "./abstract/base-weather-component";
 })
 
 export class WeatherComponent
-  extends BaseWeatherComponent
-  implements OnInit {
+  extends BaseWeatherComponent {
 
   weatherData = new WeatherData();
   weatherForecasts = new Array<WeatherForecast>();
@@ -21,6 +20,7 @@ export class WeatherComponent
 
   constructor(weatherService: WeatherService) {
     super(weatherService);
+    this.getData();
   }
 
   mapData(data: WeatherData) {
