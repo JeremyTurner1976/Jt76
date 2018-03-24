@@ -10,7 +10,7 @@ import * as moment from "moment";
 @Injectable()
 export class AppLocalStorageService {
 
-  private cacheTimeIdentifier: string = "CacheTime";
+  private cacheTimeIdentifier = "CacheTime";
 
   public isLocalAvailable: boolean;
   public isSessionAvailable: boolean;
@@ -25,8 +25,8 @@ export class AppLocalStorageService {
   */
 
   constructor(
-    private localStorage: LocalStorageService,
-    private sessionStorage: SessionStorageService,
+    private readonly localStorage: LocalStorageService,
+    private readonly sessionStorage: SessionStorageService,
   ) { }
 
   ngOnInit() {
@@ -57,8 +57,8 @@ export class AppLocalStorageService {
   }
 
   getLocalCacheAge(key) {
-    let currentTime = moment();
-    let originalTime =
+    const currentTime = moment();
+    const originalTime =
       moment(this.getLocalValue(key + this.cacheTimeIdentifier));
     return currentTime.diff(originalTime, "minutes");
   }
@@ -87,8 +87,8 @@ export class AppLocalStorageService {
   }
 
   getSessionCacheAge(key) {
-    let currentTime = moment();
-    let originalTime =
+    const currentTime = moment();
+    const originalTime =
       moment(this.getSessionValue(key + this.cacheTimeIdentifier));
     return currentTime.diff(originalTime, "minutes");
   }

@@ -18,15 +18,15 @@ export class AlertService {
 
   verticalPosition: MatSnackBarVerticalPosition = "bottom";
   horizontalPosition: MatSnackBarHorizontalPosition = "right";
-  duration: number = 1200;
+  duration = 1200;
 
-  public matSnackBarRef: MatSnackBarRef<AlertComponent>;
-  public matSnackBarConfig: MatSnackBarConfig;
+  matSnackBarRef: MatSnackBarRef<AlertComponent>;
+  matSnackBarConfig: MatSnackBarConfig;
 
   constructor(public snackBar: MatSnackBar) {
   }
 
-  public debug(
+  debug(
     message: string,
     additionalInformation: string = "") {
 
@@ -39,7 +39,7 @@ export class AlertService {
     }
   }
 
-  public info(
+  info(
     message: string,
     additionalInformation: string = "") {
 
@@ -50,7 +50,7 @@ export class AlertService {
         "alert-info");
   }
 
-  public warning(
+  warning(
     message: string,
     additionalInformation: string = "") {
 
@@ -61,7 +61,7 @@ export class AlertService {
         "alert-warning");
   }
 
-  public error(
+  error(
     message: string,
     additionalInformation: string = "") {
 

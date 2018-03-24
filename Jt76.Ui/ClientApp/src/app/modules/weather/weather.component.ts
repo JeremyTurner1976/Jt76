@@ -16,7 +16,6 @@ export class WeatherComponent
   implements OnInit {
 
   weatherData = new WeatherData();
-  currentWeather = new WeatherForecast();
   weatherForecasts = new Array<WeatherForecast>();
   dailyForecasts = new Array<DailyForecast>();
 
@@ -33,7 +32,7 @@ export class WeatherComponent
 
   clearData() {
     this.weatherData = new WeatherData();
-    this.currentWeather = new WeatherForecast();
     this.weatherForecasts = new Array<WeatherForecast>();
+    this.dailyForecasts = new Array<DailyForecast>();
   }
 }

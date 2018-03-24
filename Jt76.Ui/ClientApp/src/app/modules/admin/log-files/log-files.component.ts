@@ -20,7 +20,7 @@ implements OnInit {
   fileLines = new Array<string>();
 
   constructor(
-    private logFileService: LogFileService
+    private readonly logFileService: LogFileService
   ) {
     super();
   }

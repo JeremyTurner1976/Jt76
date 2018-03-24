@@ -5,11 +5,5 @@ import { Component, OnInit } from "@angular/core";
   templateUrl: "./web-api.component.html",
   styleUrls: ["./web-api.component.scss"]
 })
-export class WebApiComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+export class WebApiComponent {
 }

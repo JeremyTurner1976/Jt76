@@ -10,10 +10,10 @@ import { AppLocalStorageService }
 
 @Injectable()
 export class BaseService<T> {
-  public singularName: string;
-  public dataSetKey: string;
-  public dataUrl: string;
-  public dataCacheDuration: number;
+  singularName: string;
+  dataSetKey: string;
+  dataUrl: string;
+  dataCacheDuration: number;
 
   constructor(
     public http: HttpClient,

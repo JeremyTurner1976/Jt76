@@ -3,7 +3,6 @@ import {
   OnInit,
   ElementRef,
   ViewChild,
-
   Input
 } from "@angular/core";
 
