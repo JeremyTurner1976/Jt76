@@ -2,7 +2,6 @@ import {
   Component,
   IterableDiffers,
   DoCheck,
-  AfterViewInit,
   ElementRef,
   ViewChild
 } from "@angular/core";
@@ -22,7 +21,7 @@ import * as ChartJs from "chart.js";
 })
 export class WeatherPanelComponent
 extends BaseWeatherComponent
-  implements AfterViewInit, DoCheck {
+  implements DoCheck {
 
   day: string;
   graphData: any;
@@ -122,6 +121,8 @@ extends BaseWeatherComponent
   }
 
   drawGraph() {
+    //AfterViewInit is not fired to redraw on data changes
+    //this is fired for data array changes
     if (this.weatherGraph) {
       this.drawGraphNow();
     } else {
