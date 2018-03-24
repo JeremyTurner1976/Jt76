@@ -38,7 +38,7 @@ export class BaseService<T> {
           .getLocalValue(this.dataSetKey)) as T);
 
       this.alertService.debug(
-        `${this.dataSetKey}` + " loaded from LocalStorage");
+        `${this.dataSetKey}` + " loaded from Local Storage");
 
       return Observable.of(data);
     }
@@ -76,7 +76,7 @@ export class BaseService<T> {
 
       this.alertService.debug(
         `${data.length} ${this.dataSetKey}`
-          + " loaded from LocalStorage");
+          + " loaded from Local Storage");
 
       return Observable.of(data);
     }
@@ -118,7 +118,7 @@ export class BaseService<T> {
       const matchedItems = data.filter(comparator);
       if (matchedItems.length) {
         this.alertService.debug(
-          `${this.singularName} loaded from LocalStorage`);
+          `${this.singularName} loaded from Local Storage`);
 
         return Observable.of(matchedItems[0]);
       }

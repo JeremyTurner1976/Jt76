@@ -21,7 +21,6 @@
 
 		/*
 		 * TODO
-			//Finalize display for open weather api forecasts (Darksky looks good)
 			//Implement weather service and GeoLocation
 			//very detailed single day displays with graphs and such (will be a router, with a defined route just like errors)
 

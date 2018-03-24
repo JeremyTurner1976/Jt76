@@ -16,36 +16,8 @@
   overflow: auto;
 }
 
-.component-detail {
-  margin-left: 0px !important;
-}
-
-.component-weather {
-  font-size: 1.3em;
-}
-
-.daily-content {
-  font-size: 1.1em;
-}
-
-.daily-weather {
-  padding-bottom: 5px !important;
-}
-
-.detail {
-  font-size: .85em;
-}
-
 .mat-card {
-  border-radius: .5em !important;
-}
-
-.skycon-array {
-  text-align: center;
-}
-
-.skycon-item {
-  display: inline-block;
+  padding: 10px 15px 10px 15px !important;
 }
 
 .weather-content {
@@ -54,22 +26,46 @@
   font-weight: 500;
 }
 
+.weather-card {
+  padding-bottom: 5px !important;
+}
+
+.weather-description {
+  font-size: .9em;
+  max-width: 400px;
+}
+
 .weather-header {
   text-align: center;
+}
+
+.weather-time {
+  font-size: .9em;
+  font-weight: bold;
 }
 
 .weather-title {
   font-size: 1.5em;
   font-weight: 800 !important;
+  padding-bottom: 5px;
 }
 
-/*.weather-forecast {
-  min-width: 275px;
-  margin-left: 5px;
-  margin-right: 5px;
-  display: inline-block;
+.weather-temperature {
+  font-size: 1.3em;
+  font-weight: bold;
 }
 
-.weather-summary {
+.weather-temperature-mini {
+  font-size: .95em;
+  font-weight: bold;
+}
+
+.skycon-array {
   text-align: center;
-}*/
+  padding-top: 10px;
+}
+
+.skycon-item {
+  display: inline-block;
+  text-align: center;
+}

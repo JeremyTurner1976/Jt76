@@ -30,10 +30,10 @@
     </span>
     <hr/>
 
-    <div class="weather-content"
+    <div class="weather-card"
          *ngFor="let item of dailyForecasts">
 
-      <mat-card class="daily-weather">
+      <mat-card>
 
         <div class="weather-header">
           <mat-grid-list cols="2" rowHeight="25px">
@@ -45,18 +45,18 @@
             </mat-grid-tile>
             <mat-grid-tile [colspan]="1"
                            [rowspan]="1">
-              <span class="component-detail">
+              <span class="weather-detail">
                 Low:
-                <span class="component-weather">{{item.minimumTemperature}}&#176;</span>
+                <span class="weather-temperature">{{item.minimumTemperature}}&#176;</span>
                 | High:
-                <span class="component-weather">{{item.maximumTemperature}}&#176;</span>
+                <span class="weather-temperature">{{item.maximumTemperature}}&#176;</span>
               </span>
             </mat-grid-tile>
           </mat-grid-list>
         </div>
 
         <div class="skycon-array">
-          <span class="skycon-item"
+          <div class="skycon-item"
                 *ngFor="let icon of item.skyCons; index as i">
 
             <app-sky-con height="104"
@@ -65,12 +65,17 @@
                          [icon]="icon">
             </app-sky-con>
             <br />
-            <span>{{item.descriptions[i]}}</span>
-            <br />
-            <span class="detail">
-              {{item.times[i]}} &nbsp; {{item.temperatures[i]}}&#x2109;
+            <span class="weather-description">
+              {{item.descriptions[i]}}
             </span>
-          </span>
+            <br />
+            <span class="weather-time">
+               {{item.times[i]}} - 
+            </span>
+            <span class="weather-temperature-mini">
+              {{item.temperatures[i]}}&#176;
+            </span>
+          </div>
         </div>
 
         <br />

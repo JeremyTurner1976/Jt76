@@ -48,6 +48,7 @@ export class WeatherComponent implements OnInit {
     this.weatherService.refresh().subscribe(
       (data: WeatherData) => {
         this.mapData(data);
+        console.log(data);
       });
   }
 
@@ -151,15 +152,6 @@ export class WeatherComponent implements OnInit {
           dailyForecast.avgWindDirection =
             +(dailyForecast.avgWindDirection / dailyForecastCount).toFixed(0);
 
-          if (dailyForecast.descriptions.length !== forecastCount) {
-            while (dailyForecast.descriptions.length !== forecastCount) {
-              dailyForecast.descriptions.unshift("");
-              dailyForecast.skyCons.unshift("");
-              dailyForecast.times.unshift("");
-              dailyForecast.temperatures.unshift("");
-            }
-          }
-
           dailyForecasts.push(dailyForecast);
         }
       });
@@ -168,7 +160,7 @@ export class WeatherComponent implements OnInit {
     this.isLoaded = true;
   }
 
-  getTemperatureColor(temperature : number): string {
+  getTemperatureColor(temperature: number): string {
     if (temperature > 100) {
       return "#E65100";
     } else if (temperature > 95) {
