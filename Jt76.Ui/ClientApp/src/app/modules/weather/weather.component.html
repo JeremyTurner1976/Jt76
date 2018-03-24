@@ -31,6 +31,7 @@
     <hr/>
 
     <div class="weather-card"
+         [routerLink]="['/weather-panel/', item.day]"
          *ngFor="let item of dailyForecasts">
 
       <mat-card>

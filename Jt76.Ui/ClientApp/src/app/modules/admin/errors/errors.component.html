@@ -17,7 +17,7 @@
     </span>
   </p>
 
-  <div *ngIf="errors.length || countIsZero;else loading">
+  <div *ngIf="isLoaded;else loading">
     <mat-nav-list>
 
       <mat-list-item class="list-item"

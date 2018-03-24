@@ -1,3 +1,50 @@
-<p>
-  weather-panel works!
-</p>
+<div class="component-content">
+
+  <span class="component-title">
+    Weather Data
+
+    <span class="action-button">
+      <a mat-raised-button
+         color="warning"
+         *ngIf="!useOpenWeather"
+         (click)="useOpenWeatherApi(true)">
+        Open Weather Api
+      </a>
+      <a mat-raised-button
+         *ngIf="useOpenWeather"
+         color="warning"
+         (click)="useOpenWeatherApi(false)">
+        Dark Sky Weather Api
+      </a>
+      <a mat-raised-button
+         color="primary"
+         (click)="refresh()">
+        Refresh
+      </a>
+    </span>
+  </span>
+
+  <div *ngIf="isLoaded;else loading">
+    <span class="component-detail">
+      Local weather data for {{day}}
+    </span>
+    <hr/>
+
+
+  </div>
+
+  <ng-template #loading>
+    <br />
+    <span class="component-detail">
+      Loading data
+    </span>
+    <hr/>
+    <br/>
+    <mat-progress-spinner color="primary"
+                          mode="indeterminate">
+    </mat-progress-spinner>
+  </ng-template>
+
+</div>
+
+

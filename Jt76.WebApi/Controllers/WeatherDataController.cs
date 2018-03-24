@@ -21,13 +21,13 @@
 
 		/*
 		 * TODO
-			//Implement weather service and GeoLocation
-			//very detailed single day displays with graphs and such (will be a router, with a defined route just like errors)
+			//Implement weather service details and graphs
+			//Implement GeoLocation
 
 			//Paging on Errors
 			//Decorate the error page
 			//Implement sass variables - alert will use these
-			//Implement global event bus (For theme) - can use observe on local storage, themed alert. Should look into traditional methods
+			//Implement global event bus (For theme) - can use observe on local storage, themed alert. Should look into traditional angular methods
 
 			//Implement Authentication - https://social.technet.microsoft.com/wiki/contents/articles/37169.secure-your-netcore-web-applications-using-identityserver-4.aspx
 			//implement user admin

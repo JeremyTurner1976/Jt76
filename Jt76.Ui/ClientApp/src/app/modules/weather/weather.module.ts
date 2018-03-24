@@ -20,12 +20,22 @@ import { WeatherService } from
     SharedModule,
     RouterModule.forChild([
       {
-        path: "weather-panel",
+        path: "weather-panel/:day",
         component: WeatherPanelComponent
       },
       {
         path: "weather",
         component: WeatherComponent
+      },
+      {
+        path: "",
+        redirectTo: "weather",
+        pathMatch: "full"
+      },
+      {
+        path: "**",
+        redirectTo: "weather",
+        pathMatch: "full"
       }
     ])
   ],

@@ -33,6 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="ClientApp\src\app\modules\weather\abstract\" />
     <Folder Include="ClientApp\src\app\modules\weather\services\" />
   </ItemGroup>
 

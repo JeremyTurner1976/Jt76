@@ -11,7 +11,7 @@
     </span>
   </p>
 
-  <div *ngIf="logFiles.length || countIsZero;else loading">
+  <div *ngIf="isLoaded;else loading">
     <mat-accordion class="accordion-headers-align"
                    *ngFor="let item of logFiles; let i = index">
       <mat-expansion-panel [expanded]="step === i"

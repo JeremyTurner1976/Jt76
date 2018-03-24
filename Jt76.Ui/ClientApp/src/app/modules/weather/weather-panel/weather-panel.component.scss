@@ -1,0 +1,15 @@
+.action-button {
+  margin-top: 6px;
+}
+
+.component-content {
+  position: fixed;
+  top: 64px;
+  left: 0px;
+  display: block;
+  border: none;
+  height: calc(100vh - 175px);
+  width: calc(100% - 55px);
+  padding: 25px;
+  overflow: auto;
+}
