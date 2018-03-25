@@ -12,9 +12,9 @@ import { IDailyForecast, DailyForecast }
   from "../models/daily-forecast";
 import { IWeatherForecast }
   from "../models/weather-forecast";
+import { KeyValue }
+  from "../../../shared/models/key-value";
 import * as moment from "moment";
-import Keyvalue = require("../../../shared/models/key-value");
-import KeyValue = Keyvalue.KeyValue;
 
 @Injectable()
 export class WeatherService extends BaseService<IWeatherData> {
@@ -129,60 +129,60 @@ export class WeatherService extends BaseService<IWeatherData> {
     return this.dataUrl.indexOf("openWeather") >= 0;
   }
 
-  getDetailModel(weatherForecast: IWeatherForecast): Array<KeyValue> {
+  getDetailModel(item: IWeatherForecast): Array<KeyValue> {
     const keyValues = new Array<KeyValue>();
 
     keyValues.push(this.getKeyValue(
       "Description",
-      weatherForecast.description
+      item.description
     ));
     keyValues.push(this.getKeyValue(
       "Cloud Cover",
-      weatherForecast.cloudCover
+      item.cloudCover
     ));
 
     keyValues.push(this.getKeyValue(
       "Start Time",
-      moment(weatherForecast.startDateTime)
+      moment(item.startDateTime)
         .format("dddd, MMMM Do, h:mm a")
     ));
     keyValues.push(this.getKeyValue(
       "End Time",
-      moment(weatherForecast.endDateTime)
+      moment(item.endDateTime)
         .format("dddd, MMMM Do, h:mm a")
     ));
 
     keyValues.push(this.getKeyValue(
       "Minimum Temperature",
-      weatherForecast.minimumTemperature
+      item.minimumTemperature
     ));
     keyValues.push(this.getKeyValue(
       "Maximum Temperature",
-      weatherForecast.maximumTemperature
+      item.maximumTemperature
     ));
     
 
     keyValues.push(this.getKeyValue(
       "Wind Direction",
-      weatherForecast.windDirection
+      item.windDirection
     ));
     keyValues.push(this.getKeyValue(
       "Wind Speed",
-      weatherForecast.windspeed
+      item.windspeed
     ));
 
     keyValues.push(this.getKeyValue(
       "humidity",
-      weatherForecast.humidity
+      item.humidity
     ));
     keyValues.push(this.getKeyValue(
       "Precipitation Volume",
-      weatherForecast.precipitationVolume
+      item.precipitationVolume
     ));
 
     keyValues.push(this.getKeyValue(
       "Atmospheric Pressure",
-      weatherForecast.atmosphericPressure
+      item.atmosphericPressure
     ));
 
     return keyValues;

@@ -47,6 +47,8 @@ export class ErrorComponent
 
   mapData(data: IAppError) {
     this.error = data;
+    this.error.detailModel
+      = this.errorService.getDetailModel(data);
   }
 
   clearData() {

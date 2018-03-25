@@ -57,7 +57,7 @@ extends BaseWeatherComponent
   mapData(data: WeatherData) {
     const todaysForecasts =
       this.weatherService
-      .getForecastsForDay(data.weatherForecasts, this.day);
+        .getForecastsForDay(data.weatherForecasts, this.day);
 
     const labels = [];
     const weatherData = [];

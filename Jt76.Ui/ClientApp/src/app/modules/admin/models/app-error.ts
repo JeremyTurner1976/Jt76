@@ -1,3 +1,6 @@
+import { KeyValue }
+  from "../../../shared/models/key-value";
+
 export interface IAppError {
   id: number;
   message: string;
@@ -9,6 +12,7 @@ export interface IAppError {
   createdDate: Date;
   updatedBy: string;
   updatedDate: Date;
+  detailModel: Array<KeyValue>;
 }
 
 export class AppError implements IAppError {
@@ -22,4 +26,5 @@ export class AppError implements IAppError {
   createdDate = new Date();
   updatedBy = "";
   updatedDate = new Date();
+  detailModel = new Array<KeyValue>();
 }

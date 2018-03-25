@@ -7,77 +7,31 @@
   <mat-card-content>
 
     <div *ngIf="isLoaded;else loading">
-
+      
       <mat-grid-list cols="2"
-                     rowHeight="26px">
+                     rowHeight="36px">
 
         <mat-grid-tile colspan="1"
-                       rowspan="1">
+                       rowspan="1"
+                       *ngFor="let detail of error.detailModel">
           <div class="flex-start">
-            <label class="label">
-              Message:
-            </label>
-            <label>
-              {{error.message}}
-            </label>
-          </div>
-        </mat-grid-tile>
-        <mat-grid-tile colspan="1"
-                       rowspan="1">
-          <div class="flex-start">
-            <label class="label">
-              Error Level:
-            </label>
-            <label>
-              {{error.errorLevel}}
-            </label>
-          </div>
-        </mat-grid-tile>
 
-        <mat-grid-tile colspan="1"
-                       rowspan="1">
-          <div class="flex-start">
-            <label class="label">
-              Source:
-            </label>
-            <label>
-              {{error.source}}
-            </label>
-          </div>
-        </mat-grid-tile>
-        <mat-grid-tile colspan="1"
-                       rowspan="1">
-          <div class="flex-start">
-            <label class="label">
-              Additional Information:
-            </label>
-            <label>
-              {{error.additionalInformation}}
-            </label>
-          </div>
-        </mat-grid-tile>
+            <mat-grid-list cols="2"
+                           rowHeight="36px">
+              <mat-grid-tile colspan="1"
+                             rowspan="1">
+                <label class="label flex-start">
+                  {{detail.Key}}:
+                </label>
+              </mat-grid-tile>
+              <mat-grid-tile colspan="1"
+                             rowspan="1">
+                <label class="flex-start">
+                  {{detail.Value}}
+                </label>
+              </mat-grid-tile>
+            </mat-grid-list>
 
-
-        <mat-grid-tile colspan="1"
-                       rowspan="1">
-          <div class="flex-start">
-            <label class="label">
-              Created By:
-            </label>
-            <label>
-              {{error.createdBy}}
-            </label>
-          </div>
-        </mat-grid-tile>
-        <mat-grid-tile colspan="1"
-                       rowspan="1">
-          <div class="flex-start">
-            <label class="label">
-              Created Date:
-            </label>
-            <label>
-              {{error.createdDate  | date:"mediumDate":"UTC-12"}} {{error.createdDate  | date:"h:mm a":"UTC-12"}}
-            </label>
           </div>
         </mat-grid-tile>
 
