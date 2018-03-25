@@ -1,9 +1,17 @@
-import { Component, OnInit } from "@angular/core";
+import {
+  Component,
+  ViewChild,
+  AfterViewInit
+} from "@angular/core";
+import {
+  MatPaginator,
+  MatSort,
+  MatTableDataSource,
+  PageEvent
+  } from "@angular/material";
 import { IAppError } from "../models/app-error";
 import { ErrorService } from "../services/error.service";
-import { MatTableDataSource } from "@angular/material";
-import { PageEvent } from '@angular/material';
-import { BaseDataComponent }
+import { BaseDataComponent } 
   from "../../../shared/abstract/base-data-component";
 
 @Component({
@@ -12,9 +20,10 @@ import { BaseDataComponent }
   styleUrls: ["./errors.component.scss"]
 })
 export class ErrorsComponent
-  extends BaseDataComponent {
+extends BaseDataComponent
+implements AfterViewInit {
 
-  //mat table
+  // Mat table
   errors = new Array<IAppError>();
   dataSource = new MatTableDataSource<IAppError>(this.errors);
   displayedColumns = [
@@ -24,7 +33,9 @@ export class ErrorsComponent
     "info"
   ];
 
-  //mat paginator
+  // Mat paginator
+  pageEvent: PageEvent;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
   length = 100;
   pageSize = 10;
   pageSizeOptions = [
@@ -34,14 +45,19 @@ export class ErrorsComponent
     100
   ];
 
-  // MatPaginator Output
-  pageEvent: PageEvent;
+  // Mat sort
+  @ViewChild(MatSort) sort: MatSort;
 
   constructor(
     private readonly errorService: ErrorService
   ) {
     super();
     this.getData();
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
 
   getData() {
@@ -61,11 +77,12 @@ export class ErrorsComponent
   mapData(data: IAppError[]) {
     this.errors = data;
     this.length = data.length;
-    this.dataSource = new MatTableDataSource<IAppError>(data);
+    this.setupPaging();
   }
 
   clearData() {
     this.errors = new Array<IAppError>();
+    this.setupPaging();
   }
 
   applyFilter(filterValue: string) {
@@ -76,8 +93,12 @@ export class ErrorsComponent
 
   clearAll() {
     this.errorService.deleteAll(this.errors);
-    this.errors = new Array<IAppError>();
+    this.clearData();
+  }
+
+  setupPaging() {
+    this.dataSource = new MatTableDataSource<IAppError>(this.errors);
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
 }
-
-
