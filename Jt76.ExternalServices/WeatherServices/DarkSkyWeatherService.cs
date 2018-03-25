@@ -97,7 +97,6 @@
 					CloudCover = item.cloudCover,
 					PrecipitationVolume = item.precipIntensity
 				}).ToList();
-			int test = fiveDayOneHourForecasts.Count();
 
 			return GetThreeHourSummedForecasts(fiveDayOneHourForecasts);
 		}
@@ -124,19 +123,6 @@
 
 			foreach (Forecast item in fiveDayOneHourForecasts)
 			{
-				//Gather averages data
-				temperatureTotal += item.Temperature;
-				humidityTotal += item.Humidity;
-				atmosphericPressureTotal += item.AtmosphericPressure;
-				windspeedTotal += item.Windspeed;
-				windDirectionTotal += item.WindDirection;
-				cloudCoverTotal += item.CloudCover;
-				precipitationVolumeTotal += item.PrecipitationVolume;
-
-				//gather extremity data
-				minimumTemperature = Math.Min(item.Temperature, minimumTemperature);
-				maximumTemperature = Math.Max(item.Temperature, maximumTemperature);
-
 				//handle data for three hour chunks
 
 				if (count % groupSize == 0) //first item handles all resets
@@ -153,7 +139,21 @@
 					minimumTemperature = 9999;
 					maximumTemperature = -9999;
 				}
-				else if (groupCount == 1) //second item, picks some middle values for a three hour chunk
+
+				//Gather averages data
+				temperatureTotal += item.Temperature;
+				humidityTotal += item.Humidity;
+				atmosphericPressureTotal += item.AtmosphericPressure;
+				windspeedTotal += item.Windspeed;
+				windDirectionTotal += item.WindDirection;
+				cloudCoverTotal += item.CloudCover;
+				precipitationVolumeTotal += item.PrecipitationVolume;
+
+				//gather extremity data
+				minimumTemperature = Math.Min(item.Temperature, minimumTemperature);
+				maximumTemperature = Math.Max(item.Temperature, maximumTemperature);
+
+				if (groupCount == 1) //second item, picks some middle values for a three hour chunk
 				{
 					forecast = new Forecast
 					{
@@ -164,7 +164,7 @@
 						Icon = item.Icon
 					};
 				}
-				else
+				else if (count % groupSize != 0)
 				{
 					//third item, attaches averages and inserts the item
 					forecast.Temperature = (temperatureTotal / groupSize).ToPrecisionValue(precisionValue);
