@@ -1,10 +1,10 @@
 
 /*
 		 * TODO
-
+     --build communication shuttle (Talks to skycons, talks to moment, talks to chart js)
      --build set of moment directives - app-date, accepts utc true/false - defaults to whatever the error is saved as
 
-			--Implement GeoLocation
+			--Implement GeoLocation service
 
 			//Implement sass variables and traditional theming
 			//Implement global event bus (For theme) - can use observe on local storage, themed alert. Should look into traditional angular methods
