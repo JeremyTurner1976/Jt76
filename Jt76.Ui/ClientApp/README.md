@@ -1,3 +1,49 @@
+
+/*
+		 * TODO
+     directive for averaging, to pipe (Will use all over for weather - also have a to fixed built in param) - also refactor summarize weather
+			//Implement weather service details and graphs
+			//Implement GeoLocation
+
+			//Paging on Errors
+			//Decorate the error page
+			//Implement sass variables - alert will use these
+			//Implement global event bus (For theme) - can use observe on local storage, themed alert. Should look into traditional angular methods
+
+			//Implement Authentication - https://social.technet.microsoft.com/wiki/contents/articles/37169.secure-your-netcore-web-applications-using-identityserver-4.aspx
+			//implement user admin
+			//Implement User Secrets Manager
+			//storage cleanup service (Use injectors to get all services, check cache time and delete over on app start)
+
+			//Implement weather service and GeoLocation
+			//Finalized display for open weather api forecasts
+
+			//Implement dashboards
+			//Clean up references
+
+			//Implement EntityAttributeFramework
+			//Implement Pdf and excel outputs
+
+			//Implement tests
+			//refactor and add comments
+
+			//Implement prod deploy settings and test
+		 */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Jt76.Ui
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.5.

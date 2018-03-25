@@ -1,4 +1,5 @@
-<div class="component-content">
+<div class="component-content"
+     #StepList>
 
   <p class="component-title">
     Log Files
@@ -64,7 +65,7 @@
           </button>
           <button mat-button
                   color="warn"
-                  (click)="lastStep()"
+                  (click)="lastStep(logFiles)"
                   *ngIf="i < logFiles.length - 1">
             Last
           </button>

@@ -1,61 +1,64 @@
-<mat-sidenav-container>
+<div>
+  <mat-sidenav-container>
   
-  <mat-sidenav mode="side"
-               opened="true"
-               class="side-nav">
+    <mat-sidenav mode="side"
+                 opened="true"
+                 class="side-nav">
 
-    <button mat-button
-            class="side-nav-button"
-            [routerLink]="['/admin/dashboard']">
-      Dashboard
-    </button>
-    <button mat-button
-            class="side-nav-button"
-            [routerLink]="['/admin/errors']">
-      Errors
-    </button>
-    <button mat-button
-            class="side-nav-button"
-            [routerLink]="['/admin/logFiles']">
-      Log Files
-    </button>
-    <button mat-button
-            class="side-nav-button"
-            [routerLink]="['/admin/users']">
-      Users
-    </button>
-    <button mat-button
-            class="side-nav-button"
-            [routerLink]="['/admin/webApi']">
-      Web Api
-    </button>
-  </mat-sidenav>
+      <button mat-button
+              class="side-nav-button"
+              [routerLink]="['/admin/dashboard']">
+        Dashboard
+      </button>
+      <button mat-button
+              class="side-nav-button"
+              [routerLink]="['/admin/errors']">
+        Errors
+      </button>
+      <button mat-button
+              class="side-nav-button"
+              [routerLink]="['/admin/logFiles']">
+        Log Files
+      </button>
+      <button mat-button
+              class="side-nav-button"
+              [routerLink]="['/admin/users']">
+        Users
+      </button>
+      <button mat-button
+              class="side-nav-button"
+              [routerLink]="['/admin/webApi']">
+        Web Api
+      </button>
+    </mat-sidenav>
 
-  <mat-sidenav-content class="component-content">
+    <mat-sidenav-content class="component-content">
 
-    <mat-card>
+      <mat-card>
       
-      <mat-card-header>
-        <div mat-card-avatar
-             class="admin-image"></div>
-        <mat-card-title class="page-title">
-          Admin
-        </mat-card-title>
-        <mat-card-subtitle>
-          Multiple common application services in one location
-        </mat-card-subtitle>
-      </mat-card-header>
+        <mat-card-header>
+          <div mat-card-avatar
+               class="admin-image"></div>
+          <mat-card-title class="page-title">
+            Admin
+          </mat-card-title>
+          <mat-card-subtitle>
+            Multiple common application services in one location
+          </mat-card-subtitle>
+        </mat-card-header>
 
-      <hr />
-      <mat-card-content>
-        <router-outlet></router-outlet>
-      </mat-card-content>
+        <hr />
+        <mat-card-content>
+          <router-outlet></router-outlet>
+        </mat-card-content>
 
-    </mat-card>
+      </mat-card>
 
-  </mat-sidenav-content>
+    </mat-sidenav-content>
 
-</mat-sidenav-container>
+  </mat-sidenav-container>
 
 
 
+
+</div>

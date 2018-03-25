@@ -24,6 +24,7 @@ extends BaseWeatherComponent
   implements DoCheck {
 
   day: string;
+  color: "black";
   graphData: any;
   chartOptions: any;
   todaysForecasts = new Array<WeatherForecast>();

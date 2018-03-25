@@ -1,3 +1,7 @@
+.accordion-wrapper {
+  padding: 10px;
+}
+
 .action-button {
   margin-top: 6px;
 }
@@ -12,4 +16,12 @@
   width: calc(100% - 55px);
   padding: 25px;
   overflow: auto;
+}
+
+.graph-wrapper {
+  height: 225px
+}
+
+.weather-skycon {
+  margin:-10px;
 }

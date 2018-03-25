@@ -1,4 +1,5 @@
-<div class="component-content">
+<div class="component-content"
+     #StepList>
 
   <span class="component-title">
     Weather Data
@@ -36,66 +37,83 @@
     <hr />
 
     <h2 class="center">{{day}}</h2>
-    <div id="wrapper" style="position: relative; height:225px">
+    <div class="graph-wrapper">
       <canvas #WeatherGraph></canvas>
     </div>
 
     <hr/>
-    <br/>
 
-    <mat-accordion class="accordion-headers-align"
-                   *ngFor="let item of todaysForecasts; let i = index">
+    <div class="accordion-wrapper">
+      <mat-accordion class="accordion-headers-align"
+                     *ngFor="let item of todaysForecasts; let i = index">
       
-      <mat-expansion-panel [expanded]="step === i"
-                           (opened)="setStep(i)"
-                           hideToggle="true"
-                           class="list-item">
+        <mat-expansion-panel [expanded]="step === i"
+                             (opened)="setStep(i)"
+                             hideToggle="true"
+                             class="list-item">
 
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            filename
-          </mat-panel-title>
-          <mat-panel-description>
-            Error Logs
-            <mat-icon>content_copy</mat-icon>
-          </mat-panel-description>
-        </mat-expansion-panel-header>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <span class="weather-time">
+                {{item.startDateTime | date:"mediumDate"}} {{item.startDateTime | date:"h:mm a"}}
+              </span>
+            </mat-panel-title>
+            <mat-panel-description>
+              <span class="weather-temperature-mini">
+                {{item.minimumTemperature | number : '1.0-0'}}&#176; - {{item.maximumTemperature | number : '1.0-0'}}&#176;
+              </span>
+              <span class="weather-description">
+                {{item.description}}
+              </span>
+              <mat-icon>
+                <div class="weather-skycon">
+                  <app-sky-con height="25"
+                               width="25"
+                               [color]="color"
+                               [icon]="item.skyCon">
+                  </app-sky-con>
+                </div>
+              </mat-icon>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
 
-        <div (click)="hideInfo();"
-             class="list-item accordion-content">
-          CONTENT
-        </div>
+          <div (click)="hideInfo();"
+               class="list-item accordion-content"
+               #{{i}}>
+            CONTENT
+          </div>
 
-        <mat-action-row>
-          <button mat-button
-                  color="accent"
-                  (click)="firstStep()"
-                  *ngIf="i > 0">
-            First
-          </button>
-          <button mat-button
-                  color="warn"
-                  (click)="prevStep()"
-                  *ngIf="i > 0">
-            Previous
-          </button>
-          <button mat-button
-                  color="warn"
-                  (click)="nextStep()"
-                  *ngIf="i < todaysForecasts.length - 1">
-            Next
-          </button>
-          <button mat-button
-                  color="accent"
-                  (click)="lastStep()"
-                  *ngIf="i < todaysForecasts.length - 1">
-            Last
-          </button>
-        </mat-action-row>
+          <mat-action-row>
+            <button mat-button
+                    color="accent"
+                    (click)="firstStep()"
+                    *ngIf="i > 0">
+              First
+            </button>
+            <button mat-button
+                    color="warn"
+                    (click)="prevStep()"
+                    *ngIf="i > 0">
+              Previous
+            </button>
+            <button mat-button
+                    color="warn"
+                    (click)="nextStep()"
+                    *ngIf="i < todaysForecasts.length - 1">
+              Next
+            </button>
+            <button mat-button
+                    color="accent"
+                    (click)="lastStep(todaysForecasts)"
+                    *ngIf="i < todaysForecasts.length - 1">
+              Last
+            </button>
+          </mat-action-row>
 
-      </mat-expansion-panel>
+        </mat-expansion-panel>
 
-    </mat-accordion>
+      </mat-accordion>
+    </div>
 
   </div>
 
