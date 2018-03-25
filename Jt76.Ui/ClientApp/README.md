@@ -1,8 +1,14 @@
 
 /*
 		 * TODO
+     errors will become a mat table
+     --need to decorate a moment time to the errors object (BaseModel?) - will use this for page date filters
+     --need to  get sorts up
+
+
      directive and service for moment (Have to decorate error times too much - want all times to be simple - same interface)
      directive for averaging, to pipe (Will use all over for weather - also have a to fixed built in param) - also refactor summarize weather
+      --Common
 			Implement GeoLocation
 
 			//Paging on Errors

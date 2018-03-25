@@ -1,3 +1,37 @@
+.content-container {
+  min-width: 300px;
+  display: block;
+}
+
+.filter-header {
+  padding: 0 1.5em 0 1.5em;
+}
+
 .info-button {
-  margin: -15px !important;
+  float: right;
+}
+
+.mat-column-info {
+  max-width: 40px;
+}
+
+.mat-column-createdDate {
+  max-width: 20%;
+}
+
+.mat-column-createdBy {
+  max-width: 15%;
+}
+
+.mat-column-message {
+  max-width: 65%;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.mat-table {
+  overflow: auto;
+  max-height: 500px;
 }

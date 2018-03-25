@@ -5,8 +5,7 @@
     <span class="action-button">
       <a mat-raised-button
          color="warning"
-         (click)="clearAll()"
-         *ngIf="!countIsZero">
+         (click)="clearAll()">
         Clear All
       </a>
       <a mat-raised-button
@@ -18,23 +17,76 @@
   </p>
 
   <div *ngIf="isLoaded;else loading">
-    <mat-nav-list>
+    
+    <div class="filter-header">
+      <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+      </mat-form-field>
+    </div>
 
-      <mat-list-item class="list-item"
-                     *ngFor="let error of errors">
-        <div matLine
-             class="expanded-mat-line"
-             [routerLink]="['/admin/errors/', error.id]">
-          {{error.createdDate  | date:"mediumDate":"UTC-12"}} {{error.createdDate  | date:"h:mm a":"UTC-12"}} - {{error.createdBy}} - {{error.message}}
-        </div>
-        <button mat-icon-button
-                class="info-button"
-                [routerLink]="['/admin/errors/', error.id]">
-          <mat-icon>info</mat-icon>
-        </button>
-      </mat-list-item>
+    <div class="content-container mat-elevation-z8">
 
-    </mat-nav-list>
+      <mat-table [dataSource]="dataSource" matSort>
+        
+        <ng-container matColumnDef="createdDate">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Created
+          </mat-header-cell>
+          <mat-cell *matCellDef="let error">
+            {{error.createdDate | date:"mediumDate":"UTC-12"}} {{error.createdDate | date:"h:mm a":"UTC-12"}}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="createdBy">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Created By
+          </mat-header-cell>
+          <mat-cell *matCellDef="let error">
+            {{error.createdBy}}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="message">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Message
+          </mat-header-cell>
+          <mat-cell *matCellDef="let error">
+            {{error.message}}
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="info">
+          <mat-header-cell *matHeaderCellDef
+                           class="center">
+             Info
+          </mat-header-cell>
+          <mat-cell *matCellDef="let error">
+            <button mat-icon-button
+                    class="info-button">
+              <mat-icon class="info-icon">
+                info
+              </mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let error; columns: displayedColumns;"
+                 [routerLink]="['/admin/errors/', error.id]">
+        </mat-row>
+
+      </mat-table>
+
+      <div style="display: block;">
+        <mat-paginator [length]="length"
+                       [pageSize]="pageSize"
+                       [pageSizeOptions]="pageSizeOptions"
+                       (page)="pageEvent = $event">
+        </mat-paginator>
+      </div>
+
+    </div>
+
   </div>
   <ng-template #loading>
     <mat-progress-spinner
@@ -42,13 +94,6 @@
       mode="indeterminate">
     </mat-progress-spinner>
   </ng-template>
-
-
-  <div *ngIf="countIsZero">
-    <p class="component-detail">
-      No errors found
-    </p>
-  </div>
 
 </div>
 

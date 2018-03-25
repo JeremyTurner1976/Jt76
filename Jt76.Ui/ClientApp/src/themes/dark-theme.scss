@@ -3,3 +3,28 @@ $app-dark-accent: mat-palette($mat-grey, 500);
 $app-dark-warn: mat-palette($mat-grey, A200);
 
 $app-dark-theme: mat-dark-theme( $app-dark-primary, $app-dark-accent, $app-dark-warn );
+
+@include mat-core-theme($app-dark-theme);
+@include mat-autocomplete-theme($app-dark-theme);
+@include mat-button-theme($app-dark-theme);
+@include mat-button-toggle-theme($app-dark-theme);
+@include mat-card-theme($app-dark-theme);
+@include mat-checkbox-theme($app-dark-theme);
+@include mat-chips-theme($app-dark-theme);
+@include mat-dialog-theme($app-dark-theme);
+@include mat-grid-list-theme($app-dark-theme);
+@include mat-icon-theme($app-dark-theme);
+@include mat-input-theme($app-dark-theme);
+@include mat-list-theme($app-dark-theme);
+@include mat-menu-theme($app-dark-theme);
+@include mat-progress-bar-theme($app-dark-theme);
+@include mat-progress-spinner-theme($app-dark-theme);
+@include mat-radio-theme($app-dark-theme);
+@include mat-select-theme($app-dark-theme);
+@include mat-sidenav-theme($app-dark-theme);
+@include mat-slide-toggle-theme($app-dark-theme);
+@include mat-slider-theme($app-dark-theme);
+@include mat-tabs-theme($app-dark-theme);
+@include mat-toolbar-theme($app-dark-theme);
+@include mat-tooltip-theme($app-dark-theme);
+@include mat-datepicker-theme($app-dark-theme); 
