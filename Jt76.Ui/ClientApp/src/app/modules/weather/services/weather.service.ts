@@ -188,14 +188,6 @@ export class WeatherService extends BaseService<IWeatherData> {
     return keyValues;
   }
 
-  private getKeyValue(key: string, value: any)
-    : KeyValue {
-    const keyValue = new KeyValue();
-    keyValue.Key = key;
-    keyValue.Value = value;
-    return keyValue;
-  }
-
   private summarizeMatchingForecasts(
     matchingForecasts: Array<IWeatherForecast>)
     : IDailyForecast {

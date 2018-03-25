@@ -2,11 +2,12 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs/Rx";
 import "rxjs/add/operator/map";
+import { KeyValue }
+  from "../models/key-value";
 import { AlertService }
   from "../services/alert.service";
 import { AppLocalStorageService }
   from "../services/app-local-storage.service";
-
 
 @Injectable()
 export class BaseService<T> {
@@ -138,6 +139,14 @@ export class BaseService<T> {
 
           return response;
       });
+  }
+  
+  getKeyValue(key: string, value: any)
+    : KeyValue {
+    const keyValue = new KeyValue();
+    keyValue.Key = key;
+    keyValue.Value = value;
+    return keyValue;
   }
 
 }
