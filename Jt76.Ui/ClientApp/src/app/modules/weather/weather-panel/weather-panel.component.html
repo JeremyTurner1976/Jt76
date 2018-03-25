@@ -49,8 +49,7 @@
       
         <mat-expansion-panel [expanded]="step === i"
                              (opened)="setStep(i)"
-                             hideToggle="true"
-                             class="list-item">
+                             hideToggle="true">
 
           <mat-expansion-panel-header>
             <mat-panel-title>
@@ -77,20 +76,30 @@
           </mat-expansion-panel-header>
 
           <div (click)="hideInfo();"
-               class="list-item">
+               class="list-item accordion-content">
             <mat-grid-list cols="2"
-                           rowHeight="26px">
+                           rowHeight="36px">
               
               <mat-grid-tile colspan="1"
                              rowspan="1"
                              *ngFor="let detail of item.detailModel">
-                <div class="accordion-content">
-                  <label class="label">
-                    {{detail.Key}}:
-                  </label>
-                  <label>
-                    {{detail.Value}}
-                  </label>
+                <div class="flex-start">
+                  <mat-grid-list cols="2"
+                                 rowHeight="36px">
+                    <mat-grid-tile colspan="1"
+                                   rowspan="1">
+                      <label class="label flex-start">
+                        {{detail.Key}}:
+                      </label>
+                    </mat-grid-tile>
+                    <mat-grid-tile colspan="1"
+                                   rowspan="1">
+                      <label class="flex-start">
+                        {{detail.Value}}
+                      </label>
+                    </mat-grid-tile>
+
+                  </mat-grid-list>
                 </div>
               </mat-grid-tile>
 

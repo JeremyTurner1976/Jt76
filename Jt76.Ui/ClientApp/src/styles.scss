@@ -51,6 +51,16 @@
   padding-bottom: 15px !important;
 }
 
+.flex-end {
+  width: 100%;
+  justify-content: flex-end !important;
+}
+
+.flex-start {
+  width: 100%;
+  justify-content: flex-start !important;
+}
+
 .float-right {
   float: right;
 }
@@ -90,10 +100,6 @@
 
 .mat-card {
   border-radius: 6px !important;
-}
-
-.mat-grid-tile .mat-figure {
-  justify-content: flex-start !important;
 }
 
 /* Html element overrides*/

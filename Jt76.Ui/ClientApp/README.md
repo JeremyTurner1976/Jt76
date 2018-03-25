@@ -1,27 +1,19 @@
 
 /*
 		 * TODO
-     errors will become a mat table
-     --need to decorate a moment time to the errors object (BaseModel?) - will use this for page date filters
-     --need to  get sorts up
 
+     --build set of moment directives - app-date, accepts utc true/false - defaults to whatever the error is saved as
 
-     directive and service for moment (Have to decorate error times too much - want all times to be simple - same interface)
-     directive for averaging, to pipe (Will use all over for weather - also have a to fixed built in param) - also refactor summarize weather
-      --Common
-			Implement GeoLocation
+			--Implement GeoLocation
 
-			//Paging on Errors
-			//Implement sass variables - alert will use these
+			//Implement sass variables and traditional theming
 			//Implement global event bus (For theme) - can use observe on local storage, themed alert. Should look into traditional angular methods
 
+      //have this one use data source paging/sorting/etc
 			//Implement Authentication - https://social.technet.microsoft.com/wiki/contents/articles/37169.secure-your-netcore-web-applications-using-identityserver-4.aspx
 			//implement user admin
 			//Implement User Secrets Manager
 			//storage cleanup service (Use injectors to get all services, check cache time and delete over on app start)
-
-			//Implement weather service and GeoLocation
-			//Finalized display for open weather api forecasts
 
 			//Implement dashboards
 			//Clean up references
