@@ -24,7 +24,6 @@ extends BaseWeatherComponent
   implements DoCheck {
 
   day: string;
-  color: "black";
   graphData: any;
   chartOptions: any;
   todaysForecasts = new Array<WeatherForecast>();
@@ -83,6 +82,8 @@ extends BaseWeatherComponent
   }
 
   setupGraph(labels: Array<string>, weatherData: Array<any>) {
+    const fontFamily = "Roboto, 'Helvetica Neue', sans-serif";
+
     this.graphData = {
       labels: labels,
       datasets: [
@@ -113,9 +114,10 @@ extends BaseWeatherComponent
         display: true,
         position: "top",
         labels: {
-          fontFamily: "Roboto, 'Helvetica Neue', sans-serif",
           fontStyle: "700",
-          boxWidth: 12
+          boxWidth: 12,
+          fontColor: "black",
+          fontFamily: fontFamily
         }
       },
       tooltips: {
@@ -130,8 +132,9 @@ extends BaseWeatherComponent
              ticks: {
                beginAtZero: true,
                fontStyle: "700",
-               fontSize: 16,
-               fontFamily: "Roboto, 'Helvetica Neue', sans-serif"
+               fontSize: 15,
+               fontColor: "black",
+               fontFamily: fontFamily
              }
           }],
         xAxes: [
@@ -139,7 +142,8 @@ extends BaseWeatherComponent
              ticks: {
                fontStyle: "600",
                fontSize: 14,
-               fontFamily: "Roboto, 'Helvetica Neue', sans-serif"
+               fontColor: "black",
+               fontFamily: fontFamily
              }
           }]
       }
