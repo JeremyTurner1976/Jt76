@@ -8,7 +8,7 @@ import {
 import { ActivatedRoute } from "@angular/router";
 import { WeatherService } from "../services/weather.service";
 import { WeatherData } from "../models/weather-data";
-import { WeatherForecast } from "../models/weather-forecast";
+import { IWeatherForecast } from "../models/weather-forecast";
 import { BaseWeatherComponent }
   from "../abstract/base-weather-component";
 import * as moment from "moment";
@@ -26,7 +26,7 @@ extends BaseWeatherComponent
   day: string;
   graphData: any;
   chartOptions: any;
-  todaysForecasts = new Array<WeatherForecast>();
+  todaysForecasts = new Array<IWeatherForecast>();
   differ: any;
 
   @ViewChild("WeatherGraph") weatherGraph: ElementRef;
@@ -63,14 +63,14 @@ extends BaseWeatherComponent
     const weatherData = [];
     todaysForecasts.forEach(
       (item) => {
+        item.detailModel
+          = this.weatherService.getDetailModel(item);
         labels.push([
           moment(item.startDateTime).format("M/D h:mm a"),
           item.description]);
         weatherData.push({
           x: moment(item.startDateTime).date(),
-          y: +((item.maximumTemperature + item.minimumTemperature) / 2)
-            .toFixed(0)
-        });
+          y: +(item.temperature).toFixed(0)});
       });
 
     this.setupGraph(labels, weatherData);
@@ -78,7 +78,7 @@ extends BaseWeatherComponent
   }
 
   clearData() {
-    this.todaysForecasts = new Array<WeatherForecast>();
+    this.todaysForecasts = new Array<IWeatherForecast>();
   }
 
   setupGraph(labels: Array<string>, weatherData: Array<any>) {
@@ -103,8 +103,8 @@ extends BaseWeatherComponent
           pointHoverBackgroundColor: "rgba(75,192,192,1)",
           pointHoverBorderColor: "rgba(220,220,220,1)",
           pointHoverBorderWidth: 2,
-          pointRadius: 4,
-          pointHitRadius: 10
+          pointRadius: 5,
+          pointHitRadius: 35
         }
       ]
     };

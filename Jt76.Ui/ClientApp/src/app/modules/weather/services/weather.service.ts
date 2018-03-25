@@ -8,11 +8,13 @@ import { BaseService }
   from "../../../shared/abstract/base.service";
 import { IWeatherData }
   from "../models/weather-data";
-import { DailyForecast }
+import { IDailyForecast, DailyForecast }
   from "../models/daily-forecast";
-import { WeatherForecast }
+import { IWeatherForecast }
   from "../models/weather-forecast";
 import * as moment from "moment";
+import Keyvalue = require("../../../shared/models/key-value");
+import KeyValue = Keyvalue.KeyValue;
 
 @Injectable()
 export class WeatherService extends BaseService<IWeatherData> {
@@ -38,32 +40,40 @@ export class WeatherService extends BaseService<IWeatherData> {
         : "v1/weatherData/darkSkyWeatherForecasts";
   }
 
-  getForecastsForDay(forecasts: Array<WeatherForecast>,
-    day: string): Array<WeatherForecast> {
+  getForecastsForDay(forecasts: Array<IWeatherForecast>,
+    day: string): Array<IWeatherForecast> {
 
     return this.getMatchingForecasts(forecasts, day, true);
   }
 
   getMatchingForecasts(
-    forecasts: Array<WeatherForecast>,
+    forecasts: Array<IWeatherForecast>,
     day: string,
-    getOverrunData: boolean): Array<WeatherForecast> {
+    getOverrunData: boolean): Array<IWeatherForecast> {
 
     return forecasts.filter(
       (item) => {
-        if (this.isLimitedByDay(item.startDateTime)) {
-          if (getOverrunData) {
-            return moment(item.startDateTime)
-              .subtract(1, "m").format(this.dayFormat) === day;
-          }
+        if (!getOverrunData && this.isLimitedByDay(item.startDateTime)) {
           return moment(item.startDateTime).format(this.dayFormat) === day;
+        } else {
+          const fudgedStart =
+            moment(item.startDateTime)
+              .subtract(181, "m");
+          const fudgedEnd =
+            moment(item.endDateTime)
+              .add(1, "m");
+
+          return (this.isLimitedByDay(fudgedStart.toDate())
+              && this.isLimitedByDay(fudgedEnd.toDate()))
+            &&
+              (fudgedStart.format(this.dayFormat) === day
+              || fudgedEnd.format(this.dayFormat) === day);
         }
-        return false;
       });
   }
 
-  getDailyForecasts(forecasts: Array<WeatherForecast>)
-    : Array<DailyForecast> {
+  getDailyForecasts(forecasts: Array<IWeatherForecast>)
+    : Array<IDailyForecast> {
     
     const days = new Array<string>();
     for (let i = 0; i < forecasts.length; i++) {
@@ -73,7 +83,7 @@ export class WeatherService extends BaseService<IWeatherData> {
       }
     }
 
-    const dailyForecasts = new Array<DailyForecast>();
+    const dailyForecasts = new Array<IDailyForecast>();
     days.forEach(
       (day) => {
         const matchingForecasts =
@@ -119,9 +129,76 @@ export class WeatherService extends BaseService<IWeatherData> {
     return this.dataUrl.indexOf("openWeather") >= 0;
   }
 
+  getDetailModel(weatherForecast: IWeatherForecast): Array<KeyValue> {
+    const keyValues = new Array<KeyValue>();
+
+    keyValues.push(this.getKeyValue(
+      "Description",
+      weatherForecast.description
+    ));
+    keyValues.push(this.getKeyValue(
+      "Cloud Cover",
+      weatherForecast.cloudCover
+    ));
+
+    keyValues.push(this.getKeyValue(
+      "Start Time",
+      moment(weatherForecast.startDateTime)
+        .format("dddd, MMMM Do, h:mm a")
+    ));
+    keyValues.push(this.getKeyValue(
+      "End Time",
+      moment(weatherForecast.endDateTime)
+        .format("dddd, MMMM Do, h:mm a")
+    ));
+
+    keyValues.push(this.getKeyValue(
+      "Minimum Temperature",
+      weatherForecast.minimumTemperature
+    ));
+    keyValues.push(this.getKeyValue(
+      "Maximum Temperature",
+      weatherForecast.maximumTemperature
+    ));
+    
+
+    keyValues.push(this.getKeyValue(
+      "Wind Direction",
+      weatherForecast.windDirection
+    ));
+    keyValues.push(this.getKeyValue(
+      "Wind Speed",
+      weatherForecast.windspeed
+    ));
+
+    keyValues.push(this.getKeyValue(
+      "humidity",
+      weatherForecast.humidity
+    ));
+    keyValues.push(this.getKeyValue(
+      "Precipitation Volume",
+      weatherForecast.precipitationVolume
+    ));
+
+    keyValues.push(this.getKeyValue(
+      "Atmospheric Pressure",
+      weatherForecast.atmosphericPressure
+    ));
+
+    return keyValues;
+  }
+
+  private getKeyValue(key: string, value: any)
+    : KeyValue {
+    const keyValue = new KeyValue();
+    keyValue.Key = key;
+    keyValue.Value = value;
+    return keyValue;
+  }
+
   private summarizeMatchingForecasts(
-    matchingForecasts: Array<WeatherForecast>)
-    : DailyForecast {
+    matchingForecasts: Array<IWeatherForecast>)
+    : IDailyForecast {
 
     const dailyForecast = new DailyForecast();
 
@@ -174,8 +251,8 @@ export class WeatherService extends BaseService<IWeatherData> {
     const startDateTime = moment(forecastStartDate);
     return now.format(this.dayFormat) !== startDateTime.format(this.dayFormat)
       || (
-        now.format(this.dayFormat) === startDateTime.format(this.dayFormat) &&
-        now.date() === startDateTime.date()
+        now.format(this.dayFormat) === startDateTime.format(this.dayFormat)
+        && now.date() === startDateTime.date()
       );
   }
 

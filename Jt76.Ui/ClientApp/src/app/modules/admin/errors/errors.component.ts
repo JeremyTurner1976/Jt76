@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { IAppError, AppError } from "../models/app-error";
+import { IAppError } from "../models/app-error";
 import { ErrorService } from "../services/error.service";
 import { BaseDataComponent }
   from "../../../shared/abstract/base-data-component";
@@ -13,7 +13,7 @@ import { BaseDataComponent }
 export class ErrorsComponent
   extends BaseDataComponent {
 
-  errors = new Array<AppError>();
+  errors = new Array<IAppError>();
 
   constructor(
     private readonly errorService: ErrorService
@@ -41,14 +41,14 @@ export class ErrorsComponent
   }
 
   clearData() {
-    this.errors = new Array<AppError>();
+    this.errors = new Array<IAppError>();
   }
 
   //todo paged
 
   clearAll() {
     this.errorService.deleteAll(this.errors);
-    this.errors = new Array<AppError>();
+    this.errors = new Array<IAppError>();
   }
 }
 

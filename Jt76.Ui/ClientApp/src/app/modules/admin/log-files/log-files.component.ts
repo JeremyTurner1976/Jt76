@@ -14,7 +14,7 @@ export class LogFilesComponent
 extends BaseDataComponent {
   lineCount = 120;
   lastFile = new LogFile();
-  logFiles = new Array<LogFile>();
+  logFiles = new Array<ILogFile>();
   fileLines = new Array<string>();
 
   constructor(
@@ -43,7 +43,7 @@ extends BaseDataComponent {
   }
 
   clearData() {
-    this.logFiles = new Array<LogFile>();
+    this.logFiles = new Array<ILogFile>();
     this.fileLines = new Array<string>();
   }
 

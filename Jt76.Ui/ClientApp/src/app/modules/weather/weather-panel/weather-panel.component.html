@@ -77,9 +77,24 @@
           </mat-expansion-panel-header>
 
           <div (click)="hideInfo();"
-               class="list-item accordion-content"
-               #{{i}}>
-            CONTENT
+               class="list-item">
+            <mat-grid-list cols="2"
+                           rowHeight="26px">
+              
+              <mat-grid-tile colspan="1"
+                             rowspan="1"
+                             *ngFor="let detail of item.detailModel">
+                <div class="accordion-content">
+                  <label class="label">
+                    {{detail.Key}}:
+                  </label>
+                  <label>
+                    {{detail.Value}}
+                  </label>
+                </div>
+              </mat-grid-tile>
+
+            </mat-grid-list>
           </div>
 
           <mat-action-row>

@@ -11,7 +11,6 @@ import { AppLocalStorageService }
 import { BaseService }
   from "../../../shared/abstract/base.service";
 
-
 @Injectable()
 export class LogFileService extends BaseService<ILogFile> {
 

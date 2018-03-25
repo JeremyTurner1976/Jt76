@@ -1,3 +1,6 @@
+import { KeyValue }
+  from "../../../shared/models/key-value";
+
 export interface IWeatherForecast {
   atmosphericPressure: number;
   cloudCover: number;
@@ -13,6 +16,7 @@ export interface IWeatherForecast {
   temperature: number;
   windDirection: number;
   windspeed: number;
+  detailModel: Array<KeyValue>;
 }
 
 export class WeatherForecast implements IWeatherForecast {
@@ -24,10 +28,11 @@ export class WeatherForecast implements IWeatherForecast {
   icon = "";
   maximumTemperature = 0;
   minimumTemperature = 0;
-  precipitationVolume = 0;
+  precipitationVolume = 0; 
   skyCon = "";
   startDateTime = new Date();
   temperature = 0;
   windDirection = 0;
   windspeed = 0;
+  detailModel = new Array<KeyValue>();
 }

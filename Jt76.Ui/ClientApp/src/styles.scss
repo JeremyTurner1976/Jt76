@@ -46,10 +46,6 @@
   font-weight: bold;
 }
 
-ellipsis {
-  text-overflow: ellipsis;
-}
-
 .expanded-mat-line {
   padding-top: 15px !important;
   padding-bottom: 15px !important;
@@ -57,6 +53,11 @@ ellipsis {
 
 .float-right {
   float: right;
+}
+
+.label {
+  font-weight: 700;
+  padding-right: 5px;
 }
 
 .list-item {
@@ -71,9 +72,7 @@ ellipsis {
 }
 
 /* Angular material overloads */
-.mat-card {
-  border-radius: 6px !important;
-}
+
 
 .accordion-headers-align .mat-expansion-panel-header-title,
 .accordion-headers-align .mat-expansion-panel-header-description {
@@ -83,6 +82,14 @@ ellipsis {
 .accordion-headers-align .mat-expansion-panel-header-description {
   justify-content: space-between;
   align-items: center;
+}
+
+.mat-card {
+  border-radius: 6px !important;
+}
+
+.mat-grid-tile .mat-figure {
+  justify-content: flex-start !important;
 }
 
 /* Html element overrides*/
