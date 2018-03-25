@@ -25,7 +25,7 @@
         <div matLine
              class="expanded-mat-line"
              [routerLink]="['/admin/errors/', error.id]">
-          {{error.createdDate | date:"medium":"UTC-14"}} - {{error.createdBy}} - {{error.message}}
+          {{error.createdDate  | date:"mediumDate":"UTC-12"}} {{error.createdDate  | date:"h:mm a":"UTC-12"}} - {{error.createdBy}} - {{error.message}}
         </div>
         <button mat-icon-button
                 class="info-button"

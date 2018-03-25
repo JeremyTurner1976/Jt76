@@ -55,12 +55,12 @@
           <mat-expansion-panel-header>
             <mat-panel-title>
               <span class="weather-time">
-                {{item.startDateTime | date:"mediumDate"}} {{item.startDateTime | date:"h:mm a"}}
+                {{item.startDateTime | date:"mediumDate":"UTC-12"}} {{item.startDateTime | date:"h:mm a":"UTC-12"}}
               </span>
             </mat-panel-title>
             <mat-panel-description>
               <span class="weather-temperature-mini">
-                {{item.minimumTemperature | number : '1.0-0'}}&#176; - {{item.maximumTemperature | number : '1.0-0'}}&#176;
+                {{item.minimumTemperature | number :'1.0-0'}}&#176; - {{item.maximumTemperature | number :'1.0-0'}}&#176;
               </span>
               <span class="weather-description">
                 {{item.description}}

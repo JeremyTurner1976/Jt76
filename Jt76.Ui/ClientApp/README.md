@@ -1,12 +1,11 @@
 
 /*
 		 * TODO
+     directive and service for moment (Have to decorate error times too much - want all times to be simple - same interface)
      directive for averaging, to pipe (Will use all over for weather - also have a to fixed built in param) - also refactor summarize weather
-			//Implement weather service details and graphs
-			//Implement GeoLocation
+			Implement GeoLocation
 
 			//Paging on Errors
-			//Decorate the error page
 			//Implement sass variables - alert will use these
 			//Implement global event bus (For theme) - can use observe on local storage, themed alert. Should look into traditional angular methods
 

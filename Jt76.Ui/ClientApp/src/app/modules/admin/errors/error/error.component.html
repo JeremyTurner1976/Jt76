@@ -7,25 +7,97 @@
   <mat-card-content>
 
     <div *ngIf="isLoaded;else loading">
-      {{error.message}}
-      <br />
-      {{error.errorLevel}}
-      <br />
-      {{error.source}}
-      <br />
-      {{error.additionalInformation}}
-      <br />
-      {{error.stackTrace}}
-      <br />
-      {{error.createdBy}}
-      <br />
-      {{error.createdDate}}
+
+      <mat-grid-list cols="2"
+                     rowHeight="26px">
+
+        <mat-grid-tile colspan="1"
+                       rowspan="1">
+          <div class="error-content">
+            <label class="label">
+              Message:
+            </label>
+            <label>
+              {{error.message}}
+            </label>
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="1"
+                       rowspan="1">
+          <div class="error-content">
+            <label class="label">
+              Error Level:
+            </label>
+            <label>
+              {{error.errorLevel}}
+            </label>
+          </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile colspan="1"
+                       rowspan="1">
+          <div class="error-content">
+            <label class="label">
+              Source:
+            </label>
+            <label>
+              {{error.source}}
+            </label>
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="1"
+                       rowspan="1">
+          <div class="error-content">
+            <label class="label">
+              Additional Information:
+            </label>
+            <label>
+              {{error.additionalInformation}}
+            </label>
+          </div>
+        </mat-grid-tile>
+
+
+        <mat-grid-tile colspan="1"
+                       rowspan="1">
+          <div class="error-content">
+            <label class="label">
+              Created By:
+            </label>
+            <label>
+              {{error.createdBy}}
+            </label>
+          </div>
+        </mat-grid-tile>
+        <mat-grid-tile colspan="1"
+                       rowspan="1">
+          <div class="error-content">
+            <label class="label">
+              Created Date:
+            </label>
+            <label>
+              {{error.createdDate  | date:"mediumDate":"UTC-12"}} {{error.createdDate  | date:"h:mm a":"UTC-12"}}
+            </label>
+          </div>
+        </mat-grid-tile>
+
+      </mat-grid-list>
+
+      <hr class="bold-hr"/>
+      <span class="label">
+        Stack Trace:
+      </span>
+      <div class="stacktrace-content">
+        <span class="line-wrap">
+          {{error.stackTrace}}
+        </span>
+      </div>
+      <hr class="bold-hr"/>
     </div>
 
     <ng-template #loading>
-      <mat-progress-spinner
-        color="primary"
-        mode="indeterminate">
+      <mat-progress-spinner color="primary"
+                            mode="indeterminate">
       </mat-progress-spinner>
     </ng-template>
 
